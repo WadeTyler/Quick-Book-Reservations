@@ -1,12 +1,14 @@
 package net.tylerwade.quickbook.controller;
 
+import com.nimbusds.jose.proc.SecurityContext;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import net.tylerwade.quickbook.dto.api.APIResponse;
 import net.tylerwade.quickbook.dto.auth.SignupRequest;
 import net.tylerwade.quickbook.dto.auth.UserDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.User;
 import net.tylerwade.quickbook.service.TokenService;
-import net.tylerwade.quickbook.service.TokenServiceImpl;
 import net.tylerwade.quickbook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,17 +31,20 @@ public class AuthController {
 
     // Signup
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody SignupRequest signupRequest) throws HttpRequestException {
+    public ResponseEntity<?> signup(@RequestBody SignupRequest signupRequest, HttpServletResponse response) throws HttpRequestException {
         User user = this.userService.signup(signupRequest);
         UserDTO userDTO = this.userService.convertToDTO(user);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(new APIResponse<>(true, "Signup successful.", userDTO));
     }
 
     // Get Token
     @PostMapping("/token")
-    public ResponseEntity<?> getToken(Authentication authentication) {
-        String token = tokenService.generateToken(authentication);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new APIResponse<>(true, "Token retrieved.", token));
+    public ResponseEntity<?> getToken(Authentication authentication, HttpServletResponse response) {
+        Cookie authCookie = tokenService.generateAuthTokenCookie(authentication);
+
+        response.addCookie(authCookie);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new APIResponse<>(true, "Token retrieved.", authCookie.getValue()));
     }
 
     // Get User

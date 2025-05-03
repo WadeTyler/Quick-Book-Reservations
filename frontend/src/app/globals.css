@@ -1,26 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @import "tailwindcss";
+@plugin "daisyui";
 
 :root {
-  --background: #ffffff;
+  --accent: #30a675;
+  --accent-dark: #184f38;
+  --background: #efefef;
   --foreground: #171717;
+  --font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
-@theme inline {
+@theme {
+  --color-accent: var(--accent);
+  --color-accent-dark: var(--accent-dark);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-family);
+}
+
+
+.page-padding {
+  @apply lg:p-16 lg:pt-32 md:p-8 md:pt-24 p-4 pt-20;
+}
+
+.input-container {
+  @apply w-full flex flex-col gap-1;
+}
+
+.input-label {
+  @apply text-start tracking-wide text-accent;
+}
+
+.input-bar {
+  @apply w-full p-2 border border-gray-300 rounded-md focus:outline-0 focus:border-accent focus:shadow-md placeholder:text-gray-300 duration-200 hover:border-gray-400;
+}
+
+.submit-btn {
+  @apply w-full bg-accent rounded-md shadow-md text-white font-semibold hover:bg-accent-dark hover:shadow-lg duration-200 p-2 cursor-pointer;
+}
+
+.error-msg {
+  @apply text-red-700;
 }

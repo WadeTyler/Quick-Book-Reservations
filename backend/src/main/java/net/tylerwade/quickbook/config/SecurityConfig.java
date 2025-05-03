@@ -18,6 +18,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -27,16 +28,20 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
     private final JwtProperties jwtProperties;
+    private final JwtCookieToAuthorizationFilter jwtCookieToAuthorizationFilter;
 
     @Autowired
-    public SecurityConfig(JwtProperties jwtProperties) {
+    public SecurityConfig(JwtProperties jwtProperties, JwtCookieToAuthorizationFilter jwtCookieToAuthorizationFilter) {
         this.jwtProperties = jwtProperties;
+        this.jwtCookieToAuthorizationFilter = jwtCookieToAuthorizationFilter;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
+                .addFilterBefore(jwtCookieToAuthorizationFilter, BearerTokenAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/signup").permitAll()
                         .anyRequest().authenticated()
@@ -50,7 +55,9 @@ public class SecurityConfig {
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 )
-                .httpBasic(withDefaults())
+                .httpBasic(basic -> basic
+                        .authenticationEntryPoint(new NoPopupBasicAuthEntryPoint())
+                )
                 .build();
     }
 

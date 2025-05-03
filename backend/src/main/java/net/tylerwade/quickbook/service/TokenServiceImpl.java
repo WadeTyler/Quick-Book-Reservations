@@ -1,6 +1,8 @@
 package net.tylerwade.quickbook.service;
 
+import jakarta.servlet.http.Cookie;
 import net.tylerwade.quickbook.JwtProperties;
+import net.tylerwade.quickbook.config.AppProperties;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -16,10 +18,12 @@ import java.util.stream.Collectors;
 public class TokenServiceImpl implements TokenService {
     private final JwtEncoder jwtEncoder;
     private final JwtProperties jwtProperties;
+    private final AppProperties appProperties;
 
-    public TokenServiceImpl(JwtEncoder jwtEncoder, JwtProperties jwtProperties) {
+    public TokenServiceImpl(JwtEncoder jwtEncoder, JwtProperties jwtProperties, AppProperties appProperties) {
         this.jwtEncoder = jwtEncoder;
         this.jwtProperties = jwtProperties;
+        this.appProperties = appProperties;
     }
 
     public String generateToken(Authentication authentication) {
@@ -37,5 +41,20 @@ public class TokenServiceImpl implements TokenService {
                 .build();
 
         return this.jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+    }
+
+    @Override
+    public Cookie generateAuthTokenCookie(Authentication authentication) {
+        System.out.println("Generating Auth Token Cookie...");
+
+        Cookie cookie = new Cookie("AuthToken", generateToken(authentication));
+        cookie.setPath("/");
+        cookie.setSecure(appProperties.isProduction());
+        cookie.setMaxAge((int) (jwtProperties.expirationMs() / 1000));
+        System.out.println("Expires in " + (int) (jwtProperties.expirationMs() / 1000) + " seconds");
+        cookie.setHttpOnly(true);
+
+
+        return cookie;
     }
 }
