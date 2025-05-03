@@ -56,4 +56,12 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(new APIResponse<>(true, "User Retrieved.", userDTO));
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletResponse response) {
+        response.addCookie(tokenService.generateLogoutCookie());
+        return ResponseEntity.status(HttpStatus.OK).body(new APIResponse<>(true, "Logout Successful.", null));
+
+    }
+
+
 }

@@ -60,3 +60,14 @@ export async function signup(signupRequest: SignupRequest): Promise<boolean> {
       throw new Error(error.response.data.message || "Failed to signup.");
     })
 }
+
+export async function logout(): Promise<void> {
+  await axiosInstance.post("/auth/logout")
+    .then((response) => {
+      console.log(response.data.message);
+    })
+    .catch((error) => {
+      console.error(error.response.data.message || "Failed to logout.");
+      throw new Error(error.response.data.message || "Failed to logout.");
+    })
+}

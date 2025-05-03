@@ -10,4 +10,6 @@ public interface TokenService {
     String generateToken(Authentication authentication);
 
     Cookie generateAuthTokenCookie(Authentication authentication);
+
+    Cookie generateLogoutCookie();
 }

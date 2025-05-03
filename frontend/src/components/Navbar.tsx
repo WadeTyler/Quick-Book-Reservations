@@ -1,11 +1,12 @@
 'use client';
-import React from 'react';
-import {RiBook2Fill} from "@remixicon/react";
+import React, {useState} from 'react';
+import {RiBook2Fill, RiUserFill} from "@remixicon/react";
 import Link from "next/link";
-import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {fetchUser} from "@/lib/auth.service";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {fetchUser, logout} from "@/lib/auth.service";
 import {User} from "@/types/auth.types";
 import {LoadingSpinnerSM} from "@/components/LoadingSpinners";
+import {ClickAwayListener} from "@mui/material";
 
 
 type Page = {
@@ -22,11 +23,20 @@ const Navbar = () => {
 
   const queryClient = useQueryClient();
 
+  const [isShowingUserMenu, setIsShowingUserMenu] = useState<boolean>(false);
+
   // Auth User
   const {data: authUser, isPending: isLoadingAuthUser} = useQuery<User | null>({
     queryKey: ['authUser'],
     queryFn: fetchUser
   });
+
+  const {mutate: handleLogout, isPending: isLoggingOut} = useMutation({
+    mutationFn: logout,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['authUser']});
+    }
+  })
 
   return (
     <div
@@ -47,7 +57,7 @@ const Navbar = () => {
         ))}
       </div>
 
-      {isLoadingAuthUser && (<LoadingSpinnerSM />)}
+      {(isLoadingAuthUser || isLoggingOut) && (<LoadingSpinnerSM />)}
       {!isLoadingAuthUser && !authUser && (
         <div className="inline-flex gap-8 items-center">
           <Link href="/signup">Signup</Link>
@@ -55,8 +65,27 @@ const Navbar = () => {
         </div>
       )}
 
-      {!isLoadingAuthUser && authUser && (
-        <></>
+      {!isLoadingAuthUser && authUser && !isLoggingOut && (
+        <div className="relative">
+          <div
+            onClick={() => setIsShowingUserMenu(true)}
+            className="w-8 h-8 bg-white rounded-full flex items-center justify-center group hover:bg-background cursor-pointer duration-200">
+            <RiUserFill  className="text-accent-dark group-hover:text-accent duration-200"/>
+          </div>
+
+          {isShowingUserMenu && (
+            <ClickAwayListener onClickAway={() => setIsShowingUserMenu(false)}>
+              <div className="absolute right-0 top-full mt-2 w-fit bg-white rounded-md shadow-md flex flex-col text-accent-dark p-2 gap-1 items-center justify-center">
+                <Link href="/account" className="w-full text-center hover:bg-accent-dark hover:text-white duration-200 rounded-md px-2 py-1">Account</Link>
+                <span onClick={() => handleLogout()} className="w-full text-center hover:bg-accent-dark hover:text-white duration-200 rounded-md px-2 py-1 cursor-pointer">Logout</span>
+
+              </div>
+            </ClickAwayListener>
+          )}
+
+
+        </div>
+
       )}
 
     </div>

@@ -27,7 +27,6 @@ public class TokenServiceImpl implements TokenService {
     }
 
     public String generateToken(Authentication authentication) {
-        System.out.println("User Principal: " + authentication.getPrincipal());
         Instant now = Instant.now();
         String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -45,15 +44,24 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public Cookie generateAuthTokenCookie(Authentication authentication) {
-        System.out.println("Generating Auth Token Cookie...");
-
         Cookie cookie = new Cookie("AuthToken", generateToken(authentication));
         cookie.setPath("/");
         cookie.setSecure(appProperties.isProduction());
         cookie.setMaxAge((int) (jwtProperties.expirationMs() / 1000));
-        System.out.println("Expires in " + (int) (jwtProperties.expirationMs() / 1000) + " seconds");
         cookie.setHttpOnly(true);
 
+
+        return cookie;
+    }
+
+
+    @Override
+    public Cookie generateLogoutCookie() {
+        Cookie cookie = new Cookie("AuthToken", "");
+        cookie.setPath("/");
+        cookie.setSecure(appProperties.isProduction());
+        cookie.setMaxAge(0);
+        cookie.setHttpOnly(true);
 
         return cookie;
     }
