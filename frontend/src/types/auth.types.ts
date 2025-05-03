@@ -1,6 +1,9 @@
 export type User = {
   id: string;
   username: string;
+  firstName: string;
+  lastName: string;
+  createdAt: string
 }
 
 export type LoginRequest = {

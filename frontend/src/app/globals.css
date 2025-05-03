@@ -21,7 +21,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-family);
+  font-family: var(--font-family), sans-serif;
 }
 
 
@@ -42,7 +42,12 @@ body {
 }
 
 .submit-btn {
-  @apply w-full bg-accent rounded-md shadow-md text-white font-semibold hover:bg-accent-dark hover:shadow-lg duration-200 p-2 cursor-pointer;
+  @apply w-full text-center bg-accent rounded-md shadow-md text-white font-semibold hover:bg-accent-dark hover:shadow-lg duration-200 p-2 cursor-pointer;
+}
+
+
+.submit-btn2 {
+  @apply w-fit text-center bg-accent rounded-md shadow-md text-white font-semibold hover:bg-accent-dark hover:shadow-lg duration-200 p-2 cursor-pointer;
 }
 
 .error-msg {

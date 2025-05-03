@@ -40,18 +40,18 @@ const Navbar = () => {
 
   return (
     <div
-      className="fixed top-0 left-0 z-50 w-full h-16 bg-accent-dark text-white flex gap-4 items-center justify-between px-4 lg:px-16"
+      className="fixed top-0 left-0 z-50 w-full h-16 flex gap-4 items-center justify-between px-4 lg:px-16 border-b bg-background"
     >
 
       {/* Left Side */}
       <div className="inline-flex gap-8 items-center">
-        <Link href="/" className="inline-flex gap-2 items-center">
+        <Link href="/" className="inline-flex gap-2 items-center hover:text-accent duration-200">
           <RiBook2Fill className="size-8"/>
           <span className="text-2xl font-semibold tracking-wide">QUICK BOOK</span>
         </Link>
 
         {navPages.map((page, index) => (
-          <Link href={page.href} className="text-xl" key={index}>
+          <Link href={page.href} className="text-xl hover:text-accent duration-200" key={index}>
             {page.name}
           </Link>
         ))}
@@ -60,8 +60,8 @@ const Navbar = () => {
       {(isLoadingAuthUser || isLoggingOut) && (<LoadingSpinnerSM />)}
       {!isLoadingAuthUser && !authUser && (
         <div className="inline-flex gap-8 items-center">
-          <Link href="/signup">Signup</Link>
-          <Link href="/login">Login</Link>
+          <Link href="/login" className="hover:text-accent duration-200">Login</Link>
+          <Link href="/signup" className="submit-btn2">Signup</Link>
         </div>
       )}
 
@@ -75,7 +75,7 @@ const Navbar = () => {
 
           {isShowingUserMenu && (
             <ClickAwayListener onClickAway={() => setIsShowingUserMenu(false)}>
-              <div className="absolute right-0 top-full mt-2 w-fit bg-white rounded-md shadow-md flex flex-col text-accent-dark p-2 gap-1 items-center justify-center">
+              <div onClick={() => setIsShowingUserMenu(false)} className="absolute right-0 top-full mt-2 w-fit bg-white rounded-md shadow-md flex flex-col text-accent-dark p-2 gap-1 items-center justify-center">
                 <Link href="/account" className="w-full text-center hover:bg-accent-dark hover:text-white duration-200 rounded-md px-2 py-1">Account</Link>
                 <span onClick={() => handleLogout()} className="w-full text-center hover:bg-accent-dark hover:text-white duration-200 rounded-md px-2 py-1 cursor-pointer">Logout</span>
 

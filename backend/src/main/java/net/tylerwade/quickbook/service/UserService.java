@@ -17,7 +17,7 @@ public interface UserService extends UserDetailsService {
     User signup(SignupRequest signupRequest) throws HttpRequestException;
 
     default UserDTO convertToDTO(User user) {
-        return new UserDTO(user.getId(), user.getUsername());
+        return new UserDTO(user.getId(), user.getUsername(), user.getFirstName(), user.getLastName(), user.getCreatedAt());
     }
 
     default User getUser(Authentication authentication) {

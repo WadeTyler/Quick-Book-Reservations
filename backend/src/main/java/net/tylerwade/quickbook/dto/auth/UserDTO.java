@@ -1,4 +1,6 @@
 package net.tylerwade.quickbook.dto.auth;
 
-public record UserDTO(String id, String username) {
+import java.sql.Timestamp;
+
+public record UserDTO(String id, String username, String firstName, String lastName, Timestamp createdAt) {
 }
