@@ -1,0 +1,55 @@
+package net.tylerwade.quickbook.service;
+
+import net.tylerwade.quickbook.UserRepository;
+import net.tylerwade.quickbook.dto.auth.SignupRequest;
+import net.tylerwade.quickbook.exception.HttpRequestException;
+import net.tylerwade.quickbook.model.User;
+import net.tylerwade.quickbook.util.AuthUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+        return this.userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
+    }
+
+    @Override
+    public User signup(SignupRequest signupRequest) throws HttpRequestException {
+        // Validate signup request
+        AuthUtil.validateSignupRequest(signupRequest);
+
+        // Check if user already exists
+        if (this.userRepository.existsByUsername(signupRequest.username())) {
+            throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "Email already exists.");
+        }
+
+        // Create new user
+        User user = new User();
+        user.setUsername(signupRequest.username());
+        user.setFirstName(signupRequest.firstName());
+        user.setLastName(signupRequest.lastName());
+        user.setPassword(passwordEncoder.encode(signupRequest.password())); // Encode Password
+
+        // Save and return
+        userRepository.save(user);
+
+        return user;
+    }
+
+}
