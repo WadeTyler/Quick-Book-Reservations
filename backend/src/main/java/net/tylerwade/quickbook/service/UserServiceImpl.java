@@ -1,6 +1,6 @@
 package net.tylerwade.quickbook.service;
 
-import net.tylerwade.quickbook.UserRepository;
+import net.tylerwade.quickbook.repository.UserRepository;
 import net.tylerwade.quickbook.dto.auth.SignupRequest;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.User;
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
         AuthUtil.validateSignupRequest(signupRequest);
 
         // Check if user already exists
-        if (this.userRepository.existsByUsername(signupRequest.username())) {
+        if (this.userRepository.existsByUsernameIgnoreCase(signupRequest.username())) {
             throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "Email already exists.");
         }
 

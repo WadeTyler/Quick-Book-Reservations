@@ -1,4 +1,4 @@
-package net.tylerwade.quickbook;
+package net.tylerwade.quickbook.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

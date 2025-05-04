@@ -1,7 +1,7 @@
 package net.tylerwade.quickbook.service;
 
 import jakarta.servlet.http.Cookie;
-import net.tylerwade.quickbook.JwtProperties;
+import net.tylerwade.quickbook.config.JwtProperties;
 import net.tylerwade.quickbook.config.AppProperties;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
