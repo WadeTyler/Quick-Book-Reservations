@@ -3,13 +3,14 @@ import React, {useEffect} from 'react';
 import AuthProvider from "@/providers/AuthProvider";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {Business} from "@/types/business.types";
-import {fetchAllByOwnerOrStaff} from "@/lib/business.service";
+import {fetchAllManagedBusinesses} from "@/lib/business.service";
 import { fetchUser } from '@/lib/auth.service';
 import {User} from "@/types/auth.types";
 import {LoadingSpinnerXL} from "@/components/LoadingSpinners";
-import ManagedBusinessPanel from "@/components/businesses/ManagedBusinessPanel";
+import ManagedBusinessPanel from "@/components/businesses/manage/ManagedBusinessPanel";
 import Link from "next/link";
 import appProperties from "@/constants/app.properties";
+import Breadcrumbs, {Breadcrumb} from "@/components/Breadcrumbs";
 
 const ManageBusinessesPage = () => {
 
@@ -17,7 +18,7 @@ const ManageBusinessesPage = () => {
 
   const {data:managedBusinesses, isPending:isLoadingManagedBusinesses, error:loadManagedBusinessesError} = useQuery<Business[] | null>({
     queryKey: ['managedBusinesses'],
-    queryFn: fetchAllByOwnerOrStaff
+    queryFn: fetchAllManagedBusinesses
   });
 
   // Auth User
@@ -30,9 +31,16 @@ const ManageBusinessesPage = () => {
     queryClient.invalidateQueries({queryKey: ['managedBusinesses']});
   }, [authUser, queryClient]);
 
+  const breadcrumbs: Breadcrumb[] = [
+    {name: "Manage Businesses", href: "/businesses/manage"},
+  ]
+
   return (
     <AuthProvider forceAuth={true}>
-      <div className="page-padding w-full min-h-screen flex flex-col items-center">
+
+      <Breadcrumbs breadcrumbs={breadcrumbs} />
+
+      <div className="page-padding-with-breadcrumbs w-full min-h-screen flex flex-col items-center">
         <main className="w-full max-w-[55rem] flex flex-col gap-4 items-center">
           <header className="text-center flex flex-col gap-1">
             <h1 className="text-accent font-semibold tracking-wide text-3xl">Manage Businesses</h1>

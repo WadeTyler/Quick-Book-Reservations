@@ -1,9 +1,9 @@
 import axiosInstance from "@/lib/axios";
 import {APIResponse} from "@/types/api-response.types";
 import {AxiosError, AxiosResponse} from "axios";
-import {Business, CreateBusinessRequest} from "@/types/business.types";
+import {Business, CreateBusinessRequest, ManagedBusiness} from "@/types/business.types";
 
-export async function fetchAllByOwnerOrStaff() {
+export async function fetchAllManagedBusinesses() {
   return await axiosInstance.get("/businesses/manage")
     .then((response: AxiosResponse<APIResponse<Business[]>>) => {
       // Success!
@@ -18,6 +18,24 @@ export async function fetchAllByOwnerOrStaff() {
       // Error
       throw new Error(error.response.data.message || "Something went wrong. Try again later.");
     });
+}
+
+export async function fetchManagedBusinessById(businessId: string) {
+  return await axiosInstance.get(`/businesses/manage/${businessId}`)
+    .then((response: AxiosResponse<APIResponse<ManagedBusiness>>) => {
+      // Success!
+
+      if (!response.data.isSuccess || !response.data.data) {
+        throw new Error(response.data.message);
+      }
+
+      // return business
+      return response.data.data;
+    })
+    .catch((error: AxiosError<APIResponse<null>>) => {
+      // Failed!
+      throw new Error(error.response?.data.message || "Something went wrong. Try again later.");
+    })
 }
 
 export async function createBusiness(createBusinessRequest: CreateBusinessRequest) {

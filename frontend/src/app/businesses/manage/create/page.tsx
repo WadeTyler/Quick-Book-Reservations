@@ -2,13 +2,14 @@
 import React, {useState} from 'react';
 import {Business, CreateBusinessRequest} from "@/types/business.types";
 import {useMutation, useQuery} from "@tanstack/react-query";
-import {createBusiness, fetchAllByOwnerOrStaff} from "@/lib/business.service";
+import {createBusiness, fetchAllManagedBusinesses} from "@/lib/business.service";
 import {useRouter} from "next/navigation";
 import {LoadingSpinnerSM} from "@/components/LoadingSpinners";
 import AuthProvider from "@/providers/AuthProvider";
 import appProperties from "@/constants/app.properties";
 import Link from "next/link";
 import Image from "next/image";
+import Breadcrumbs, {Breadcrumb} from "@/components/Breadcrumbs";
 
 const CreateBusinessPage = () => {
 
@@ -30,16 +31,23 @@ const CreateBusinessPage = () => {
 
   const {data: managedBusinesses, isPending: isLoadingManagedBusinesses} = useQuery<Business[] | null>({
     queryKey: ['managedBusinesses'],
-    queryFn: fetchAllByOwnerOrStaff
+    queryFn: fetchAllManagedBusinesses
   });
 
   const hasMaxBusinesses = !isLoadingManagedBusinesses && managedBusinesses != null && managedBusinesses && managedBusinesses.length >= appProperties.maxUserBusinesses;
 
   const isSubmitDisabled = isCreatingBusiness || !createBusinessRequest.name || !createBusinessRequest.description || hasMaxBusinesses;
 
+
+  const breadcrumbs: Breadcrumb[] = [
+    {name: "Manage Businesses", href: "/businesses/manage"},
+    {name: "Create Business", href: "/businesses/manage/create"}
+  ]
+
   return (
     <AuthProvider forceAuth={true}>
-      <div className="page-padding w-full min-h-screen flex items-center justify-center">
+      <div className="page-padding-with-breadcrumbs w-full min-h-screen flex justify-center">
+        <Breadcrumbs breadcrumbs={breadcrumbs} />
 
         {hasMaxBusinesses && (
           <div className="text-center flex flex-col gap-2 items-center justify-center">
@@ -57,7 +65,7 @@ const CreateBusinessPage = () => {
 
               handleCreateBusiness(createBusinessRequest);
             }}
-            className="min-w-96 bg-background-secondary flex flex-col items-center justify-center md:p-8 p-4 rounded-md shadow-md gap-4">
+            className="min-w-96 h-fit bg-background-secondary flex flex-col items-center justify-center md:p-8 p-4 rounded-md shadow-md gap-4">
             <header className="flex flex-col items-center justify-center gap-2">
               <h1 className="text-2xl text-accent font-semibold tracking-wide">Create Business</h1>
               <p className="text-center">Let&#39;s go ahead and create your next business!</p>
@@ -101,7 +109,7 @@ const CreateBusinessPage = () => {
               )}
 
               <div className="flex gap-2 items-center justify-center">
-                <label htmlFor="image" className="submit-btn3">Upload Image</label>
+                <label htmlFor="image" className="submit-btn3">Upload Image (Optional)</label>
                 <input type="file" id="image" name="image" accept="image/*" hidden
                        onChange={(e) => {
                          setCreateBusinessRequest(prev => {

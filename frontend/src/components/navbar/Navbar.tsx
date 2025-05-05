@@ -41,7 +41,7 @@ const Navbar = () => {
 
   return (
     <div
-      className="fixed top-0 left-0 z-50 w-full h-16 flex gap-4 items-center justify-between px-4 lg:px-16 border-b bg-background"
+      className="fixed top-0 left-0 z-50 w-full h-16 flex gap-4 items-center justify-between px-4 lg:px-16 border-b bg-background-secondary"
     >
 
       {/* Left Side */}

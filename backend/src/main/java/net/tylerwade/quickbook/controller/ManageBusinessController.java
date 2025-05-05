@@ -3,6 +3,7 @@ package net.tylerwade.quickbook.controller;
 import jakarta.validation.Valid;
 import net.tylerwade.quickbook.dto.api.APIResponse;
 import net.tylerwade.quickbook.dto.business.CreateBusinessRequest;
+import net.tylerwade.quickbook.dto.business.ManagedBusinessDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
 import net.tylerwade.quickbook.service.BusinessService;
@@ -36,8 +37,13 @@ public class ManageBusinessController {
     // Find all by id and owner or staff
     @GetMapping("/{businessId}")
     private ResponseEntity<?> findByIdAndOwnerOrStaff(Authentication authentication, @PathVariable String businessId) throws HttpRequestException {
+
+        ManagedBusinessDTO managedBusinessDTO = businessService.convertToManagedBusinessDTO(
+                businessService.findByIdAndOwnerOrStaff(businessId, authentication)
+        );
+
         return ResponseEntity.status(HttpStatus.OK).body(
-                new APIResponse<>(true, "Business retrieved.", businessService.findByIdAndOwnerOrStaff(businessId, authentication))
+                new APIResponse<>(true, "Business retrieved.", managedBusinessDTO)
         );
     }
 
