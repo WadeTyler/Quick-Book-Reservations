@@ -23,7 +23,7 @@ const SignupPage = () => {
   });
 
   return (
-    <AuthProvider forceNoAuth={true} redirectTo="/">
+    <AuthProvider forceNoAuth={true} redirectTo="/businesses/manage">
       <div className="page-padding w-full min-h-screen flex items-center justify-center">
 
         <form
