@@ -21,7 +21,11 @@ export async function fetchAllByOwnerOrStaff() {
 }
 
 export async function createBusiness(createBusinessRequest: CreateBusinessRequest) {
-  return await axiosInstance.post("/businesses/manage/create", createBusinessRequest)
+  return await axiosInstance.post("/businesses/manage/create", createBusinessRequest, {
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  })
     .then((response: AxiosResponse<APIResponse<Business>>) => {
       // Success
 

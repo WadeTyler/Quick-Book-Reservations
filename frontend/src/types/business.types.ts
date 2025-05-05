@@ -12,6 +12,6 @@ export type Business = {
 
 export type CreateBusinessRequest = {
   name: string;
-  image?: string;
+  image?: File | null;
   description: string;
 }

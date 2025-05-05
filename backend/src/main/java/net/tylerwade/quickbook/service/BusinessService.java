@@ -6,6 +6,7 @@ import net.tylerwade.quickbook.model.Business;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -18,5 +19,6 @@ public interface BusinessService {
     Business findByIdAndOwnerOrStaff(String businessId, Authentication authentication) throws HttpRequestException;
 
     // Create new Business
-    Business create(CreateBusinessRequest createBusinessRequest, Authentication authentication) throws HttpRequestException;
+    Business create(CreateBusinessRequest createBusinessRequest, Authentication authentication) throws IOException;
+
 }

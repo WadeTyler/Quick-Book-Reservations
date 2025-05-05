@@ -8,6 +8,7 @@ import {LoadingSpinnerSM} from "@/components/LoadingSpinners";
 import AuthProvider from "@/providers/AuthProvider";
 import appProperties from "@/constants/app.properties";
 import Link from "next/link";
+import Image from "next/image";
 
 const CreateBusinessPage = () => {
 
@@ -15,7 +16,8 @@ const CreateBusinessPage = () => {
 
   const [createBusinessRequest, setCreateBusinessRequest] = useState<CreateBusinessRequest>({
     name: '',
-    description: ''
+    description: '',
+    image: null
   });
 
 
@@ -26,7 +28,7 @@ const CreateBusinessPage = () => {
     }
   });
 
-  const {data:managedBusinesses, isPending: isLoadingManagedBusinesses } = useQuery<Business[] | null>({
+  const {data: managedBusinesses, isPending: isLoadingManagedBusinesses} = useQuery<Business[] | null>({
     queryKey: ['managedBusinesses'],
     queryFn: fetchAllByOwnerOrStaff
   });
@@ -85,11 +87,56 @@ const CreateBusinessPage = () => {
               }))}></textarea>
             </fieldset>
 
+            {/* Business Image */}
+            <fieldset className="input-container">
+
+
+              {/* Preview Image */}
+              {createBusinessRequest.image && (
+                <div className="w-full aspect-video relative overflow-hidden">
+                  <Image src={URL.createObjectURL(createBusinessRequest.image)} alt={"Selected Image"} fill={true}
+                         objectFit="cover"
+                         objectPosition="center" className="rounded-md"/>
+                </div>
+              )}
+
+              <div className="flex gap-2 items-center justify-center">
+                <label htmlFor="image" className="submit-btn3">Upload Image</label>
+                <input type="file" id="image" name="image" accept="image/*" hidden
+                       onChange={(e) => {
+                         setCreateBusinessRequest(prev => {
+                           const file = e.target.files ? e.target.files[0] : null;
+
+                           if (file) {
+                             return {
+                               ...prev,
+                               image: file
+                             }
+                           } else {
+                             return prev;
+                           }
+                         })
+                       }}/>
+                {createBusinessRequest.image && (
+                  <button className="submit-btn3" type="button" onClick={() =>
+                    setCreateBusinessRequest(prev => ({
+                      ...prev,
+                      image: null
+                    }))
+                  }>
+                    Reset Image
+                  </button>
+                )}
+              </div>
+
+
+            </fieldset>
+
             {createBusinessError && (
               <p className="error-msg">{(createBusinessError as Error).message}</p>
             )}
 
-            <button className="submit-btn" disabled={isSubmitDisabled}>
+            <button className="submit-btn" type="submit" disabled={isSubmitDisabled}>
               {!isCreatingBusiness ? (
                 <>Create Business</>
               ) : (

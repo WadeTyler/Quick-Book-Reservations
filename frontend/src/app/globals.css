@@ -41,7 +41,7 @@ body {
 }
 
 .input-container {
-  @apply w-full flex flex-col gap-1;
+  @apply w-full flex flex-col gap-2;
 }
 
 .input-label {
