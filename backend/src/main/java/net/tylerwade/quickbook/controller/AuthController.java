@@ -3,6 +3,7 @@ package net.tylerwade.quickbook.controller;
 import com.nimbusds.jose.proc.SecurityContext;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import net.tylerwade.quickbook.dto.api.APIResponse;
 import net.tylerwade.quickbook.dto.auth.SignupRequest;
 import net.tylerwade.quickbook.dto.auth.UserDTO;
@@ -31,7 +32,7 @@ public class AuthController {
 
     // Signup
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody SignupRequest signupRequest, HttpServletResponse response) throws HttpRequestException {
+    public ResponseEntity<?> signup(@Valid @RequestBody SignupRequest signupRequest, HttpServletResponse response) throws HttpRequestException {
         User user = this.userService.signup(signupRequest);
         UserDTO userDTO = this.userService.convertToDTO(user);
 

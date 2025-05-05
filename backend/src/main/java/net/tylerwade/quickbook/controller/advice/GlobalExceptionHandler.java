@@ -4,9 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import net.tylerwade.quickbook.config.AppProperties;
 import net.tylerwade.quickbook.dto.api.APIResponse;
 import net.tylerwade.quickbook.exception.HttpRequestException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
@@ -26,6 +32,23 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleHttpRequestException(HttpRequestException e) {
         printDebugMessage(e);
         return ResponseEntity.status(e.getHttpStatus()).body(new APIResponse<>(false, e.getMessage(), null));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        printDebugMessage(e);
+
+        // Build message
+        StringBuilder errors = new StringBuilder();
+
+        for (int i = 0; i < e.getBindingResult().getAllErrors().size(); i++) {
+            errors.append(e.getBindingResult().getAllErrors().get(i).getDefaultMessage());
+            if (i != e.getBindingResult().getAllErrors().size() - 1) {
+                errors.append("\n");
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new APIResponse<>(false, errors.toString(), null));
     }
 
     // Catch all
