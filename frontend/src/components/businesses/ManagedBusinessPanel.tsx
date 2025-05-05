@@ -21,20 +21,23 @@ const ManagedBusinessPanel = ({business}: {
 
 
   return (
-    <div className="w-full min-h-48 h-full bg-white rounded-md shadow-md overflow-hidden">
+    <div className="w-full min-h-48 h-full bg-background-secondary rounded-md shadow-md overflow-hidden">
 
       {/* Image */}
-      <div className="w-full bg-gray-500 relative aspect-video">
+      <div className="w-full bg-gray-500 relative aspect-video flex items-end justify-start p-4">
         {business.image && (
           <Image src={business.image} alt={`Image for ${business.name}`} fill={true} objectFit='cover'
                  objectPosition='center'/>
+        )}
+        {!business.image && (
+          <span className="text-center text-gray-600 italic tracking-widest">No Image</span>
         )}
       </div>
 
       {/* Info Container */}
       <div className="p-4 flex flex-col gap-2">
         {/* Business Name */}
-        <h3 className="text-lg md:text-xl font-semibold text-accent-dark tracking-wide">
+        <h3 className="text-lg md:text-xl font-semibold tracking-wide">
           {business.name.length < 40 ? business.name : business.name.substring(0, 37) + "..."}
         </h3>
 

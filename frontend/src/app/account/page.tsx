@@ -19,7 +19,7 @@ const AccountPage = () => {
         <div className="w-full min-h-screen flex items-center justify-center gap-16 page-padding">
 
           {/* Account Info */}
-          <div className="w-fit h-fit flex flex-col gap-4 bg-white rounded-md md:p-8 p-4">
+          <div className="w-fit h-fit flex flex-col gap-4 bg-background-secondary rounded-md md:p-8 p-4">
             <h1 className="text-3xl font-semibold tracking-wide text-accent">Account Details</h1>
 
             <hr className="text-accent w-full"/>

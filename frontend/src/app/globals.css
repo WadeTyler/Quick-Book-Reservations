@@ -5,8 +5,18 @@
 :root {
   --accent: #30a675;
   --accent-dark: #184f38;
+  --background-secondary: #fff;
   --background: #efefef;
   --foreground: #171717;
+  --font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+[data-theme="dark"] {
+  --accent: #30a675;
+  --accent-dark: #184f38;
+  --foreground: #efefef;
+  --background: #171717;
+  --background-secondary: #0c0c0c;
   --font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
@@ -15,6 +25,7 @@
   --color-accent-dark: var(--accent-dark);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-background-secondary: var(--background-secondary);
 }
 
 

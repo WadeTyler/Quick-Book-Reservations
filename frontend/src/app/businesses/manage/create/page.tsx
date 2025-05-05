@@ -55,7 +55,7 @@ const CreateBusinessPage = () => {
 
               handleCreateBusiness(createBusinessRequest);
             }}
-            className="min-w-96 bg-white flex flex-col items-center justify-center md:p-8 p-4 rounded-md shadow-md gap-4">
+            className="min-w-96 bg-background-secondary flex flex-col items-center justify-center md:p-8 p-4 rounded-md shadow-md gap-4">
             <header className="flex flex-col items-center justify-center gap-2">
               <h1 className="text-2xl text-accent font-semibold tracking-wide">Create Business</h1>
               <p className="text-center">Let&#39;s go ahead and create your next business!</p>

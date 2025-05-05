@@ -29,7 +29,7 @@ const LoginPage = () => {
             e.preventDefault();
             handleLogin({username, password});
           }}
-          className="min-w-96 bg-white flex flex-col items-center justify-center md:p-8 p-4 rounded-md shadow-md gap-4">
+          className="min-w-96 bg-background-secondary flex flex-col items-center justify-center md:p-8 p-4 rounded-md shadow-md gap-4">
           <header className="flex flex-col items-center justify-center gap-2">
             <h1 className="text-2xl text-accent font-semibold tracking-wide">Login</h1>
             <p className="text-center">Welcome back! Let&#39;s manage your applications!</p>
