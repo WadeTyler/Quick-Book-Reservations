@@ -41,7 +41,7 @@ const ManageBusinessesPage = () => {
 
           <hr className="text-accent w-full"/>
 
-          {managedBusinesses && (
+          {managedBusinesses && !loadManagedBusinessesError && (
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 w-full gap-8">
               {managedBusinesses.map((business) => (
                 <ManagedBusinessPanel key={business.id} business={business} />

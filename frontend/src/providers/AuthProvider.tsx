@@ -18,9 +18,9 @@ const AuthProvider = ({forceAuth = false, redirectTo = "/login", forceNoAuth = f
   const queryClient = useQueryClient();
 
   // Auth User
-  const {data: authUser, isPending: isLoadingAuthUser} = useQuery<User | null>({
+  const {data: authUser, isPending: isLoadingAuthUser, error: loadUserError} = useQuery<User | null>({
     queryKey: ['authUser'],
-    queryFn: fetchUser
+    queryFn: fetchUser,
   });
 
   async function handleLoad() {
@@ -39,13 +39,13 @@ const AuthProvider = ({forceAuth = false, redirectTo = "/login", forceNoAuth = f
   }
 
   // Redirect if required and no authuser
-  if (!authUser && !isLoadingAuthUser && forceAuth) {
+  if (!authUser && !isLoadingAuthUser && forceAuth || (forceAuth && loadUserError)) {
     router.push(redirectTo);
     return null;
   }
 
   // Force no auth
-  if (authUser && !isLoadingAuthUser && forceNoAuth) {
+  if (authUser && !isLoadingAuthUser && forceNoAuth || (forceNoAuth && loadUserError)) {
     router.push(redirectTo !== pathname ? redirectTo : '/not-found')
   }
 
