@@ -5,6 +5,7 @@ export type Business = {
   ownerId: string;
   name: string;
   image?: string;
+  description: string;
   createdAt: string;
   staff: User[];
 }
