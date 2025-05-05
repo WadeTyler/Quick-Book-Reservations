@@ -9,3 +9,9 @@ export type Business = {
   createdAt: string;
   staff: User[];
 }
+
+export type CreateBusinessRequest = {
+  name: string;
+  image?: string;
+  description: string;
+}

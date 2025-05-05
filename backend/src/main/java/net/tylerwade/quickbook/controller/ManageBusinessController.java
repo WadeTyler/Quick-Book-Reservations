@@ -1,16 +1,15 @@
 package net.tylerwade.quickbook.controller;
 
+import jakarta.validation.Valid;
 import net.tylerwade.quickbook.dto.api.APIResponse;
+import net.tylerwade.quickbook.dto.business.CreateBusinessRequest;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/businesses/manage")
@@ -35,6 +34,14 @@ public class ManageBusinessController {
     private ResponseEntity<?> findByIdAndOwnerOrStaff(Authentication authentication, @PathVariable String businessId) throws HttpRequestException {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new APIResponse<>(true, "Business retrieved.", businessService.findByIdAndOwnerOrStaff(businessId, authentication))
+        );
+    }
+
+    // Create new Business
+    @PostMapping("/create")
+    private ResponseEntity<?> create(Authentication authentication, @Valid @RequestBody CreateBusinessRequest createBusinessRequest) throws HttpRequestException {
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                new APIResponse<>(true, "Business Created", businessService.create(createBusinessRequest, authentication))
         );
     }
 

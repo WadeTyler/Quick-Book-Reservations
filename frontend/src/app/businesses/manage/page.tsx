@@ -9,6 +9,7 @@ import {User} from "@/types/auth.types";
 import {LoadingSpinnerXL} from "@/components/LoadingSpinners";
 import ManagedBusinessPanel from "@/components/businesses/ManagedBusinessPanel";
 import Link from "next/link";
+import appProperties from "@/constants/app.properties";
 
 const ManageBusinessesPage = () => {
 
@@ -29,7 +30,6 @@ const ManageBusinessesPage = () => {
     queryClient.invalidateQueries({queryKey: ['managedBusinesses']});
   }, [authUser, queryClient]);
 
-
   return (
     <AuthProvider forceAuth={true}>
       <div className="page-padding w-full min-h-screen flex flex-col items-center">
@@ -46,14 +46,17 @@ const ManageBusinessesPage = () => {
               {managedBusinesses.map((business) => (
                 <ManagedBusinessPanel key={business.id} business={business} />
               ))}
-              
-              <Link href="/businesses/manage/create" className="w-full min-h-48 h-full rounded-md border-dashed border-accent border-3 overflow-hidden flex flex-col gap-2 text-accent items-center justify-center hover:bg-accent hover:text-white group duration-200 cursor-pointer p-4 text-center">
+
+              {managedBusinesses && managedBusinesses.length < appProperties.maxUserBusinesses && (
+                <Link href="/businesses/manage/create" className="w-full min-h-48 h-full rounded-md border-dashed border-accent border-3 overflow-hidden flex flex-col gap-2 text-accent items-center justify-center hover:bg-accent hover:text-white group duration-200 cursor-pointer p-4 text-center">
                 <span className="rounded-full max-w-32 w-full max-h-32 h-full border-accent border-3 border-dashed flex items-center justify-center group-hover:border-white duration-200">
                   <span className="text-6xl" aria-hidden={true}>+</span>
                 </span>
 
-                <span>Create new Business</span>
-              </Link>
+                  <span>Create new Business</span>
+                </Link>
+              )}
+
               
             </div>
           )}

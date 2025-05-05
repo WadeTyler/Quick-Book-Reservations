@@ -55,5 +55,5 @@ body {
 }
 
 .error-msg {
-  @apply text-red-700 whitespace-pre-line;
+  @apply text-red-700 whitespace-pre-line text-center;
 }
