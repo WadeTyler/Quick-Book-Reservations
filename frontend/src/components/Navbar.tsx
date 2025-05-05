@@ -16,7 +16,7 @@ type Page = {
 
 const navPages: Page[] = [
   {name: 'Home', href: "/"},
-  {name: 'Manage Applications', href: "/manage/applications"}
+  {name: 'Manage Businesses', href: "/businesses/manage"}
 ];
 
 const Navbar = () => {
