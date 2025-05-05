@@ -4,7 +4,6 @@ import net.tylerwade.quickbook.repository.UserRepository;
 import net.tylerwade.quickbook.dto.auth.SignupRequest;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.User;
-import net.tylerwade.quickbook.util.AuthUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
