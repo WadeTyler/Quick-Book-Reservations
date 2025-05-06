@@ -23,6 +23,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findById(String userId) throws HttpRequestException {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "User not found."));
+    }
+
+    @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
         return this.userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));

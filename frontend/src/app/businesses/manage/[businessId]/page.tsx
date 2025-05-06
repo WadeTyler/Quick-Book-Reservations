@@ -27,16 +27,16 @@ const ManageBusinessPage = () => {
     retry: 1
   });
 
-  const breadcrumbs: Breadcrumb[] = [
-    {name: "Manage Businesses", href: "/businesses/manage"},
-    {name: `${managedBusiness ? managedBusiness.name : "Manage Business"}`, href: `/businesses/manage/${businessId}`}
-  ]
-
   // Auth User
   const {data: authUser} = useQuery<User | null>({
     queryKey: ['authUser'],
     queryFn: fetchUser,
   });
+
+  const breadcrumbs: Breadcrumb[] = [
+    {name: "Manage Businesses", href: "/businesses/manage"},
+    {name: `${managedBusiness ? managedBusiness.name : "Manage Business"}`, href: `/businesses/manage/${businessId}`}
+  ]
 
   return (
     <AuthProvider forceAuth={true}>

@@ -6,6 +6,7 @@ import io.awspring.cloud.s3.S3Template;
 import net.tylerwade.quickbook.config.AppProperties;
 import net.tylerwade.quickbook.dto.business.CreateBusinessRequest;
 import net.tylerwade.quickbook.dto.business.ManagedBusinessDTO;
+import net.tylerwade.quickbook.dto.business.StaffManagementDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
 import net.tylerwade.quickbook.model.User;
@@ -13,6 +14,7 @@ import net.tylerwade.quickbook.repository.BusinessRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -62,7 +64,6 @@ public class BusinessServiceImpl implements BusinessService {
         User user = userService.getUser(authentication);
 
 
-
         // Check if user reached maximum businesses
         if (businessRepository.countAllByOwner(user) >= appProperties.maxUserBusinesses()) {
             throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "You have reached the maximum amount of businesses: " + appProperties.maxUserBusinesses());
@@ -102,8 +103,67 @@ public class BusinessServiceImpl implements BusinessService {
                 business.getDescription(),
                 business.getCreatedAt(),
                 business.getStaffIds(),
-                business.getOwner(),
-                business.getStaff(),
+                userService.convertToDTO(business.getOwner()),
+                business.getStaff().stream().map(userService::convertToDTO).toList(),
                 0L, 0);
+    }
+
+    @Override
+    public Business addStaffMember(String businessId, StaffManagementDTO staffManagementDTO, Authentication authentication) throws HttpRequestException {
+        // Find the business and verify the authenticated user is the owner or staff
+        Business business = findByIdAndOwnerOrStaff(businessId, authentication);
+
+        User authUser = userService.getUser(authentication);
+
+        // Check if user is the owner of the business
+        if (!business.getOwnerId().equals(authUser.getId())) {
+            throw new HttpRequestException(HttpStatus.UNAUTHORIZED, "You must be the owner of a business to add staff members.");
+        }
+
+        try {
+            // Find the user to add as staff by email (username)
+            User userToAdd = userService.loadUserByUsername(staffManagementDTO.email());
+
+            // Check if the user is already a staff member
+            if (business.getStaff().contains(userToAdd)) {
+                throw new HttpRequestException(HttpStatus.BAD_REQUEST, "User is already a staff member.");
+            }
+
+            // Add the user to staff
+            business.getStaff().add(userToAdd);
+
+            // Save and return the updated business
+            return businessRepository.save(business);
+
+        } catch (UsernameNotFoundException e) {
+            throw new HttpRequestException(HttpStatus.NOT_FOUND, "User not found with email: " + staffManagementDTO.email());
+        }
+    }
+
+    @Override
+    public Business removeStaffMember(String businessId, String staffId, Authentication authentication) throws HttpRequestException {
+        // Find the business and verify the authenticated user is the owner or staff
+        Business business = findByIdAndOwnerOrStaff(businessId, authentication);
+
+        User authUser = userService.getUser(authentication);
+
+        // Check if user is the owner of the business
+        if (!business.getOwnerId().equals(authUser.getId())) {
+            throw new HttpRequestException(HttpStatus.UNAUTHORIZED, "You must be the owner of a business to add staff members.");
+        }
+
+        // Find the user to remove from staff by id
+        User userToRemove = userService.findById(staffId);
+
+        // Check if the user is a staff member
+        if (!business.getStaff().contains(userToRemove)) {
+            throw new HttpRequestException(HttpStatus.BAD_REQUEST, "User is not a staff member.");
+        }
+
+        // Remove the user from staff
+        business.getStaff().remove(userToRemove);
+
+        // Save and return the updated business
+        return businessRepository.save(business);
     }
 }

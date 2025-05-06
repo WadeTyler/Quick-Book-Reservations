@@ -32,3 +32,7 @@ export type BusinessService = {
   image: string;
   createdAt: string;
 }
+
+export type StaffManagementDTO = {
+  email: string;
+}

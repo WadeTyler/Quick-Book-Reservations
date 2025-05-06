@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService extends UserDetailsService {
 
+    User findById(String userId) throws HttpRequestException;
+
     User loadUserByUsername(String username) throws UsernameNotFoundException;
 
     User signup(SignupRequest signupRequest) throws HttpRequestException;

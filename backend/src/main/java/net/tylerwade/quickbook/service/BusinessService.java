@@ -2,6 +2,7 @@ package net.tylerwade.quickbook.service;
 
 import net.tylerwade.quickbook.dto.business.CreateBusinessRequest;
 import net.tylerwade.quickbook.dto.business.ManagedBusinessDTO;
+import net.tylerwade.quickbook.dto.business.StaffManagementDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,12 @@ public interface BusinessService {
 
     // Create new Business
     Business create(CreateBusinessRequest createBusinessRequest, Authentication authentication) throws IOException;
+
+    // Add staff member to business
+    Business addStaffMember(String businessId, StaffManagementDTO staffManagementDTO, Authentication authentication) throws HttpRequestException;
+
+    // Remove staff member from business
+    Business removeStaffMember(String businessId, String staffId, Authentication authentication) throws HttpRequestException;
 
     ManagedBusinessDTO convertToManagedBusinessDTO(Business business);
 

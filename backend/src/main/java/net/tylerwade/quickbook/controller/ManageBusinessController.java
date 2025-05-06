@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import net.tylerwade.quickbook.dto.api.APIResponse;
 import net.tylerwade.quickbook.dto.business.CreateBusinessRequest;
 import net.tylerwade.quickbook.dto.business.ManagedBusinessDTO;
+import net.tylerwade.quickbook.dto.business.StaffManagementDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
 import net.tylerwade.quickbook.service.BusinessService;
@@ -53,6 +54,36 @@ public class ManageBusinessController {
 
         Business newBusiness = businessService.create(createBusinessRequest, authentication);
         return ResponseEntity.status(HttpStatus.CREATED).body(new APIResponse<>(true, "Business Created!", newBusiness));
+    }
+
+    // Add staff member to business
+    @PostMapping("/{businessId}/staff")
+    private ResponseEntity<?> addStaffMember(
+            Authentication authentication,
+            @PathVariable String businessId,
+            @RequestBody @Valid StaffManagementDTO staffManagementDTO) throws HttpRequestException {
+
+        Business updatedBusiness = businessService.addStaffMember(businessId, staffManagementDTO, authentication);
+        ManagedBusinessDTO managedBusinessDTO = businessService.convertToManagedBusinessDTO(updatedBusiness);
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new APIResponse<>(true, "Staff member added successfully.", managedBusinessDTO)
+        );
+    }
+
+    // Remove staff member from business
+    @DeleteMapping("/{businessId}/staff/{staffId}")
+    private ResponseEntity<?> removeStaffMember(
+            Authentication authentication,
+            @PathVariable String businessId,
+            @PathVariable String staffId) throws HttpRequestException {
+
+        Business updatedBusiness = businessService.removeStaffMember(businessId, staffId, authentication);
+        ManagedBusinessDTO managedBusinessDTO = businessService.convertToManagedBusinessDTO(updatedBusiness);
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new APIResponse<>(true, "Staff member removed successfully.", managedBusinessDTO)
+        );
     }
 
 }
