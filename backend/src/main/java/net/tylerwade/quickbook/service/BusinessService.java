@@ -36,6 +36,9 @@ public interface BusinessService {
     // Remove Business Image
     Business removeBusinessImage(String businessId, Authentication authentication) throws HttpRequestException;
 
+    // Delete Business
+    void deleteBusiness(String businessId, Authentication authentication) throws HttpRequestException;
+
     ManagedBusinessDTO convertToManagedBusinessDTO(Business business);
 
 

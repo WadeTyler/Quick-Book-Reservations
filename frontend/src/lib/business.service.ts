@@ -162,3 +162,22 @@ export async function removeBusinessImage(request: {
       throw new Error(error.response?.data.message || "Something went wrong. Try again later.");
     })
 }
+
+export async function deleteBusiness(request: {
+  businessId: string;
+}) {
+  return await axiosInstance.delete(`/businesses/manage/${request.businessId}`)
+    .then((response: AxiosResponse<APIResponse<null>>) => {
+      // Success!
+
+      if (!response.data.isSuccess) {
+        throw new Error(response.data.message);
+      }
+      return response.data.data;
+    })
+    .catch((error: AxiosError<APIResponse<null>>) => {
+      // Failed
+
+      throw new Error(error.response?.data.message || "Something went wrong. Try again later.");
+    })
+}

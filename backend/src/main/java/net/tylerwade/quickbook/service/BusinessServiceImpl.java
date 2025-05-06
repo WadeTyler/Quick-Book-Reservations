@@ -223,4 +223,21 @@ public class BusinessServiceImpl implements BusinessService {
         // Save and return the updated business
         return businessRepository.save(business);
     }
+
+    @Override
+    public void deleteBusiness(String businessId, Authentication authentication) throws HttpRequestException {
+        User authUser = userService.getUser(authentication);
+        // Find the business and verify user is owner
+        Business business = businessRepository.findByIdAndOwner(businessId, authUser)
+                .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Business not found or you are not authorized to perform this action."));
+
+
+        // Delete image from store if present
+        if (business.getImage() != null) {
+            s3Template.deleteObject(appProperties.imageBucketName(), business.getImageObjectKey());
+        }
+
+        // Delete
+        businessRepository.delete(business);
+    }
 }
