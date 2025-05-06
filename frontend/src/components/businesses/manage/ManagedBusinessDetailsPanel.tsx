@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {ManagedBusiness} from "@/types/business.types";
-import Image from "next/image";
 import Overlay from "@/components/util/Overlay";
 import ChangeDetails from "@/components/businesses/manage/details/ChangeDetails";
 import ChangeImage from "@/components/businesses/manage/details/ChangeImage";
@@ -14,8 +13,11 @@ const ManagedBusinessDetailsPanel = ({managedBusiness}: {
   const [isChangingImage, setIsChangingImage] = useState<boolean>(false);
 
   return (
-    <div className="w-full flex lg:flex-row-reverse flex-col-reverse bg-background-secondary rounded-md shadow-md lg:col-span-2 overflow-hidden">
+    <div className="w-full flex lg:flex-row flex-col bg-background-secondary rounded-md shadow-md lg:col-span-2 overflow-hidden">
       {/* Left Side */}
+      <BusinessImageContainer image={managedBusiness.image} alt={`${managedBusiness.name}'s Image`} />
+
+      {/* Right Side */}
       <div className="flex flex-col gap-4 w-full p-4">
         <h2 className="font-semibold text-xl">Business Details</h2>
         <p>Owner: {managedBusiness.owner?.firstName + " " + managedBusiness.owner?.lastName}</p>
@@ -28,8 +30,7 @@ const ManagedBusinessDetailsPanel = ({managedBusiness}: {
         </div>
       </div>
 
-      {/* Right Side */}
-      <BusinessImageContainer image={managedBusiness.image} alt={`${managedBusiness.name}'s Image`} />
+
 
       {isChangingDetails && (
         <Overlay>
