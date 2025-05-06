@@ -36,3 +36,12 @@ export type BusinessService = {
 export type StaffManagementDTO = {
   email: string;
 }
+
+export type UpdateBusinessDetailsRequest = {
+  name: string;
+  description: string;
+}
+
+export type UpdateBusinessImageRequest = {
+  image: File;
+}

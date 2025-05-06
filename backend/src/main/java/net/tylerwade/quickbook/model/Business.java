@@ -55,4 +55,10 @@ public class Business {
                 .map(User::getId)
                 .toList();
     }
+
+
+    // --- UTIL FUNCTIONS ---
+    public String getImageObjectKey() {
+        return "business-image-" + id + ".jpg";
+    }
 }

@@ -10,11 +10,12 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.*;
 
 
 @Slf4j
@@ -49,6 +50,15 @@ public class GlobalExceptionHandler {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new APIResponse<>(false, errors.toString(), null));
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<?> handleMaxUploadSizeExceedException(MaxUploadSizeExceededException e) {
+        printDebugMessage(e);
+
+        return ResponseEntity.status(PAYLOAD_TOO_LARGE).body(
+                new APIResponse<>(false, "The file you are attempting to upload is too large. Max Upload Size: " + appProperties.maxUploadSizeMb() + "MB.", null)
+        );
     }
 
     // Catch all

@@ -13,6 +13,8 @@ import java.util.Optional;
 @Repository
 public interface BusinessRepository extends JpaRepository<Business, String> {
 
+    Optional<Business> findByIdAndOwner(String businessId, User owner);
+
     @Query("SELECT b FROM Business b WHERE b.owner = :user OR :user MEMBER OF b.staff")
     List<Business> findAllByOwnerOrStaff(@Param("user") User user);
 
@@ -22,4 +24,6 @@ public interface BusinessRepository extends JpaRepository<Business, String> {
     boolean existsByName(String name);
 
     Long countAllByOwner(User owner);
+
+    boolean existsByNameAndIdNot(String name, String businessId);
 }

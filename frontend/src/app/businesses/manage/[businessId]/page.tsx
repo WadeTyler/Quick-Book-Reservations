@@ -8,7 +8,6 @@ import {LoadingSpinnerXL} from "@/components/LoadingSpinners";
 import Link from "next/link";
 import Breadcrumbs, {Breadcrumb} from "@/components/Breadcrumbs";
 import {ManagedBusiness} from "@/types/business.types";
-import ManagedBusinessImagePanel from "@/components/businesses/manage/ManagedBusinessImagePanel";
 import ManagedBusinessDetailsPanel from "@/components/businesses/manage/ManagedBusinessDetailsPanel";
 import ManagedBusinessReservationsPanel from "@/components/businesses/manage/ManagedBusinessReservationsPanel";
 import ManagedBusinessStaffPanel from "@/components/businesses/manage/ManagedBusinessStaffPanel";
@@ -63,6 +62,9 @@ const ManageBusinessPage = () => {
 
             <div className="grid lg:grid-cols-2 grid-cols-1 gap-8">
 
+              {/* Business Details */}
+              <ManagedBusinessDetailsPanel managedBusiness={managedBusiness} />
+
               {/* Reservations */}
               <ManagedBusinessReservationsPanel managedBusiness={managedBusiness} />
 
@@ -72,13 +74,7 @@ const ManageBusinessPage = () => {
               {/* Services */}
               <ManagedBusinessServicesPanel managedBusiness={managedBusiness} />
 
-              {/* Business Image */}
-              <ManagedBusinessImagePanel managedBusiness={managedBusiness} />
-
-              {/* Business Details */}
-              <ManagedBusinessDetailsPanel managedBusiness={managedBusiness} />
-
-              {/* Administrator */}
+                            {/* Administrator */}
               {managedBusiness.owner.id === authUser?.id && (
                 <ManagedBusinessAdminPanel managedBusiness={managedBusiness} />
               )}

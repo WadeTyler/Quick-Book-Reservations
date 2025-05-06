@@ -1,8 +1,6 @@
 package net.tylerwade.quickbook.service;
 
-import net.tylerwade.quickbook.dto.business.CreateBusinessRequest;
-import net.tylerwade.quickbook.dto.business.ManagedBusinessDTO;
-import net.tylerwade.quickbook.dto.business.StaffManagementDTO;
+import net.tylerwade.quickbook.dto.business.*;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
 import org.springframework.security.core.Authentication;
@@ -15,7 +13,7 @@ import java.util.List;
 public interface BusinessService {
 
     // Get All Businesses that user is owner or staff of
-    List<Business> findAllByOwnerOrStaff(Authentication authentication) throws HttpRequestException;
+    List<Business> findAllByOwnerOrStaff(Authentication authentication);
 
     // Find one by id
     Business findByIdAndOwnerOrStaff(String businessId, Authentication authentication) throws HttpRequestException;
@@ -28,6 +26,15 @@ public interface BusinessService {
 
     // Remove staff member from business
     Business removeStaffMember(String businessId, String staffId, Authentication authentication) throws HttpRequestException;
+
+    // Update Business Details
+    Business updatedBusinessDetails(String businessId, UpdateBusinessDetailsRequest updateBusinessDetailsRequest, Authentication authentication) throws HttpRequestException;
+
+    // Update Business Image
+    Business updateBusinessImage(String businessId, UpdateBusinessImageRequest updateBusinessImageRequest, Authentication authentication) throws IOException;
+
+    // Remove Business Image
+    Business removeBusinessImage(String businessId, Authentication authentication) throws HttpRequestException;
 
     ManagedBusinessDTO convertToManagedBusinessDTO(Business business);
 

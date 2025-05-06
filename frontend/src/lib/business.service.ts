@@ -5,7 +5,7 @@ import {
   Business,
   CreateBusinessRequest,
   ManagedBusiness,
-  StaffManagementDTO,
+  StaffManagementDTO, UpdateBusinessDetailsRequest, UpdateBusinessImageRequest,
 } from "@/types/business.types";
 
 export async function fetchAllManagedBusinesses() {
@@ -89,6 +89,65 @@ export async function removeStaff(removeStaffRequest: {
   staffId: string;
 }) {
   return await axiosInstance.delete(`/businesses/manage/${removeStaffRequest.businessId}/staff/${removeStaffRequest.staffId}`)
+    .then((response: AxiosResponse<APIResponse<ManagedBusiness>>) => {
+      // Success!
+
+      if (!response.data.isSuccess || !response.data.data) {
+        throw new Error(response.data.message);
+      }
+
+      return response.data.data;
+    })
+    .catch((error: AxiosError<APIResponse<null>>) => {
+      // Failed!
+      throw new Error(error.response?.data.message || "Something went wrong. Try again later.");
+    })
+}
+
+export async function updateBusinessDetails(request: {businessId: string, updateBusinessDetailsRequest: UpdateBusinessDetailsRequest}) {
+  return await axiosInstance.put(`/businesses/manage/${request.businessId}/details`, request.updateBusinessDetailsRequest)
+    .then((response: AxiosResponse<APIResponse<ManagedBusiness>>) => {
+      // Success!
+
+      if (!response.data.isSuccess || !response.data.data) {
+        throw new Error(response.data.message);
+      }
+
+      return response.data.data;
+    })
+    .catch((error: AxiosError<APIResponse<null>>) => {
+      throw new Error(error.response?.data.message || "Something went wrong. Try again later.");
+    })
+}
+
+export async function updateBusinessImage(request: {
+  businessId: string;
+  updateBusinessImageRequest: UpdateBusinessImageRequest
+}) {
+  return await axiosInstance.put(`/businesses/manage/${request.businessId}/image`, request.updateBusinessImageRequest, {
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  })
+    .then((response: AxiosResponse<APIResponse<ManagedBusiness>>) => {
+      // Success!
+
+      if (!response.data.isSuccess || !response.data.data) {
+        throw new Error(response.data.message);
+      }
+
+      return response.data.data;
+    })
+    .catch((error: AxiosError<APIResponse<null>>) => {
+      // Failed!
+      throw new Error(error.response?.data.message || "Something went wrong. Try again later.");
+    })
+}
+
+export async function removeBusinessImage(request: {
+  businessId: string;
+}) {
+  return await axiosInstance.delete(`/businesses/manage/${request.businessId}/image`)
     .then((response: AxiosResponse<APIResponse<ManagedBusiness>>) => {
       // Success!
 

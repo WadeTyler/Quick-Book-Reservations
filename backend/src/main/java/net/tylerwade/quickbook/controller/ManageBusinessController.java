@@ -2,9 +2,7 @@ package net.tylerwade.quickbook.controller;
 
 import jakarta.validation.Valid;
 import net.tylerwade.quickbook.dto.api.APIResponse;
-import net.tylerwade.quickbook.dto.business.CreateBusinessRequest;
-import net.tylerwade.quickbook.dto.business.ManagedBusinessDTO;
-import net.tylerwade.quickbook.dto.business.StaffManagementDTO;
+import net.tylerwade.quickbook.dto.business.*;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
 import net.tylerwade.quickbook.service.BusinessService;
@@ -29,7 +27,7 @@ public class ManageBusinessController {
 
     // Find all by owner or staff
     @GetMapping
-    private ResponseEntity<?> findAllByOwnerOrStaff(Authentication authentication) throws HttpRequestException {
+    private ResponseEntity<?> findAllByOwnerOrStaff(Authentication authentication) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new APIResponse<>(true, "Businesses retrieved.", businessService.findAllByOwnerOrStaff(authentication))
         );
@@ -83,6 +81,36 @@ public class ManageBusinessController {
 
         return ResponseEntity.status(HttpStatus.OK).body(
                 new APIResponse<>(true, "Staff member removed successfully.", managedBusinessDTO)
+        );
+    }
+
+    @PutMapping("/{businessId}/details")
+    private ResponseEntity<?> updateBusinessDetails(Authentication authentication, @PathVariable String businessId, @RequestBody @Valid UpdateBusinessDetailsRequest updateBusinessDetailsRequest) throws HttpRequestException {
+        Business updatedBusiness = businessService.updatedBusinessDetails(businessId, updateBusinessDetailsRequest, authentication);
+        ManagedBusinessDTO managedBusinessDTO = businessService.convertToManagedBusinessDTO(updatedBusiness);
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new APIResponse<>(true, "Business details updated.", managedBusinessDTO)
+        );
+    }
+
+    @PutMapping(value = "/{businessId}/image", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    private ResponseEntity<?> updateBusinessImage(Authentication authentication, @PathVariable String businessId, @ModelAttribute @Valid UpdateBusinessImageRequest updateBusinessImageRequest) throws IOException {
+        Business updatedBusiness =  businessService.updateBusinessImage(businessId, updateBusinessImageRequest, authentication);
+        ManagedBusinessDTO managedBusinessDTO = businessService.convertToManagedBusinessDTO(updatedBusiness);
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new APIResponse<>(true, "Business image updated.", managedBusinessDTO)
+        );
+    }
+
+    @DeleteMapping("/{businessId}/image")
+    private ResponseEntity<?> removeBusinessImage(Authentication authentication, @PathVariable String businessId) throws HttpRequestException {
+        Business updatedBusiness = businessService.removeBusinessImage(businessId, authentication);
+        ManagedBusinessDTO managedBusinessDTO = businessService.convertToManagedBusinessDTO(updatedBusiness);
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new APIResponse<>(true, "Image removed.", managedBusinessDTO)
         );
     }
 

@@ -6,6 +6,7 @@ import {useQuery} from "@tanstack/react-query";
 import {fetchUser} from "@/lib/auth.service";
 import {User} from "@/types/auth.types";
 import {RiUser2Line, RiVipCrown2Line} from "@remixicon/react";
+import BusinessImageContainer from "@/components/businesses/BusinessImageContainer";
 
 const ManagedBusinessPanel = ({business}: {
   business: Business;
@@ -24,15 +25,7 @@ const ManagedBusinessPanel = ({business}: {
     <div className="w-full min-h-48 h-full bg-background-secondary rounded-md shadow-md overflow-hidden">
 
       {/* Image */}
-      <div className="w-full bg-gray-500 relative aspect-video flex items-end justify-start p-4">
-        {business.image && (
-          <Image src={business.image} alt={`Image for ${business.name}`} fill={true} objectFit='cover'
-                 objectPosition='center'/>
-        )}
-        {!business.image && (
-          <span className="text-center text-gray-600 italic tracking-widest">No Image</span>
-        )}
-      </div>
+      <BusinessImageContainer image={business.image} alt={`${business.name}'s Image`} />
 
       {/* Info Container */}
       <div className="p-4 flex flex-col gap-2">
