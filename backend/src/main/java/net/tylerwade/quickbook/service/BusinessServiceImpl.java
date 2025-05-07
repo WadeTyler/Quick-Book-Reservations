@@ -5,20 +5,23 @@ import io.awspring.cloud.s3.S3Resource;
 import io.awspring.cloud.s3.S3Template;
 import net.tylerwade.quickbook.config.AppProperties;
 import net.tylerwade.quickbook.dto.business.*;
+import net.tylerwade.quickbook.dto.business.service.CreateServiceRequest;
+import net.tylerwade.quickbook.dto.business.service.ServiceDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
+import net.tylerwade.quickbook.model.Service;
 import net.tylerwade.quickbook.model.User;
 import net.tylerwade.quickbook.repository.BusinessRepository;
+import net.tylerwade.quickbook.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
 
-@Service
+@org.springframework.stereotype.Service
 public class BusinessServiceImpl implements BusinessService {
 
 
@@ -26,13 +29,21 @@ public class BusinessServiceImpl implements BusinessService {
     private final BusinessRepository businessRepository;
     private final AppProperties appProperties;
     private final S3Template s3Template;
+    private final ServiceRepository serviceRepository;
 
     @Autowired
-    public BusinessServiceImpl(UserService userService, BusinessRepository businessRepository, AppProperties appProperties, S3Template s3Template) {
+    public BusinessServiceImpl(UserService userService, BusinessRepository businessRepository, AppProperties appProperties, S3Template s3Template, ServiceRepository serviceRepository) {
         this.userService = userService;
         this.businessRepository = businessRepository;
         this.appProperties = appProperties;
         this.s3Template = s3Template;
+        this.serviceRepository = serviceRepository;
+    }
+
+    @Override
+    public Business findByIdAndOwner(String businessId, Authentication authentication) throws HttpRequestException {
+        return businessRepository.findByIdAndOwner(businessId, userService.getUser(authentication))
+                .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Business not found or you are not authorized to perform this action."));
     }
 
     @Override
@@ -162,7 +173,19 @@ public class BusinessServiceImpl implements BusinessService {
                 business.getStaffIds(),
                 userService.convertToDTO(business.getOwner()),
                 business.getStaff().stream().map(userService::convertToDTO).toList(),
-                0L, 0);
+                0L,
+                0,
+                business.getServices().stream().map(this::convertToServiceDTO).toList());
+    }
+
+    public ServiceDTO convertToServiceDTO(Service service) {
+        return new ServiceDTO(service.getId(),
+                service.getBusiness().getId(),
+                service.getName(),
+                service.getType(),
+                service.getDescription(),
+                service.getImage(),
+                service.getCreatedAt());
     }
 
     @Override
@@ -239,5 +262,37 @@ public class BusinessServiceImpl implements BusinessService {
 
         // Delete
         businessRepository.delete(business);
+    }
+
+    @Override
+    public Business createService(String businessId, CreateServiceRequest createServiceRequest, Authentication authentication) throws IOException {
+        // Find the business and verify user is owner
+        Business business = findByIdAndOwner(businessId, authentication);
+
+        // Check if business already has a service with name
+        if (serviceRepository.existsByBusinessAndNameEqualsIgnoreCase(business, createServiceRequest.name())) {
+            throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "A service with that name already exists in this business.");
+        }
+
+        // Create service
+        Service service = new Service();
+        service.setBusiness(business);
+        service.setType(createServiceRequest.type());
+        service.setName(createServiceRequest.name());
+        service.setDescription(createServiceRequest.description());
+
+        // Save
+        serviceRepository.save(service);
+
+        // Add image to store if sent
+        if (createServiceRequest.image() != null) {
+            S3Resource uploaded = s3Template.upload(appProperties.imageBucketName(), service.getImageObjectKey(), createServiceRequest.image().getInputStream());
+
+            service.setImage(uploaded.getURL().toString());
+            serviceRepository.save(service);
+        }
+
+        // Return updated business
+        return findByIdAndOwner(businessId, authentication);
     }
 }

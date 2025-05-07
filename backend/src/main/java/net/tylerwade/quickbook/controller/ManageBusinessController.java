@@ -3,6 +3,7 @@ package net.tylerwade.quickbook.controller;
 import jakarta.validation.Valid;
 import net.tylerwade.quickbook.dto.api.APIResponse;
 import net.tylerwade.quickbook.dto.business.*;
+import net.tylerwade.quickbook.dto.business.service.CreateServiceRequest;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
 import net.tylerwade.quickbook.service.BusinessService;
@@ -119,6 +120,16 @@ public class ManageBusinessController {
         businessService.deleteBusiness(businessId, authentication);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new APIResponse<>(true, "Business deleted.", null)
+        );
+    }
+
+    @PostMapping(value = "/{businessId}/services", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    private ResponseEntity<?> createService(Authentication authentication, @PathVariable String businessId, @Valid @ModelAttribute CreateServiceRequest createServiceRequest) throws IOException {
+        Business updatedBusiness = businessService.createService(businessId, createServiceRequest, authentication);
+        ManagedBusinessDTO managedBusinessDTO = businessService.convertToManagedBusinessDTO(updatedBusiness);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                new APIResponse<>(true, "Service created.", managedBusinessDTO)
         );
     }
 

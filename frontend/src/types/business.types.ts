@@ -8,6 +8,7 @@ export interface Business {
   description: string;
   createdAt: string;
   staffIds: string[];
+  serviceIds: number[];
 }
 
 export interface ManagedBusiness extends Business{
@@ -15,6 +16,16 @@ export interface ManagedBusiness extends Business{
   staff: User[];
   upcomingReservationCount: number;
   servicesCount: number;
+  services: Service[];
+}
+
+export type Service = {
+  id: number;
+  name: string;
+  description: string;
+  type: string;
+  image: string;
+  createdAt: string;
 }
 
 export type CreateBusinessRequest = {
@@ -44,4 +55,11 @@ export type UpdateBusinessDetailsRequest = {
 
 export type UpdateBusinessImageRequest = {
   image: File;
+}
+
+export type CreateServiceRequest = {
+  name: string;
+  type: string;
+  description: string;
+  image?: File | null;
 }

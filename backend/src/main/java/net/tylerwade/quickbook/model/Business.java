@@ -56,6 +56,9 @@ public class Business {
                 .toList();
     }
 
+    @OneToMany(mappedBy = "business", orphanRemoval = true)
+    @JsonIgnore
+    private List<Service> services = new ArrayList<>();
 
     // --- UTIL FUNCTIONS ---
     public String getImageObjectKey() {

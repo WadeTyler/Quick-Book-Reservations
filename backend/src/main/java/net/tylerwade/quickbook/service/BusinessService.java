@@ -1,6 +1,8 @@
 package net.tylerwade.quickbook.service;
 
 import net.tylerwade.quickbook.dto.business.*;
+import net.tylerwade.quickbook.dto.business.service.CreateServiceRequest;
+import net.tylerwade.quickbook.dto.business.service.ServiceDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
 import org.springframework.security.core.Authentication;
@@ -11,6 +13,9 @@ import java.util.List;
 
 @Service
 public interface BusinessService {
+
+    // Get Business by id and owner
+    Business findByIdAndOwner(String businessId, Authentication authentication) throws HttpRequestException;
 
     // Get All Businesses that user is owner or staff of
     List<Business> findAllByOwnerOrStaff(Authentication authentication);
@@ -39,7 +44,11 @@ public interface BusinessService {
     // Delete Business
     void deleteBusiness(String businessId, Authentication authentication) throws HttpRequestException;
 
+    // Create Service
+    Business createService(String businessId, CreateServiceRequest createServiceRequest, Authentication authentication) throws IOException;
+
     ManagedBusinessDTO convertToManagedBusinessDTO(Business business);
 
+    ServiceDTO convertToServiceDTO(net.tylerwade.quickbook.model.Service service);
 
 }
