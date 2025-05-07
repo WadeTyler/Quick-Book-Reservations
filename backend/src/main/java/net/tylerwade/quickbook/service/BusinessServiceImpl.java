@@ -163,18 +163,15 @@ public class BusinessServiceImpl implements BusinessService {
     @Override
     public ManagedBusinessDTO convertToManagedBusinessDTO(Business business) {
 
-        // TODO: Implement upcomingReservationCount and servicesCount
+        // TODO: Implement upcomingReservationCount
         return new ManagedBusinessDTO(business.getId(),
-                business.getOwnerId(),
                 business.getName(),
                 business.getImage(),
                 business.getDescription(),
                 business.getCreatedAt(),
-                business.getStaffIds(),
                 userService.convertToDTO(business.getOwner()),
                 business.getStaff().stream().map(userService::convertToDTO).toList(),
                 0L,
-                0,
                 business.getServices().stream().map(this::convertToServiceDTO).toList());
     }
 

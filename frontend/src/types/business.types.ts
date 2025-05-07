@@ -11,11 +11,15 @@ export interface Business {
   serviceIds: number[];
 }
 
-export interface ManagedBusiness extends Business{
+export interface ManagedBusiness {
+  id: string;
+  name: string;
+  image: string;
+  description: string;
+  createdAt: string;
   owner: User;
   staff: User[];
   upcomingReservationCount: number;
-  servicesCount: number;
   services: Service[];
 }
 
