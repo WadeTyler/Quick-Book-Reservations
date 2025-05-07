@@ -23,7 +23,8 @@ const CreateServiceForm = () => {
     name: '',
     type: '',
     description: '',
-    image: null
+    image: null,
+    removeImage: false
   });
 
   const {
