@@ -1,10 +1,11 @@
 package net.tylerwade.quickbook.dto.business.service;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
-public record CreateServiceRequest(
+public record ManageServiceRequest(
 
         @NotBlank(message = "Name is required.")
         @Size(min = 3, max = 100, message = "Name must be between 3 - 100 characters.")
@@ -18,6 +19,8 @@ public record CreateServiceRequest(
         @Size(min = 20, max = 500, message = "Description must be between 20 - 500 characters.")
         String description,
 
-        MultipartFile image
+        MultipartFile image,
+
+        boolean removeImage
 ) {
 }

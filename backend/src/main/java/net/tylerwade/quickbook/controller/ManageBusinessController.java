@@ -3,7 +3,7 @@ package net.tylerwade.quickbook.controller;
 import jakarta.validation.Valid;
 import net.tylerwade.quickbook.dto.api.APIResponse;
 import net.tylerwade.quickbook.dto.business.*;
-import net.tylerwade.quickbook.dto.business.service.CreateServiceRequest;
+import net.tylerwade.quickbook.dto.business.service.ManageServiceRequest;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
 import net.tylerwade.quickbook.service.BusinessService;
@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.attribute.standard.Media;
 import java.io.IOException;
 import java.util.List;
 
@@ -131,8 +132,8 @@ public class ManageBusinessController {
     }
 
     @PostMapping(value = "/{businessId}/services", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    private ResponseEntity<?> createService(Authentication authentication, @PathVariable String businessId, @Valid @ModelAttribute CreateServiceRequest createServiceRequest) throws IOException {
-        Business updatedBusiness = businessService.createService(businessId, createServiceRequest, authentication);
+    private ResponseEntity<?> createService(Authentication authentication, @PathVariable String businessId, @Valid @ModelAttribute ManageServiceRequest manageServiceRequest) throws IOException {
+        Business updatedBusiness = businessService.createService(businessId, manageServiceRequest, authentication);
         ManagedBusinessDTO managedBusinessDTO = businessService.convertToManagedBusinessDTO(updatedBusiness);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -148,6 +149,16 @@ public class ManageBusinessController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new APIResponse<>(true, "Service deleted.", managedBusinessDTO));
+    }
+
+    @PutMapping(value = "/{businessId}/services/{serviceId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    private ResponseEntity<?> updateService(Authentication authentication, @PathVariable String businessId, @PathVariable Long serviceId, @Valid @ModelAttribute ManageServiceRequest manageServiceRequest) throws IOException {
+        Business updatedBusiness = businessService.updateService(businessId, serviceId, manageServiceRequest, authentication);
+        ManagedBusinessDTO managedBusinessDTO = businessService.convertToManagedBusinessDTO(updatedBusiness);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new APIResponse<>(true, "Service updated.", managedBusinessDTO));
     }
 
 }

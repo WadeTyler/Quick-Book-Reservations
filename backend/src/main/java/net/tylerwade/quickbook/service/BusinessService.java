@@ -1,7 +1,7 @@
 package net.tylerwade.quickbook.service;
 
 import net.tylerwade.quickbook.dto.business.*;
-import net.tylerwade.quickbook.dto.business.service.CreateServiceRequest;
+import net.tylerwade.quickbook.dto.business.service.ManageServiceRequest;
 import net.tylerwade.quickbook.dto.business.service.ServiceDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
@@ -45,7 +45,9 @@ public interface BusinessService {
     void deleteBusiness(String businessId, Authentication authentication) throws HttpRequestException;
 
     // Create Service
-    Business createService(String businessId, CreateServiceRequest createServiceRequest, Authentication authentication) throws IOException;
+    Business createService(String businessId, ManageServiceRequest manageServiceRequest, Authentication authentication) throws IOException;
+
+    Business updateService(String businessId, Long serviceId, ManageServiceRequest manageServiceRequest, Authentication authentication) throws IOException;
 
     // Delete Service
     Business deleteService(String businessId, Long serviceId, Authentication authentication) throws HttpRequestException;

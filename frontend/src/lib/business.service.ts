@@ -3,7 +3,7 @@ import {APIResponse} from "@/types/api-response.types";
 import {AxiosError, AxiosResponse} from "axios";
 import {
   Business,
-  CreateBusinessRequest, CreateServiceRequest,
+  CreateBusinessRequest, ManageServiceRequest,
   ManagedBusiness,
   StaffManagementDTO, UpdateBusinessDetailsRequest, UpdateBusinessImageRequest,
 } from "@/types/business.types";
@@ -187,7 +187,7 @@ export async function deleteBusiness(request: {
 
 export async function createService(request: {
   businessId: string;
-  createServiceRequest: CreateServiceRequest;
+  createServiceRequest: ManageServiceRequest;
 }) {
   return await axiosInstance.post(`/businesses/manage/${request.businessId}/services`, request.createServiceRequest, {
     headers: {
@@ -229,3 +229,27 @@ export async function deleteService(request: {
     })
 }
 
+export async function updateService(request: {
+  businessId: string;
+  serviceId: number;
+  manageServiceRequest: ManageServiceRequest;
+}) {
+  return await axiosInstance.put(`/businesses/manage/${request.businessId}/services/${request.serviceId}`, request.manageServiceRequest, {
+    headers: {
+      'Content-Type': "multipart/form-data"
+    }
+  })
+    .then((response: AxiosResponse<APIResponse<ManagedBusiness>>) => {
+      // Success!
+
+      if (!response.data.isSuccess) {
+        throw new Error(response.data.message);
+      }
+      return response.data.data;
+    })
+    .catch((error: AxiosError<APIResponse<null>>) => {
+      // Failed
+
+      throw new Error(error.response?.data.message || "Something went wrong. Try again later.");
+    })
+}

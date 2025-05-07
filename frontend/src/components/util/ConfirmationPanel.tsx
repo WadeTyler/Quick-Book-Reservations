@@ -16,7 +16,7 @@ const ConfirmationPanel = ({heading, body, confirmFn, cancelFn}: {
         </div>
 
         <div className="bg-background-secondary flex items-center justify-end p-4 gap-4">
-          <button type="button" className="hover:text-gray-400 text-gray-500 cursor-pointer" onClick={cancelFn}>Cancel</button>
+          <button type="button" className="cancel-btn" onClick={cancelFn}>Cancel</button>
           <button className="submit-btn3" onClick={confirmFn}>Confirm</button>
         </div>
       </div>

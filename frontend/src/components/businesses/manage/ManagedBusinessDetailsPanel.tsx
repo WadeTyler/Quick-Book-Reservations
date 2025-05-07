@@ -3,7 +3,7 @@ import {ManagedBusiness} from "@/types/business.types";
 import Overlay from "@/components/util/Overlay";
 import ChangeDetails from "@/components/businesses/manage/details/ChangeDetails";
 import ChangeImage from "@/components/businesses/manage/details/ChangeImage";
-import BusinessImageContainer from "@/components/businesses/BusinessImageContainer";
+import ImageContainer from "@/components/businesses/ImageContainer";
 
 const ManagedBusinessDetailsPanel = ({managedBusiness}: {
   managedBusiness: ManagedBusiness;
@@ -15,7 +15,7 @@ const ManagedBusinessDetailsPanel = ({managedBusiness}: {
   return (
     <div className="w-full flex lg:flex-row flex-col bg-background-secondary rounded-md shadow-md lg:col-span-2 overflow-hidden">
       {/* Left Side */}
-      <BusinessImageContainer image={managedBusiness.image} alt={`${managedBusiness.name}'s Image`} />
+      <ImageContainer image={managedBusiness.image} alt={`${managedBusiness.name}'s Image`} />
 
       {/* Right Side */}
       <div className="flex flex-col gap-4 w-full p-4">

@@ -5,7 +5,7 @@ import Image from "next/image";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {removeBusinessImage, updateBusinessImage} from "@/lib/business.service";
 import {LoadingSpinnerLG} from "@/components/LoadingSpinners";
-import BusinessImageContainer from "@/components/businesses/BusinessImageContainer";
+import ImageContainer from "@/components/businesses/ImageContainer";
 
 const ChangeImage = ({managedBusiness, closeFn}: {
   managedBusiness: ManagedBusiness;
@@ -69,7 +69,7 @@ const ChangeImage = ({managedBusiness, closeFn}: {
 
           <fieldset className="input-container gap-4!">
             {/* Preview */}
-            <BusinessImageContainer image={updatedImagePreview} alt={'Image preview'} />
+            <ImageContainer image={updatedImagePreview} alt={'Image preview'} />
 
             <input id="business-image" name="business-image" type="file" accept="image/**" hidden
                    onChange={(e) => {

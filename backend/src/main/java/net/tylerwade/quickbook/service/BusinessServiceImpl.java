@@ -5,7 +5,7 @@ import io.awspring.cloud.s3.S3Resource;
 import io.awspring.cloud.s3.S3Template;
 import net.tylerwade.quickbook.config.AppProperties;
 import net.tylerwade.quickbook.dto.business.*;
-import net.tylerwade.quickbook.dto.business.service.CreateServiceRequest;
+import net.tylerwade.quickbook.dto.business.service.ManageServiceRequest;
 import net.tylerwade.quickbook.dto.business.service.ServiceDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
@@ -276,32 +276,68 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public Business createService(String businessId, CreateServiceRequest createServiceRequest, Authentication authentication) throws IOException {
+    public Business createService(String businessId, ManageServiceRequest manageServiceRequest, Authentication authentication) throws IOException {
         // Find the business and verify user is owner
         Business business = findByIdAndOwner(businessId, authentication);
 
         // Check if business already has a service with name
-        if (serviceRepository.existsByBusinessAndNameEqualsIgnoreCase(business, createServiceRequest.name())) {
+        if (serviceRepository.existsByBusinessAndNameEqualsIgnoreCase(business, manageServiceRequest.name())) {
             throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "A service with that name already exists in this business.");
         }
 
         // Create service
         Service service = new Service();
         service.setBusiness(business);
-        service.setType(createServiceRequest.type());
-        service.setName(createServiceRequest.name());
-        service.setDescription(createServiceRequest.description());
+        service.setType(manageServiceRequest.type());
+        service.setName(manageServiceRequest.name());
+        service.setDescription(manageServiceRequest.description());
 
         // Save
         serviceRepository.save(service);
 
         // Add image to store if sent
-        if (createServiceRequest.image() != null) {
-            S3Resource uploaded = s3Template.upload(appProperties.imageBucketName(), service.getImageObjectKey(), createServiceRequest.image().getInputStream());
+        if (manageServiceRequest.image() != null) {
+            S3Resource uploaded = s3Template.upload(appProperties.imageBucketName(), service.getImageObjectKey(), manageServiceRequest.image().getInputStream());
 
             service.setImage(uploaded.getURL().toString());
             serviceRepository.save(service);
         }
+
+        // Return updated business
+        return findByIdAndOwner(businessId, authentication);
+    }
+
+    @Override
+    public Business updateService(String businessId, Long serviceId, ManageServiceRequest manageServiceRequest, Authentication authentication) throws IOException {
+        // Find target service
+        Business business = findByIdAndOwner(businessId, authentication);
+        Service service = business.getServices().stream()
+                .filter(s -> s.getId().equals(serviceId))
+                .findFirst()
+                .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Service not found."));
+
+        // Check if business already has a service with name
+        if (serviceRepository.existsByBusinessAndNameEqualsIgnoreCaseAndIdNot(business, manageServiceRequest.name(), serviceId)) {
+            throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "A service with that name already exists in this business.");
+        }
+
+        // Update
+        service.setName(manageServiceRequest.name());
+        service.setDescription(manageServiceRequest.description());
+        service.setType(manageServiceRequest.type());
+
+        // If changing image
+        if (manageServiceRequest.image() != null && !manageServiceRequest.removeImage()) {
+            S3Resource uploadedImage = s3Template.upload(appProperties.imageBucketName(), service.getImageObjectKey(), manageServiceRequest.image().getInputStream());
+            service.setImage(uploadedImage.getURL().toString());
+        } else if (manageServiceRequest.removeImage() && service.getImage() != null) {
+            // Handle removing image if checked
+            s3Template.deleteObject(appProperties.imageBucketName(), service.getImageObjectKey());
+            service.setImage(null);
+        }
+
+        // Save
+        serviceRepository.save(service);
 
         // Return updated business
         return findByIdAndOwner(businessId, authentication);

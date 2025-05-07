@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from "next/image";
 
-const BusinessImageContainer = ({image, alt}: {
+const ImageContainer = ({image, alt}: {
   image: string | null;
   alt: string;
 }) => {
@@ -12,9 +12,8 @@ const BusinessImageContainer = ({image, alt}: {
       ) : (
         <span className="text-gray-700 italic text-lg">No Image</span>
       )}
-
     </div>
   );
 };
 
-export default BusinessImageContainer;
+export default ImageContainer;

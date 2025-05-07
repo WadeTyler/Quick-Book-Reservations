@@ -2,7 +2,7 @@
 import React, {FormEvent, useState} from 'react';
 import {useParams, useRouter} from "next/navigation";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {CreateServiceRequest, ManagedBusiness} from "@/types/business.types";
+import {ManageServiceRequest, ManagedBusiness} from "@/types/business.types";
 import {createService, fetchManagedBusinessById} from "@/lib/business.service";
 import {User} from "@/types/auth.types";
 import {fetchUser} from "@/lib/auth.service";
@@ -19,7 +19,7 @@ const CreateServicePage = () => {
   const router = useRouter();
 
   const [imagePreview, setImagePreview] = useState<string | null>();
-  const [formFields, setFormFields] = useState<CreateServiceRequest>({
+  const [formFields, setFormFields] = useState<ManageServiceRequest>({
     name: '',
     type: '',
     description: '',
@@ -170,7 +170,7 @@ const CreateServicePage = () => {
               {/* Input (hidden) */}
               <input type="file"
                      id="image"
-                     accept="image/**"
+                     accept="image/*"
                      hidden
                      onChange={(e) => {
                        const file = e.target.files ? e.target.files[0] : null;

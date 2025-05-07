@@ -1,5 +1,5 @@
 'use client';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import AuthProvider from "@/providers/AuthProvider";
 import {useParams} from "next/navigation";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
@@ -9,14 +9,18 @@ import {User} from "@/types/auth.types";
 import {fetchUser} from "@/lib/auth.service";
 import Breadcrumbs, {Breadcrumb} from "@/components/Breadcrumbs";
 import LoadingHandler from "@/components/util/LoadingHandler";
-import BusinessImageContainer from "@/components/businesses/BusinessImageContainer";
+import ImageContainer from "@/components/businesses/ImageContainer";
 import Link from "next/link";
+import Overlay from "@/components/util/Overlay";
+import ChangeServiceDetails from "@/components/businesses/manage/services/service/ChangeServiceDetails";
 
 const ManageServicePage = () => {
 
 
   const {businessId, serviceId} = useParams();
   const queryClient = useQueryClient();
+
+  const [isChangingDetails, setIsChangingDetails] = useState<boolean>(false);
 
   const {
     data: managedBusiness,
@@ -34,7 +38,7 @@ const ManageServicePage = () => {
     queryFn: fetchUser,
   });
 
-  const {data:targetService, isPending:isLoadingService, error:loadServiceError} = useQuery({
+  const {data: targetService, isPending: isLoadingService, error: loadServiceError} = useQuery({
     queryKey: ['targetService'],
     queryFn: () => {
       if (!managedBusiness) {
@@ -72,24 +76,37 @@ const ManageServicePage = () => {
                         errorBackLink={`/businesses/manage/${businessId}/services`}>
           {/* Handle Load Service */}
           <LoadingHandler isLoading={isLoadingService} object={targetService} error={loadServiceError}>
-            <main className="flex flex-col max-w-[55rem] w-full bg-background-secondary rounded-md">
-              {targetService && (
+            <main className="flex flex-col max-w-[55rem] w-full bg-background-secondary rounded-md overflow-hidden">
+              {managedBusiness && authUser && targetService && (
                 <>
-                  <BusinessImageContainer image={targetService.image} alt={`${targetService.name}'s Image`} />
+                  <ImageContainer image={targetService.image} alt={`${targetService.name}'s Image`}/>
 
                   <div className="w-full flex flex-col gap-4 p-4">
                     <h1>{targetService.name}</h1>
-                    <p>Created At: {targetService.createdAt}</p>
+                    <p>Created At: {new Date(targetService.createdAt).toLocaleDateString()}</p>
                     <p>Type: {targetService.type}</p>
                     <p>{targetService.description}</p>
 
                     {/* Action Buttons */}
                     <div className=" w-full mt-auto flex gap-4">
-                      <button className="submit-btn3">Change Details</button>
-                      <button className="submit-btn3">Change Image</button>
-                      <Link href={`/businesses/manage/${businessId}/services/${serviceId}/delete`} className="delete-btn3">Delete Service</Link>
+                      {/* Owner Actions */}
+                      {managedBusiness.owner.id === authUser.id && (
+                        <>
+                          <button className="submit-btn3" onClick={() => setIsChangingDetails(true)}>Change Details
+                          </button>
+                          <Link href={`/businesses/manage/${businessId}/services/${serviceId}/delete`}
+                                className="delete-btn3">Delete Service</Link>
+                        </>
+                      )}
                     </div>
                   </div>
+
+                  {isChangingDetails && (
+                    <Overlay>
+                      <ChangeServiceDetails service={targetService} closeFn={() => setIsChangingDetails(false)}/>
+                    </Overlay>
+                  )}
+
                 </>
               )}
 

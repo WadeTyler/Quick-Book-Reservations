@@ -25,6 +25,7 @@ export interface ManagedBusiness {
 
 export type Service = {
   id: number;
+  businessId: string;
   name: string;
   description: string;
   type: string;
@@ -61,9 +62,10 @@ export type UpdateBusinessImageRequest = {
   image: File;
 }
 
-export type CreateServiceRequest = {
+export type ManageServiceRequest = {
   name: string;
   type: string;
   description: string;
   image?: File | null;
+  removeImage?: boolean;
 }
