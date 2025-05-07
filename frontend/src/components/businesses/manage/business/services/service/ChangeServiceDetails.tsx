@@ -1,7 +1,7 @@
 import React, {FormEvent, useState} from 'react';
 import {ManagedBusiness, ManageServiceRequest, Service} from "@/types/business.types";
 import {ClickAwayListener} from "@mui/material";
-import ImageContainer from "@/components/businesses/ImageContainer";
+import ImageContainer from "@/components/util/ImageContainer";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {updateService} from "@/lib/business.service";
 import {LoadingSpinnerSM} from "@/components/LoadingSpinners";

@@ -1,5 +1,5 @@
 import React from 'react';
-import ImageContainer from "@/components/businesses/ImageContainer";
+import ImageContainer from "@/components/util/ImageContainer";
 import Link from "next/link";
 import {Service} from "@/types/business.types";
 

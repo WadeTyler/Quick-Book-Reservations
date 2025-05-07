@@ -1,11 +1,10 @@
 import React, {FormEvent, useState} from 'react';
 import {ClickAwayListener} from "@mui/material";
 import {ManagedBusiness} from "@/types/business.types";
-import Image from "next/image";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {removeBusinessImage, updateBusinessImage} from "@/lib/business.service";
 import {LoadingSpinnerLG} from "@/components/LoadingSpinners";
-import ImageContainer from "@/components/businesses/ImageContainer";
+import ImageContainer from "@/components/util/ImageContainer";
 
 const ChangeImage = ({managedBusiness, closeFn}: {
   managedBusiness: ManagedBusiness;

@@ -1,39 +1,25 @@
-'use client';
 import React from 'react';
-import AuthProvider from "@/providers/AuthProvider";
-import {useQuery} from "@tanstack/react-query";
-import {User} from "@/types/auth.types";
-import {fetchUser} from "@/lib/auth.service";
+import AccountDetails from "@/components/account/AccountDetails";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+  title: "Account | Quick Book",
+  description: "View or update your account details."
+}
 
 const AccountPage = () => {
 
-  // Auth User
-  const {data: authUser} = useQuery<User | null>({
-    queryKey: ['authUser'],
-    queryFn: fetchUser
-  });
-
   return (
-    <AuthProvider forceAuth={true}>
-      {authUser && (
-        <div className="w-full min-h-screen flex items-center justify-center gap-16 page-padding">
+    <div className="w-full min-h-screen page-padding flex flex-col gap-4 items-center">
 
-          {/* Account Info */}
-          <div className="w-fit h-fit flex flex-col gap-4 bg-background-secondary rounded-md md:p-8 p-4">
-            <h1 className="text-3xl font-semibold tracking-wide text-accent">Account Details</h1>
+      <header className="flex flex-col gap-2 text-center">
+        <h1>Account Details</h1>
+        <p>View or update your account details!</p>
+      </header>
 
-            <hr className="text-accent w-full"/>
+      <AccountDetails />
 
-            <p><strong>First Name: </strong> {authUser.firstName}</p>
-            <p><strong>Last Name: </strong> {authUser.lastName}</p>
-            <p><strong>Email: </strong> {authUser.username}</p>
-            <p><strong>Created At: </strong> {new Date(authUser.createdAt).toLocaleTimeString()}</p>
-          </div>
-
-
-        </div>
-      )}
-    </AuthProvider>
+    </div>
   );
 };
 

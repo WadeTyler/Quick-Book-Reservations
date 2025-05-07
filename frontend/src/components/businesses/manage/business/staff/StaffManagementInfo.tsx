@@ -1,10 +1,6 @@
 import React from 'react';
-import Link from "next/link";
-import {ManagedBusiness} from "@/types/business.types";
 
-const StaffManagementInfo = ({managedBusiness}: {
-  managedBusiness: ManagedBusiness;
-}) => {
+const StaffManagementInfo = ()  => {
   return (
     <div className="w-full p-4 flex flex-col gap-4 bg-background-secondary rounded-md shadow-md lg:col-span-2">
       <h2 className="font-semibold text-xl">About Staff Management</h2>
@@ -23,13 +19,6 @@ const StaffManagementInfo = ({managedBusiness}: {
           <li>Delete the business</li>
           <li>Change business ownership</li>
         </ul>
-      </div>
-
-      <div className="mt-4">
-        <Link href={`/businesses/manage/${managedBusiness.id}`}
-              className="text-accent underline hover:text-accent-dark">
-          Back to Business Management
-        </Link>
       </div>
     </div>
   );

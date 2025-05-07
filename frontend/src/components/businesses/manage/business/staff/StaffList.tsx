@@ -73,7 +73,7 @@ const StaffList = ({managedBusiness}: {
 
                   <td className="py-3 px-4 text-right">
                     {/* Remove Button */}
-                    {managedBusiness.ownerId === authUser?.id && (
+                    {managedBusiness.owner.id === authUser?.id && (
                       <button
                         className="text-red-500 hover:text-red-700 cursor-pointer"
                         onClick={() => {

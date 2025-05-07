@@ -1,12 +1,11 @@
 import React from 'react';
 import {Business} from "@/types/business.types";
-import Image from "next/image";
 import Link from "next/link";
 import {useQuery} from "@tanstack/react-query";
 import {fetchUser} from "@/lib/auth.service";
 import {User} from "@/types/auth.types";
 import {RiUser2Line, RiVipCrown2Line} from "@remixicon/react";
-import ImageContainer from "@/components/businesses/ImageContainer";
+import ImageContainer from "@/components/util/ImageContainer";
 
 const ManagedBusinessPanel = ({business}: {
   business: Business;

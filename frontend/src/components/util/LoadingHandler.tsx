@@ -2,8 +2,6 @@ import React from 'react';
 import {LoadingSpinnerXL} from "@/components/LoadingSpinners";
 import Link from "next/link";
 
-
-
 function LoadingHandler<T>({children, isLoading, object, error, errorBackLink, errorBackLinkText}: {
   children: React.ReactNode;
   isLoading: boolean;
@@ -40,6 +38,6 @@ function LoadingHandler<T>({children, isLoading, object, error, errorBackLink, e
       )}
     </>
   );
-};
+}
 
 export default LoadingHandler;

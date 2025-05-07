@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {ManagedBusiness} from "@/types/business.types";
 import Overlay from "@/components/util/Overlay";
-import ChangeDetails from "@/components/businesses/manage/details/ChangeDetails";
-import ChangeImage from "@/components/businesses/manage/details/ChangeImage";
-import ImageContainer from "@/components/businesses/ImageContainer";
+import ChangeDetails from "@/components/businesses/manage/business/details/ChangeDetails";
+import ChangeImage from "@/components/businesses/manage/business/details/ChangeImage";
+import ImageContainer from "@/components/util/ImageContainer";
 
 const ManagedBusinessDetailsPanel = ({managedBusiness}: {
   managedBusiness: ManagedBusiness;
