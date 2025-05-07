@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/businesses/manage")
@@ -29,8 +30,14 @@ public class ManageBusinessController {
     // Find all by owner or staff
     @GetMapping
     private ResponseEntity<?> findAllByOwnerOrStaff(Authentication authentication) {
+        // Return normal DTOs
+        List<BusinessDTO> businesses = businessService.findAllByOwnerOrStaff(authentication)
+                .stream()
+                .map(businessService::convertToDTO)
+                .toList();
+
         return ResponseEntity.status(HttpStatus.OK).body(
-                new APIResponse<>(true, "Businesses retrieved.", businessService.findAllByOwnerOrStaff(authentication))
+                new APIResponse<>(true, "Businesses retrieved.", businesses)
         );
     }
 
@@ -97,7 +104,7 @@ public class ManageBusinessController {
 
     @PutMapping(value = "/{businessId}/image", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     private ResponseEntity<?> updateBusinessImage(Authentication authentication, @PathVariable String businessId, @ModelAttribute @Valid UpdateBusinessImageRequest updateBusinessImageRequest) throws IOException {
-        Business updatedBusiness =  businessService.updateBusinessImage(businessId, updateBusinessImageRequest, authentication);
+        Business updatedBusiness = businessService.updateBusinessImage(businessId, updateBusinessImageRequest, authentication);
         ManagedBusinessDTO managedBusinessDTO = businessService.convertToManagedBusinessDTO(updatedBusiness);
 
         return ResponseEntity.status(HttpStatus.OK).body(

@@ -60,6 +60,12 @@ public class Business {
     @JsonIgnore
     private List<Service> services = new ArrayList<>();
 
+    public List<Long> getServiceIds() {
+            return services.stream()
+                    .map(Service::getId)
+                    .toList();
+    }
+
     // --- UTIL FUNCTIONS ---
     public String getImageObjectKey() {
         return "business-image-" + id + ".jpg";

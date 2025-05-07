@@ -178,6 +178,20 @@ public class BusinessServiceImpl implements BusinessService {
                 business.getServices().stream().map(this::convertToServiceDTO).toList());
     }
 
+    @Override
+    public BusinessDTO convertToDTO(Business business) {
+        return new BusinessDTO(
+                business.getId(),
+                business.getOwner().getId(),
+                business.getName(),
+                business.getImage(),
+                business.getDescription(),
+                business.getCreatedAt(),
+                business.getStaffIds(),
+                business.getServiceIds()
+        );
+    }
+
     public ServiceDTO convertToServiceDTO(Service service) {
         return new ServiceDTO(service.getId(),
                 service.getBusiness().getId(),

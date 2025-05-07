@@ -49,6 +49,8 @@ public interface BusinessService {
 
     ManagedBusinessDTO convertToManagedBusinessDTO(Business business);
 
+    BusinessDTO convertToDTO(Business business);
+
     ServiceDTO convertToServiceDTO(net.tylerwade.quickbook.model.Service service);
 
 }
