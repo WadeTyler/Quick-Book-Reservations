@@ -11,51 +11,169 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Service interface for managing businesses and their related operations.
+ */
 @Service
 public interface BusinessService {
 
-    // Get Business by id and owner
+    /**
+     * Retrieves a business by its ID and the authenticated owner.
+     *
+     * @param businessId The ID of the business.
+     * @param authentication The authentication object of the current user.
+     * @return The business entity.
+     * @throws HttpRequestException If the business is not found or the user is unauthorized.
+     */
     Business findByIdAndOwner(String businessId, Authentication authentication) throws HttpRequestException;
 
-    // Get All Businesses that user is owner or staff of
+    /**
+     * Retrieves all businesses where the user is either the owner or a staff member.
+     *
+     * @param authentication The authentication object of the current user.
+     * @return A list of businesses.
+     */
     List<Business> findAllByOwnerOrStaff(Authentication authentication);
 
-    // Find one by id
+    /**
+     * Retrieves a business by its ID where the user is either the owner or a staff member.
+     *
+     * @param businessId The ID of the business.
+     * @param authentication The authentication object of the current user.
+     * @return The business entity.
+     * @throws HttpRequestException If the business is not found or the user is unauthorized.
+     */
     Business findByIdAndOwnerOrStaff(String businessId, Authentication authentication) throws HttpRequestException;
 
-    // Create new Business
+    /**
+     * Creates a new business.
+     *
+     * @param createBusinessRequest The request object containing business details.
+     * @param authentication The authentication object of the current user.
+     * @return The created business entity.
+     * @throws IOException If an error occurs during creation.
+     */
     Business create(CreateBusinessRequest createBusinessRequest, Authentication authentication) throws IOException;
 
-    // Add staff member to business
+    /**
+     * Adds a staff member to a business.
+     *
+     * @param businessId The ID of the business.
+     * @param staffManagementDTO The staff member details.
+     * @param authentication The authentication object of the current user.
+     * @return The updated business entity.
+     * @throws HttpRequestException If the business is not found or the user is unauthorized.
+     */
     Business addStaffMember(String businessId, StaffManagementDTO staffManagementDTO, Authentication authentication) throws HttpRequestException;
 
-    // Remove staff member from business
+    /**
+     * Removes a staff member from a business.
+     *
+     * @param businessId The ID of the business.
+     * @param staffId The ID of the staff member to remove.
+     * @param authentication The authentication object of the current user.
+     * @return The updated business entity.
+     * @throws HttpRequestException If the business or staff member is not found or the user is unauthorized.
+     */
     Business removeStaffMember(String businessId, String staffId, Authentication authentication) throws HttpRequestException;
 
-    // Update Business Details
+    /**
+     * Updates the details of a business.
+     *
+     * @param businessId The ID of the business.
+     * @param updateBusinessDetailsRequest The request object containing updated business details.
+     * @param authentication The authentication object of the current user.
+     * @return The updated business entity.
+     * @throws HttpRequestException If the business is not found or the user is unauthorized.
+     */
     Business updatedBusinessDetails(String businessId, UpdateBusinessDetailsRequest updateBusinessDetailsRequest, Authentication authentication) throws HttpRequestException;
 
-    // Update Business Image
+    /**
+     * Updates the image of a business.
+     *
+     * @param businessId The ID of the business.
+     * @param updateBusinessImageRequest The request object containing the new image details.
+     * @param authentication The authentication object of the current user.
+     * @return The updated business entity.
+     * @throws IOException If an error occurs during the update.
+     */
     Business updateBusinessImage(String businessId, UpdateBusinessImageRequest updateBusinessImageRequest, Authentication authentication) throws IOException;
 
-    // Remove Business Image
+    /**
+     * Removes the image of a business.
+     *
+     * @param businessId The ID of the business.
+     * @param authentication The authentication object of the current user.
+     * @return The updated business entity.
+     * @throws HttpRequestException If the business is not found or the user is unauthorized.
+     */
     Business removeBusinessImage(String businessId, Authentication authentication) throws HttpRequestException;
 
-    // Delete Business
+    /**
+     * Deletes a business.
+     *
+     * @param businessId The ID of the business.
+     * @param authentication The authentication object of the current user.
+     * @throws HttpRequestException If the business is not found or the user is unauthorized.
+     */
     void deleteBusiness(String businessId, Authentication authentication) throws HttpRequestException;
 
-    // Create Service
+    /**
+     * Creates a new service for a business.
+     *
+     * @param businessId The ID of the business.
+     * @param manageServiceRequest The request object containing service details.
+     * @param authentication The authentication object of the current user.
+     * @return The updated business entity.
+     * @throws IOException If an error occurs during creation.
+     */
     Business createService(String businessId, ManageServiceRequest manageServiceRequest, Authentication authentication) throws IOException;
 
+    /**
+     * Updates an existing service for a business.
+     *
+     * @param businessId The ID of the business.
+     * @param serviceId The ID of the service to update.
+     * @param manageServiceRequest The request object containing updated service details.
+     * @param authentication The authentication object of the current user.
+     * @return The updated business entity.
+     * @throws IOException If an error occurs during the update.
+     */
     Business updateService(String businessId, Long serviceId, ManageServiceRequest manageServiceRequest, Authentication authentication) throws IOException;
 
-    // Delete Service
+    /**
+     * Deletes a service from a business.
+     *
+     * @param businessId The ID of the business.
+     * @param serviceId The ID of the service to delete.
+     * @param authentication The authentication object of the current user.
+     * @return The updated business entity.
+     * @throws HttpRequestException If the business or service is not found or the user is unauthorized.
+     */
     Business deleteService(String businessId, Long serviceId, Authentication authentication) throws HttpRequestException;
 
+    /**
+     * Converts a business entity to a ManagedBusinessDTO.
+     *
+     * @param business The business entity.
+     * @return The ManagedBusinessDTO representation.
+     */
     ManagedBusinessDTO convertToManagedBusinessDTO(Business business);
 
+    /**
+     * Converts a business entity to a BusinessDTO.
+     *
+     * @param business The business entity.
+     * @return The BusinessDTO representation.
+     */
     BusinessDTO convertToDTO(Business business);
 
+    /**
+     * Converts a service entity to a ServiceDTO.
+     *
+     * @param service The service entity.
+     * @return The ServiceDTO representation.
+     */
     ServiceDTO convertToServiceDTO(net.tylerwade.quickbook.model.Service service);
 
 }
