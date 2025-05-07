@@ -280,6 +280,11 @@ public class BusinessServiceImpl implements BusinessService {
         // Find the business and verify user is owner
         Business business = findByIdAndOwner(businessId, authentication);
 
+        // Check if at max services
+        if (business.getServices().size() >= appProperties.maxBusinessServices()) {
+            throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "You have reached the max amount of services for this business.");
+        }
+
         // Check if business already has a service with name
         if (serviceRepository.existsByBusinessAndNameEqualsIgnoreCase(business, manageServiceRequest.name())) {
             throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "A service with that name already exists in this business.");
