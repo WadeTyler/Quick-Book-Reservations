@@ -47,6 +47,9 @@ public interface BusinessService {
     // Create Service
     Business createService(String businessId, CreateServiceRequest createServiceRequest, Authentication authentication) throws IOException;
 
+    // Delete Service
+    Business deleteService(String businessId, Long serviceId, Authentication authentication) throws HttpRequestException;
+
     ManagedBusinessDTO convertToManagedBusinessDTO(Business business);
 
     BusinessDTO convertToDTO(Business business);

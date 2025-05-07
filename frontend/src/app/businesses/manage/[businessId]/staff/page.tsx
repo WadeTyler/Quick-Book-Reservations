@@ -70,7 +70,7 @@ const ManageStaffPage = () => {
 
 
             {/* Add Staff Form */}
-            {managedBusiness.ownerId === authUser?.id && (
+            {managedBusiness.owner.id === authUser?.id && (
               <AddStaffMember managedBusiness={managedBusiness}/>
             )}
 

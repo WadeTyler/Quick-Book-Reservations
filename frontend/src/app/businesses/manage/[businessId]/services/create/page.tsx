@@ -50,7 +50,7 @@ const CreateServicePage = () => {
     }
   });
 
-  const isDisabled: boolean = !managedBusiness || !authUser || managedBusiness.ownerId !== authUser.id || !formFields.type || !formFields.description || !formFields.name || isLoadingManagedBusiness || isCreating || !businessId || formFields.name.length < 3 || formFields.type.length < 3 || formFields.description.length < 20;
+  const isDisabled: boolean = !managedBusiness || !authUser || managedBusiness.owner.id !== authUser.id || !formFields.type || !formFields.description || !formFields.name || isLoadingManagedBusiness || isCreating || !businessId || formFields.name.length < 3 || formFields.type.length < 3 || formFields.description.length < 20;
 
     function handleSubmit(e: FormEvent) {
       e.preventDefault();
@@ -89,7 +89,7 @@ const CreateServicePage = () => {
         )}
 
         {/* Loaded but not owner */}
-        {!isLoadingManagedBusiness && !loadManagedBusinessError && managedBusiness && authUser?.id !== managedBusiness.ownerId && (
+        {!isLoadingManagedBusiness && !loadManagedBusinessError && managedBusiness && authUser?.id !== managedBusiness.owner.id && (
           <>
             <h1>You are not authorized to create new services</h1>
             <Link href={`/businesses/manage/${businessId}/services`}>

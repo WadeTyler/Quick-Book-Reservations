@@ -306,4 +306,26 @@ public class BusinessServiceImpl implements BusinessService {
         // Return updated business
         return findByIdAndOwner(businessId, authentication);
     }
+
+    @Override
+    public Business deleteService(String businessId, Long serviceId, Authentication authentication) throws HttpRequestException {
+        Business business = findByIdAndOwner(businessId, authentication);
+
+        Service service = business.getServices().stream()
+                .filter(s -> s.getId().equals(serviceId))
+                .findFirst()
+                .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Service not found."));
+
+        // If service has image remove from store
+        if (service.getImage() != null) {
+            s3Template.deleteObject(appProperties.imageBucketName(), service.getImageObjectKey());
+        }
+
+        // Delete service
+        serviceRepository.delete(service);
+
+        // Return updated business
+        business.setServices(business.getServices().stream().filter(s -> !s.getId().equals(serviceId)).toList());
+        return business;
+    }
 }

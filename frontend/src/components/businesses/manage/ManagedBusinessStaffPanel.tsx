@@ -10,7 +10,7 @@ const ManagedBusinessStaffPanel = ({managedBusiness}: {
       <h2 className="font-semibold text-xl">Staff</h2>
 
       <p>
-        <span className="text-accent font-semibold text-3xl">{managedBusiness.staffIds.length || 0}</span> Staff Members
+        <span className="text-accent font-semibold text-3xl">{managedBusiness.staff.length || 0}</span> Staff Members
       </p>
       
       <Link href={`/businesses/manage/${managedBusiness.id}/staff`} className="submit-btn3 mt-auto">Manage Staff</Link>

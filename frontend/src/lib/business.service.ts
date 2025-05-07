@@ -104,7 +104,10 @@ export async function removeStaff(removeStaffRequest: {
     })
 }
 
-export async function updateBusinessDetails(request: {businessId: string, updateBusinessDetailsRequest: UpdateBusinessDetailsRequest}) {
+export async function updateBusinessDetails(request: {
+  businessId: string,
+  updateBusinessDetailsRequest: UpdateBusinessDetailsRequest
+}) {
   return await axiosInstance.put(`/businesses/manage/${request.businessId}/details`, request.updateBusinessDetailsRequest)
     .then((response: AxiosResponse<APIResponse<ManagedBusiness>>) => {
       // Success!
@@ -164,7 +167,7 @@ export async function removeBusinessImage(request: {
 }
 
 export async function deleteBusiness(request: {
-  businessId: string;
+  businessId: string
 }) {
   return await axiosInstance.delete(`/businesses/manage/${request.businessId}`)
     .then((response: AxiosResponse<APIResponse<null>>) => {
@@ -191,6 +194,26 @@ export async function createService(request: {
       "Content-Type": "multipart/form-data"
     }
   })
+    .then((response: AxiosResponse<APIResponse<ManagedBusiness>>) => {
+      // Success!
+
+      if (!response.data.isSuccess) {
+        throw new Error(response.data.message);
+      }
+      return response.data.data;
+    })
+    .catch((error: AxiosError<APIResponse<null>>) => {
+      // Failed
+
+      throw new Error(error.response?.data.message || "Something went wrong. Try again later.");
+    })
+}
+
+export async function deleteService(request: {
+  businessId: string;
+  serviceId: number;
+}) {
+  return await axiosInstance.delete(`/businesses/manage/${request.businessId}/services/${request.serviceId}`)
     .then((response: AxiosResponse<APIResponse<ManagedBusiness>>) => {
       // Success!
 

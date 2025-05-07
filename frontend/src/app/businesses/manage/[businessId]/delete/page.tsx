@@ -44,7 +44,7 @@ const DeleteBusinessPage = () => {
     }
   })
 
-  const isDisabled: boolean = !managedBusiness || confirmText !== managedBusiness.name || !authUser || authUser.id !== managedBusiness.ownerId;
+  const isDisabled: boolean = !managedBusiness || confirmText !== managedBusiness.name || !authUser || authUser.id !== managedBusiness.owner.id;
 
   function handleFormSubmit(e: FormEvent) {
     e.preventDefault();
@@ -80,7 +80,7 @@ const DeleteBusinessPage = () => {
 
         {/* Loaded */}
         {!isLoadingManagedBusiness && !loadManagedBusinessError && managedBusiness && authUser && (
-          managedBusiness.ownerId === authUser.id ? (
+          managedBusiness.owner.id === authUser.id ? (
             <>
               <Breadcrumbs breadcrumbs={breadcrumbs}/>
               <form className="max-w-96 bg-background-secondary p-4 rounded-md shadow-md flex flex-col gap-4"

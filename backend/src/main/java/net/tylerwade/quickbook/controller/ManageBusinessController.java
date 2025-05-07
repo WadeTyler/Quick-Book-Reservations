@@ -140,4 +140,14 @@ public class ManageBusinessController {
         );
     }
 
+    @DeleteMapping("/{businessId}/services/{serviceId}")
+    private ResponseEntity<?> deleteService(Authentication authentication, @PathVariable String businessId, @PathVariable Long serviceId) throws HttpRequestException {
+        Business updatedBusiness = businessService.deleteService(businessId, serviceId, authentication);
+        ManagedBusinessDTO managedBusinessDTO = businessService.convertToManagedBusinessDTO(updatedBusiness);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new APIResponse<>(true, "Service deleted.", managedBusinessDTO));
+    }
+
 }

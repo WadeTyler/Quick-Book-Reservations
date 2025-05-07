@@ -8,9 +8,9 @@ import {fetchManagedBusinessById} from "@/lib/business.service";
 import {User} from "@/types/auth.types";
 import {fetchUser} from "@/lib/auth.service";
 import {useParams} from "next/navigation";
-import {LoadingSpinnerXL} from "@/components/LoadingSpinners";
 import ManagedServicePanel from "@/components/businesses/manage/services/ManagedServicePanel";
 import CreateServicePanel from "@/components/businesses/manage/services/CreateServicePanel";
+import LoadingHandler from "@/components/util/LoadingHandler";
 
 const ManageServicesPage = () => {
 
@@ -43,36 +43,22 @@ const ManageServicesPage = () => {
       <div className="w-full min-h-screen page-padding-with-breadcrumbs flex flex-col items-center">
         <Breadcrumbs breadcrumbs={breadcrumbs}/>
 
-        {/* Loading */}
-        {isLoadingManagedBusiness && (
-          <LoadingSpinnerXL/>
-        )}
-
-        {/* Failed to load */}
-        {!isLoadingManagedBusiness && loadManagedBusinessError && (
-          <>
-            <h1>Something went wrong</h1>
-            <p className="error-msg">{(loadManagedBusinessError as Error).message}</p>
-          </>
-        )}
-
-        {/* Loaded */}
-        {!isLoadingManagedBusiness && !loadManagedBusinessError && managedBusiness && (
+       <LoadingHandler isLoading={isLoadingManagedBusiness} object={managedBusiness} error={loadManagedBusinessError} errorBackLink={`/businesses/manage/${businessId}`} errorBackLinkText={"Back to Manage Business"}>
           <div className="w-full max-w-[55rem] flex flex-col items-center justify-center gap-4">
             <h1>Manage Services</h1>
             <p>Manage and Create Services for your business!</p>
 
             {/* List Services */}
-            {managedBusiness.services.map((service) => (
+            {managedBusiness?.services.map((service) => (
               <ManagedServicePanel key={service.id} businessId={managedBusiness.id} service={service}/>
             ))}
 
-            {managedBusiness.ownerId === authUser?.id && (
+            {managedBusiness && managedBusiness?.owner.id === authUser?.id && (
               <CreateServicePanel businessId={managedBusiness.id}/>
             )}
 
           </div>
-        )}
+       </LoadingHandler>
 
 
       </div>
