@@ -1,4 +1,5 @@
 import {User} from "@/types/auth.types";
+import {ServiceOffering} from "@/types/service-offering.types";
 
 export interface Business {
   id: string;
@@ -23,30 +24,10 @@ export interface ManagedBusiness {
   serviceOfferings: ServiceOffering[];
 }
 
-export type ServiceOffering = {
-  id: number;
-  businessId: string;
-  name: string;
-  description: string;
-  type: string;
-  image: string;
-  createdAt: string;
-}
-
 export type CreateBusinessRequest = {
   name: string;
   image?: File | null;
   description: string;
-}
-
-export type BusinessService = {
-  id: number;
-  business_id: string;
-  name: string;
-  type: string;
-  description: string;
-  image: string;
-  createdAt: string;
 }
 
 export type StaffManagementDTO = {
@@ -62,10 +43,3 @@ export type UpdateBusinessImageRequest = {
   image: File;
 }
 
-export type ManageServiceOfferingRequest = {
-  name: string;
-  type: string;
-  description: string;
-  image?: File | null;
-  removeImage?: boolean;
-}

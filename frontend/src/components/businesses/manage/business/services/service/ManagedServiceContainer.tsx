@@ -12,7 +12,7 @@ import {ManagedBusiness} from "@/types/business.types";
 import {fetchManagedBusinessById} from "@/lib/business.service";
 import {User} from "@/types/auth.types";
 import {fetchUser} from "@/lib/auth.service";
-import {findServiceInBusiness} from "@/lib/util/business.util";
+import {findServiceOfferingInManagedBusiness} from "@/lib/util/service-offering.util";
 
 const ManagedServiceContainer = () => {
 
@@ -39,7 +39,7 @@ const ManagedServiceContainer = () => {
 
   const {data: targetService, isPending: isLoadingService, error: loadServiceError} = useQuery({
     queryKey: ['targetService'],
-    queryFn: () => findServiceInBusiness(managedBusiness, serviceId)
+    queryFn: () => findServiceOfferingInManagedBusiness(managedBusiness, serviceId)
   });
 
   useEffect(() => {

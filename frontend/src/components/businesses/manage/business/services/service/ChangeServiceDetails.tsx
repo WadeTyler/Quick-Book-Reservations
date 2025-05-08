@@ -1,10 +1,11 @@
 import React, {FormEvent, useState} from 'react';
-import {ManagedBusiness, ManageServiceOfferingRequest, ServiceOffering} from "@/types/business.types";
+import {ManagedBusiness} from "@/types/business.types";
 import {ClickAwayListener} from "@mui/material";
 import ImageContainer from "@/components/util/ImageContainer";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {updateService} from "@/lib/business.service";
 import {LoadingSpinnerSM} from "@/components/LoadingSpinners";
+import {ServiceOffering, ManageServiceOfferingRequest} from "@/types/service-offering.types";
+import {updateService} from "@/lib/service-offering.service";
 
 const ChangeServiceDetails = ({serviceOffering, closeFn}: {
   serviceOffering: ServiceOffering;

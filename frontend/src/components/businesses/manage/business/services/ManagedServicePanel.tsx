@@ -1,7 +1,7 @@
 import React from 'react';
 import ImageContainer from "@/components/util/ImageContainer";
 import Link from "next/link";
-import {ServiceOffering} from "@/types/business.types";
+import {ServiceOffering} from "@/types/service-offering.types";
 
 const ManagedServicePanel = ({businessId, serviceOffering}: {
   businessId: string;

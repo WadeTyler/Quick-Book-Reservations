@@ -1,7 +1,7 @@
 import {ManagedBusiness} from "@/types/business.types";
 import {ParamValue} from "next/dist/server/request/params";
 
-export const findServiceInBusiness = (managedBusiness: ManagedBusiness | null | undefined, serviceId: ParamValue | string) => {
+export const findServiceOfferingInManagedBusiness = (managedBusiness: ManagedBusiness | null | undefined, serviceId: ParamValue | string) => {
   if (!managedBusiness) {
     throw new Error("Managed business not found.");
   }

@@ -7,10 +7,11 @@ import AuthProvider from "@/providers/AuthProvider";
 import {useParams, useRouter} from "next/navigation";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {ManagedBusiness} from "@/types/business.types";
-import {deleteService, fetchManagedBusinessById} from "@/lib/business.service";
+import {fetchManagedBusinessById} from "@/lib/business.service";
 import {User} from "@/types/auth.types";
 import {fetchUser} from "@/lib/auth.service";
-import {findServiceInBusiness} from "@/lib/util/business.util";
+import {findServiceOfferingInManagedBusiness} from "@/lib/util/service-offering.util";
+import {deleteService} from "@/lib/service-offering.service";
 
 const DeleteServiceForm = () => {
 
@@ -36,7 +37,7 @@ const DeleteServiceForm = () => {
 
   const {data: targetService, isPending: isLoadingService, error: loadServiceError} = useQuery({
     queryKey: ['targetService'],
-    queryFn: () => findServiceInBusiness(managedBusiness, serviceId)
+    queryFn: () => findServiceOfferingInManagedBusiness(managedBusiness, serviceId)
   });
 
   useEffect(() => {

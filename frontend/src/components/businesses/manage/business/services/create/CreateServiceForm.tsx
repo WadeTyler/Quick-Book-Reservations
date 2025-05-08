@@ -5,11 +5,13 @@ import Image from "next/image";
 import AuthProvider from "@/providers/AuthProvider";
 import {useParams, useRouter} from "next/navigation";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {ManagedBusiness, ManageServiceOfferingRequest} from "@/types/business.types";
-import {createService, fetchManagedBusinessById} from "@/lib/business.service";
+import {ManagedBusiness} from "@/types/business.types";
+import {fetchManagedBusinessById} from "@/lib/business.service";
 import {User} from "@/types/auth.types";
 import {fetchUser} from "@/lib/auth.service";
 import LoadingHandler from "@/components/util/LoadingHandler";
+import {ManageServiceOfferingRequest} from "@/types/service-offering.types";
+import {createService} from "@/lib/service-offering.service";
 
 const CreateServiceForm = () => {
 
