@@ -1,10 +1,7 @@
 package net.tylerwade.quickbook.controller;
 
-import jakarta.validation.Valid;
 import net.tylerwade.quickbook.dto.api.APIResponse;
 import net.tylerwade.quickbook.dto.business.BusinessDTO;
-import net.tylerwade.quickbook.dto.reservation.CreateReservationRequest;
-import net.tylerwade.quickbook.dto.reservation.ReservationDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
 import net.tylerwade.quickbook.service.BusinessService;
@@ -37,11 +34,13 @@ public class BusinessController {
                 .body(new APIResponse<>(true, "Businesses retrieved.", businesses));
     }
 
-    @PostMapping("/{businessId}/services/{serviceId}/reservations")
-    public ResponseEntity<?> createReservation(@PathVariable String businessId, @PathVariable Long serviceId, @RequestBody @Valid CreateReservationRequest createReservationRequest) throws HttpRequestException {
-        ReservationDTO reservation = businessService.createReservation(businessId, serviceId, createReservationRequest).toDTO();
+    @GetMapping("/{businessId}")
+    public ResponseEntity<?> findById(@PathVariable String businessId) throws HttpRequestException {
         return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(new APIResponse<>(true, "Reservation created.", reservation));
+                .status(HttpStatus.OK)
+                .body(new APIResponse<>(true,
+                        "Business Retrieved.",
+                        businessService.findById(businessId)));
     }
+
 }

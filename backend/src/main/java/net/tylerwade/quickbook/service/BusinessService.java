@@ -1,10 +1,8 @@
 package net.tylerwade.quickbook.service;
 
 import net.tylerwade.quickbook.dto.business.*;
-import net.tylerwade.quickbook.dto.reservation.CreateReservationRequest;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
-import net.tylerwade.quickbook.model.Reservation;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +21,9 @@ public interface BusinessService {
      * @return all businesses
      */
     List<Business> findAll();
+
+
+    Business findById(String businessId) throws HttpRequestException;
 
     /**
      * Retrieves a business by its ID and the authenticated owner.
@@ -124,15 +125,5 @@ public interface BusinessService {
      * @throws HttpRequestException If the business is not found or the user is unauthorized.
      */
     void deleteBusiness(String businessId, Authentication authentication) throws HttpRequestException;
-
-    /**
-     * Create a reservation
-     * @param businessId The business id
-     * @param serviceId The service id
-     * @param createReservationRequest The request object containing the reservation details
-     * @return the newly created reservation
-     */
-    Reservation createReservation(String businessId, Long serviceId, CreateReservationRequest createReservationRequest) throws HttpRequestException;
-
 
 }

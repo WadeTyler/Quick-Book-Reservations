@@ -5,14 +5,10 @@ import io.awspring.cloud.s3.S3Resource;
 import io.awspring.cloud.s3.S3Template;
 import net.tylerwade.quickbook.config.AppProperties;
 import net.tylerwade.quickbook.dto.business.*;
-import net.tylerwade.quickbook.dto.reservation.CreateReservationRequest;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
-import net.tylerwade.quickbook.model.Reservation;
-import net.tylerwade.quickbook.model.ServiceOffering;
 import net.tylerwade.quickbook.model.User;
 import net.tylerwade.quickbook.repository.BusinessRepository;
-import net.tylerwade.quickbook.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -29,20 +25,24 @@ public class BusinessServiceImpl implements BusinessService {
     private final BusinessRepository businessRepository;
     private final AppProperties appProperties;
     private final S3Template s3Template;
-    private final ReservationRepository reservationRepository;
 
     @Autowired
-    public BusinessServiceImpl(UserService userService, BusinessRepository businessRepository, AppProperties appProperties, S3Template s3Template,  ReservationRepository reservationRepository) {
+    public BusinessServiceImpl(UserService userService, BusinessRepository businessRepository, AppProperties appProperties, S3Template s3Template) {
         this.userService = userService;
         this.businessRepository = businessRepository;
         this.appProperties = appProperties;
         this.s3Template = s3Template;
-        this.reservationRepository = reservationRepository;
     }
 
     @Override
     public List<Business> findAll() {
         return businessRepository.findAll();
+    }
+
+    @Override
+    public Business findById(String businessId) throws HttpRequestException {
+        return businessRepository.findById(businessId)
+                .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Business not found."));
     }
 
     @Override
@@ -163,40 +163,6 @@ public class BusinessServiceImpl implements BusinessService {
 
         // Save and return
         return businessRepository.save(business);
-    }
-
-    @Override
-    public Reservation createReservation(String businessId, Long serviceId, CreateReservationRequest createReservationRequest) throws HttpRequestException {
-        // Find the target business
-        Business business = businessRepository.findById(businessId)
-                .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Business not found."));
-
-        // Find the target service
-        ServiceOffering serviceOffering = business.getServiceOfferings().stream()
-                .filter(s -> s.getId().equals(serviceId))
-                .findFirst()
-                .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Service not found."));
-
-        // Check if a reservation already exists for date and time
-        if (reservationRepository.existsByServiceOfferingAndDateAndTime(serviceOffering, createReservationRequest.date(), createReservationRequest.time())) {
-            throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "Date and Time not available.");
-        }
-
-        // Create new reservation
-        Reservation reservation = new Reservation(serviceOffering,
-                createReservationRequest.firstName(),
-                createReservationRequest.lastName(),
-                createReservationRequest.email(),
-                createReservationRequest.phoneNumber(),
-                createReservationRequest.date(),
-                createReservationRequest.time());
-
-        // Save reservation
-        reservationRepository.save(reservation);
-
-        // TODO: Queue Email task to send confirmation
-
-        return reservation;
     }
 
     @Override
