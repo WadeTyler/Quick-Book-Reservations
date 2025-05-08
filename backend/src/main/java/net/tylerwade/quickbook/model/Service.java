@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "business_services")
@@ -36,6 +38,9 @@ public class Service {
     private String image;
 
     private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
+
+    @OneToMany(mappedBy = "service", cascade = CascadeType.REMOVE)
+    List<Reservation> reservations = new ArrayList<>();
 
     // --- UTIL FUNCTIONS ---
     @JsonIgnore

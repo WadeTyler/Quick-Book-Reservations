@@ -1,10 +1,13 @@
 package net.tylerwade.quickbook.service;
 
 import net.tylerwade.quickbook.dto.business.*;
-import net.tylerwade.quickbook.dto.business.service.ManageServiceRequest;
-import net.tylerwade.quickbook.dto.business.service.ServiceDTO;
+import net.tylerwade.quickbook.dto.reservation.CreateReservationRequest;
+import net.tylerwade.quickbook.dto.reservation.ReservationDTO;
+import net.tylerwade.quickbook.dto.service.ManageServiceRequest;
+import net.tylerwade.quickbook.dto.service.ServiceDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
+import net.tylerwade.quickbook.model.Reservation;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,13 @@ import java.util.List;
  */
 @Service
 public interface BusinessService {
+
+    /**
+     * Retrieves all businesses
+     *
+     * @return all businesses
+     */
+    List<Business> findAll();
 
     /**
      * Retrieves a business by its ID and the authenticated owner.
@@ -175,5 +185,22 @@ public interface BusinessService {
      * @return The ServiceDTO representation.
      */
     ServiceDTO convertToServiceDTO(net.tylerwade.quickbook.model.Service service);
+
+    /**
+     * Converts a reservation entity to a ReservationDTO.
+     * @param reservation The reservation entity.
+     * @return The ReservationDTO representation.
+     */
+    ReservationDTO convertToReservationDTO(Reservation reservation);
+
+    /**
+     * Create a reservation
+     * @param businessId The business id
+     * @param serviceId The service id
+     * @param createReservationRequest The request object containing the reservation details
+     * @return the newly created reservation
+     */
+    Reservation createReservation(String businessId, Long serviceId, CreateReservationRequest createReservationRequest) throws HttpRequestException;
+
 
 }

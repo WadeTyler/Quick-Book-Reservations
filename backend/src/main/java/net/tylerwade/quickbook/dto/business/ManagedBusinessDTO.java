@@ -1,7 +1,7 @@
 package net.tylerwade.quickbook.dto.business;
 
 import net.tylerwade.quickbook.dto.auth.UserDTO;
-import net.tylerwade.quickbook.dto.business.service.ServiceDTO;
+import net.tylerwade.quickbook.dto.service.ServiceDTO;
 
 import java.sql.Timestamp;
 import java.util.List;

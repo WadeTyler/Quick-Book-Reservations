@@ -3,7 +3,7 @@ package net.tylerwade.quickbook.controller;
 import jakarta.validation.Valid;
 import net.tylerwade.quickbook.dto.api.APIResponse;
 import net.tylerwade.quickbook.dto.business.*;
-import net.tylerwade.quickbook.dto.business.service.ManageServiceRequest;
+import net.tylerwade.quickbook.dto.service.ManageServiceRequest;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
 import net.tylerwade.quickbook.service.BusinessService;
@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.Media;
 import java.io.IOException;
 import java.util.List;
 

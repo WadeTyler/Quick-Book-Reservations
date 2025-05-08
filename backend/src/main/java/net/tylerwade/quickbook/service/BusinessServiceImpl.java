@@ -5,13 +5,17 @@ import io.awspring.cloud.s3.S3Resource;
 import io.awspring.cloud.s3.S3Template;
 import net.tylerwade.quickbook.config.AppProperties;
 import net.tylerwade.quickbook.dto.business.*;
-import net.tylerwade.quickbook.dto.business.service.ManageServiceRequest;
-import net.tylerwade.quickbook.dto.business.service.ServiceDTO;
+import net.tylerwade.quickbook.dto.reservation.CreateReservationRequest;
+import net.tylerwade.quickbook.dto.reservation.ReservationDTO;
+import net.tylerwade.quickbook.dto.service.ManageServiceRequest;
+import net.tylerwade.quickbook.dto.service.ServiceDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
+import net.tylerwade.quickbook.model.Reservation;
 import net.tylerwade.quickbook.model.Service;
 import net.tylerwade.quickbook.model.User;
 import net.tylerwade.quickbook.repository.BusinessRepository;
+import net.tylerwade.quickbook.repository.ReservationRepository;
 import net.tylerwade.quickbook.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,14 +34,21 @@ public class BusinessServiceImpl implements BusinessService {
     private final AppProperties appProperties;
     private final S3Template s3Template;
     private final ServiceRepository serviceRepository;
+    private final ReservationRepository reservationRepository;
 
     @Autowired
-    public BusinessServiceImpl(UserService userService, BusinessRepository businessRepository, AppProperties appProperties, S3Template s3Template, ServiceRepository serviceRepository) {
+    public BusinessServiceImpl(UserService userService, BusinessRepository businessRepository, AppProperties appProperties, S3Template s3Template, ServiceRepository serviceRepository, ReservationRepository reservationRepository) {
         this.userService = userService;
         this.businessRepository = businessRepository;
         this.appProperties = appProperties;
         this.s3Template = s3Template;
         this.serviceRepository = serviceRepository;
+        this.reservationRepository = reservationRepository;
+    }
+
+    @Override
+    public List<Business> findAll() {
+        return businessRepository.findAll();
     }
 
     @Override
@@ -197,6 +208,53 @@ public class BusinessServiceImpl implements BusinessService {
                 service.getDescription(),
                 service.getImage(),
                 service.getCreatedAt());
+    }
+
+    @Override
+    public ReservationDTO convertToReservationDTO(Reservation reservation) {
+        return new ReservationDTO(reservation.getId(),
+                reservation.getService().getId(),
+                reservation.getFirstName(),
+                reservation.getLastName(),
+                reservation.getEmail(),
+                reservation.getPhoneNumber(),
+                reservation.getDate(),
+                reservation.getTime(),
+                reservation.getCreatedAt());
+    }
+
+    @Override
+    public Reservation createReservation(String businessId, Long serviceId, CreateReservationRequest createReservationRequest) throws HttpRequestException {
+        // Find the target business
+        Business business = businessRepository.findById(businessId)
+                .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Business not found."));
+
+        // Find the target service
+        Service service = business.getServices().stream()
+                .filter(s -> s.getId().equals(serviceId))
+                .findFirst()
+                .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Service not found."));
+
+        // Check if a reservation already exists for date and time
+        if (reservationRepository.existsByServiceAndDateAndTime(service, createReservationRequest.date(), createReservationRequest.time())) {
+            throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "Date and Time not available.");
+        }
+
+        // Create new reservation
+        Reservation reservation = new Reservation(service,
+                createReservationRequest.firstName(),
+                createReservationRequest.lastName(),
+                createReservationRequest.email(),
+                createReservationRequest.phoneNumber(),
+                createReservationRequest.date(),
+                createReservationRequest.time());
+
+        // Save reservation
+        reservationRepository.save(reservation);
+
+        // TODO: Queue Email task to send confirmation
+
+        return reservation;
     }
 
     @Override

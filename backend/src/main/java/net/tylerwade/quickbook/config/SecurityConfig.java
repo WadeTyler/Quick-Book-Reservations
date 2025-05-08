@@ -43,6 +43,8 @@ public class SecurityConfig {
                 .addFilterBefore(jwtCookieToAuthorizationFilter, BearerTokenAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/signup").permitAll()
+                        .requestMatchers("/api/businesses/manage/**").authenticated()
+                        .requestMatchers("/api/businesses/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
