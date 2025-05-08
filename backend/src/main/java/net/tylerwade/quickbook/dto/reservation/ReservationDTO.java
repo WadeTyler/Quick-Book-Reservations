@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 
 public record ReservationDTO(
         Long id,
-        Long serviceId,
+        Long serviceOfferingId,
         String firstName,
         String lastName,
         String email,

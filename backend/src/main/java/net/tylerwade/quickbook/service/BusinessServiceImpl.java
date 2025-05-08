@@ -6,9 +6,6 @@ import io.awspring.cloud.s3.S3Template;
 import net.tylerwade.quickbook.config.AppProperties;
 import net.tylerwade.quickbook.dto.business.*;
 import net.tylerwade.quickbook.dto.reservation.CreateReservationRequest;
-import net.tylerwade.quickbook.dto.reservation.ReservationDTO;
-import net.tylerwade.quickbook.dto.service.ManageServiceOfferingRequest;
-import net.tylerwade.quickbook.dto.service.ServiceOfferingDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
 import net.tylerwade.quickbook.model.Reservation;
@@ -16,7 +13,6 @@ import net.tylerwade.quickbook.model.ServiceOffering;
 import net.tylerwade.quickbook.model.User;
 import net.tylerwade.quickbook.repository.BusinessRepository;
 import net.tylerwade.quickbook.repository.ReservationRepository;
-import net.tylerwade.quickbook.repository.ServiceOfferingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -33,16 +29,14 @@ public class BusinessServiceImpl implements BusinessService {
     private final BusinessRepository businessRepository;
     private final AppProperties appProperties;
     private final S3Template s3Template;
-    private final ServiceOfferingRepository serviceOfferingRepository;
     private final ReservationRepository reservationRepository;
 
     @Autowired
-    public BusinessServiceImpl(UserService userService, BusinessRepository businessRepository, AppProperties appProperties, S3Template s3Template, ServiceOfferingRepository serviceOfferingRepository, ReservationRepository reservationRepository) {
+    public BusinessServiceImpl(UserService userService, BusinessRepository businessRepository, AppProperties appProperties, S3Template s3Template,  ReservationRepository reservationRepository) {
         this.userService = userService;
         this.businessRepository = businessRepository;
         this.appProperties = appProperties;
         this.s3Template = s3Template;
-        this.serviceOfferingRepository = serviceOfferingRepository;
         this.reservationRepository = reservationRepository;
     }
 
@@ -172,58 +166,6 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public ManagedBusinessDTO convertToManagedBusinessDTO(Business business) {
-
-        // TODO: Implement upcomingReservationCount
-        return new ManagedBusinessDTO(business.getId(),
-                business.getName(),
-                business.getImage(),
-                business.getDescription(),
-                business.getCreatedAt(),
-                userService.convertToDTO(business.getOwner()),
-                business.getStaff().stream().map(userService::convertToDTO).toList(),
-                0L,
-                business.getServiceOfferings().stream().map(this::convertToServiceDTO).toList());
-    }
-
-    @Override
-    public BusinessDTO convertToDTO(Business business) {
-        return new BusinessDTO(
-                business.getId(),
-                business.getOwner().getId(),
-                business.getName(),
-                business.getImage(),
-                business.getDescription(),
-                business.getCreatedAt(),
-                business.getStaffIds(),
-                business.getServiceIds()
-        );
-    }
-
-    public ServiceOfferingDTO convertToServiceDTO(ServiceOffering serviceOffering) {
-        return new ServiceOfferingDTO(serviceOffering.getId(),
-                serviceOffering.getBusiness().getId(),
-                serviceOffering.getName(),
-                serviceOffering.getType(),
-                serviceOffering.getDescription(),
-                serviceOffering.getImage(),
-                serviceOffering.getCreatedAt());
-    }
-
-    @Override
-    public ReservationDTO convertToReservationDTO(Reservation reservation) {
-        return new ReservationDTO(reservation.getId(),
-                reservation.getServiceOffering().getId(),
-                reservation.getFirstName(),
-                reservation.getLastName(),
-                reservation.getEmail(),
-                reservation.getPhoneNumber(),
-                reservation.getDate(),
-                reservation.getTime(),
-                reservation.getCreatedAt());
-    }
-
-    @Override
     public Reservation createReservation(String businessId, Long serviceId, CreateReservationRequest createReservationRequest) throws HttpRequestException {
         // Find the target business
         Business business = businessRepository.findById(businessId)
@@ -333,98 +275,8 @@ public class BusinessServiceImpl implements BusinessService {
         businessRepository.delete(business);
     }
 
-    @Override
-    public Business createService(String businessId, ManageServiceOfferingRequest manageServiceOfferingRequest, Authentication authentication) throws IOException {
-        // Find the business and verify user is owner
-        Business business = findByIdAndOwner(businessId, authentication);
 
-        // Check if at max services
-        if (business.getServiceOfferings().size() >= appProperties.maxBusinessServices()) {
-            throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "You have reached the max amount of services for this business.");
-        }
 
-        // Check if business already has a service with name
-        if (serviceOfferingRepository.existsByBusinessAndNameEqualsIgnoreCase(business, manageServiceOfferingRequest.name())) {
-            throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "A service with that name already exists in this business.");
-        }
 
-        // Create service
-        ServiceOffering serviceOffering = new ServiceOffering();
-        serviceOffering.setBusiness(business);
-        serviceOffering.setType(manageServiceOfferingRequest.type());
-        serviceOffering.setName(manageServiceOfferingRequest.name());
-        serviceOffering.setDescription(manageServiceOfferingRequest.description());
 
-        // Save
-        serviceOfferingRepository.save(serviceOffering);
-
-        // Add image to store if sent
-        if (manageServiceOfferingRequest.image() != null) {
-            S3Resource uploaded = s3Template.upload(appProperties.imageBucketName(), serviceOffering.getImageObjectKey(), manageServiceOfferingRequest.image().getInputStream());
-
-            serviceOffering.setImage(uploaded.getURL().toString());
-            serviceOfferingRepository.save(serviceOffering);
-        }
-
-        // Return updated business
-        return findByIdAndOwner(businessId, authentication);
-    }
-
-    @Override
-    public Business updateService(String businessId, Long serviceId, ManageServiceOfferingRequest manageServiceOfferingRequest, Authentication authentication) throws IOException {
-        // Find target service
-        Business business = findByIdAndOwner(businessId, authentication);
-        ServiceOffering serviceOffering = business.getServiceOfferings().stream()
-                .filter(s -> s.getId().equals(serviceId))
-                .findFirst()
-                .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Service not found."));
-
-        // Check if business already has a service with name
-        if (serviceOfferingRepository.existsByBusinessAndNameEqualsIgnoreCaseAndIdNot(business, manageServiceOfferingRequest.name(), serviceId)) {
-            throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "A service with that name already exists in this business.");
-        }
-
-        // Update
-        serviceOffering.setName(manageServiceOfferingRequest.name());
-        serviceOffering.setDescription(manageServiceOfferingRequest.description());
-        serviceOffering.setType(manageServiceOfferingRequest.type());
-
-        // If changing image
-        if (manageServiceOfferingRequest.image() != null && !manageServiceOfferingRequest.removeImage()) {
-            S3Resource uploadedImage = s3Template.upload(appProperties.imageBucketName(), serviceOffering.getImageObjectKey(), manageServiceOfferingRequest.image().getInputStream());
-            serviceOffering.setImage(uploadedImage.getURL().toString());
-        } else if (manageServiceOfferingRequest.removeImage() && serviceOffering.getImage() != null) {
-            // Handle removing image if checked
-            s3Template.deleteObject(appProperties.imageBucketName(), serviceOffering.getImageObjectKey());
-            serviceOffering.setImage(null);
-        }
-
-        // Save
-        serviceOfferingRepository.save(serviceOffering);
-
-        // Return updated business
-        return findByIdAndOwner(businessId, authentication);
-    }
-
-    @Override
-    public Business deleteService(String businessId, Long serviceId, Authentication authentication) throws HttpRequestException {
-        Business business = findByIdAndOwner(businessId, authentication);
-
-        ServiceOffering serviceOffering = business.getServiceOfferings().stream()
-                .filter(s -> s.getId().equals(serviceId))
-                .findFirst()
-                .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Service not found."));
-
-        // If service has image remove from store
-        if (serviceOffering.getImage() != null) {
-            s3Template.deleteObject(appProperties.imageBucketName(), serviceOffering.getImageObjectKey());
-        }
-
-        // Delete service
-        serviceOfferingRepository.delete(serviceOffering);
-
-        // Return updated business
-        business.setServiceOfferings(business.getServiceOfferings().stream().filter(s -> !s.getId().equals(serviceId)).toList());
-        return business;
-    }
 }

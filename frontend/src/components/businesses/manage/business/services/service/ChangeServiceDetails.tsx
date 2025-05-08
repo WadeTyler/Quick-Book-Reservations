@@ -1,5 +1,5 @@
 import React, {FormEvent, useState} from 'react';
-import {ManagedBusiness, ManageServiceOferringRequest, ServiceOffering} from "@/types/business.types";
+import {ManagedBusiness, ManageServiceOfferingRequest, ServiceOffering} from "@/types/business.types";
 import {ClickAwayListener} from "@mui/material";
 import ImageContainer from "@/components/util/ImageContainer";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
@@ -15,7 +15,7 @@ const ChangeServiceDetails = ({serviceOffering, closeFn}: {
 
   const [imagePreview, setImagePreview] = useState<string>(serviceOffering.image);
 
-  const [formData, setFormData] = useState<ManageServiceOferringRequest>({
+  const [formData, setFormData] = useState<ManageServiceOfferingRequest>({
     name: serviceOffering.name,
     description: serviceOffering.description,
     type: serviceOffering.type,

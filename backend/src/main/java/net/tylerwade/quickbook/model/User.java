@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.tylerwade.quickbook.dto.auth.UserDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -72,5 +73,15 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    // --- UTIL FUNCTIONS ---
+    @JsonIgnore
+    public UserDTO toDTO() {
+        return new UserDTO(id,
+                username,
+                firstName,
+                lastName,
+                createdAt);
     }
 }

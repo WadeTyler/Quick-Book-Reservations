@@ -62,7 +62,7 @@ export type UpdateBusinessImageRequest = {
   image: File;
 }
 
-export type ManageServiceOferringRequest = {
+export type ManageServiceOfferingRequest = {
   name: string;
   type: string;
   description: string;

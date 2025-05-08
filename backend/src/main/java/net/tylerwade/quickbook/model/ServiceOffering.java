@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.tylerwade.quickbook.dto.service.ServiceOfferingDTO;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -46,5 +47,16 @@ public class ServiceOffering {
     @JsonIgnore
     public String getImageObjectKey() {
         return "service-image-" + id + ".jpg";
+    }
+
+    @JsonIgnore
+    public ServiceOfferingDTO toDTO() {
+        return new ServiceOfferingDTO(id,
+                business.getId(),
+                name,
+                type,
+                description,
+                image,
+                createdAt);
     }
 }

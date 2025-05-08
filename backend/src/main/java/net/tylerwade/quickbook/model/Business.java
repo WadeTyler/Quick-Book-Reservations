@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.tylerwade.quickbook.dto.business.BusinessDTO;
+import net.tylerwade.quickbook.dto.business.ManagedBusinessDTO;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -61,13 +63,38 @@ public class Business {
     private List<ServiceOffering> serviceOfferings = new ArrayList<>();
 
     public List<Long> getServiceIds() {
-            return serviceOfferings.stream()
-                    .map(ServiceOffering::getId)
-                    .toList();
+        return serviceOfferings.stream()
+                .map(ServiceOffering::getId)
+                .toList();
     }
 
     // --- UTIL FUNCTIONS ---
     public String getImageObjectKey() {
         return "business-image-" + id + ".jpg";
+    }
+
+    @JsonIgnore
+    public ManagedBusinessDTO toManagedBusinessDTO() {
+        return new ManagedBusinessDTO(id,
+                name,
+                image,
+                description,
+                createdAt,
+                owner.toDTO(),
+                staff.stream().map(User::toDTO).toList(),
+                0L,
+                serviceOfferings.stream().map(ServiceOffering::toDTO).toList());
+    }
+
+    @JsonIgnore
+    public BusinessDTO toDTO() {
+        return new BusinessDTO(id,
+                owner.getId(),
+                name,
+                image,
+                description,
+                createdAt,
+                staff.stream().map(User::getId).toList(),
+                serviceOfferings.stream().map(ServiceOffering::getId).toList());
     }
 }

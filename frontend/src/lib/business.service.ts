@@ -3,7 +3,7 @@ import {APIResponse} from "@/types/api-response.types";
 import {AxiosError, AxiosResponse} from "axios";
 import {
   Business,
-  CreateBusinessRequest, ManageServiceOferringRequest,
+  CreateBusinessRequest, ManageServiceOfferingRequest,
   ManagedBusiness,
   StaffManagementDTO, UpdateBusinessDetailsRequest, UpdateBusinessImageRequest,
 } from "@/types/business.types";
@@ -187,7 +187,7 @@ export async function deleteBusiness(request: {
 
 export async function createService(request: {
   businessId: string;
-  createServiceRequest: ManageServiceOferringRequest;
+  createServiceRequest: ManageServiceOfferingRequest;
 }) {
   return await axiosInstance.post(`/businesses/manage/${request.businessId}/services`, request.createServiceRequest, {
     headers: {
@@ -232,7 +232,7 @@ export async function deleteService(request: {
 export async function updateService(request: {
   businessId: string;
   serviceId: number;
-  manageServiceRequest: ManageServiceOferringRequest;
+  manageServiceRequest: ManageServiceOfferingRequest;
 }) {
   return await axiosInstance.put(`/businesses/manage/${request.businessId}/services/${request.serviceId}`, request.manageServiceRequest, {
     headers: {

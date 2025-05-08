@@ -1,9 +1,11 @@
 package net.tylerwade.quickbook.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.tylerwade.quickbook.dto.reservation.ReservationDTO;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -53,5 +55,19 @@ public class Reservation {
         this.phoneNumber = phoneNumber;
         this.date = date;
         this.time = time;
+    }
+
+    // --- UTIL Function
+    @JsonIgnore
+    public ReservationDTO toDTO() {
+        return new ReservationDTO(id,
+                serviceOffering.getId(),
+                firstName,
+                lastName,
+                email,
+                phoneNumber,
+                date,
+                time,
+                createdAt);
     }
 }

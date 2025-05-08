@@ -5,7 +5,7 @@ import Image from "next/image";
 import AuthProvider from "@/providers/AuthProvider";
 import {useParams, useRouter} from "next/navigation";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {ManagedBusiness, ManageServiceOferringRequest} from "@/types/business.types";
+import {ManagedBusiness, ManageServiceOfferingRequest} from "@/types/business.types";
 import {createService, fetchManagedBusinessById} from "@/lib/business.service";
 import {User} from "@/types/auth.types";
 import {fetchUser} from "@/lib/auth.service";
@@ -19,7 +19,7 @@ const CreateServiceForm = () => {
   const router = useRouter();
 
   const [imagePreview, setImagePreview] = useState<string | null>();
-  const [formFields, setFormFields] = useState<ManageServiceOferringRequest>({
+  const [formFields, setFormFields] = useState<ManageServiceOfferingRequest>({
     name: '',
     type: '',
     description: '',

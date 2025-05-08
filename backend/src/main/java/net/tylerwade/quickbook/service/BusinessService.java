@@ -2,13 +2,9 @@ package net.tylerwade.quickbook.service;
 
 import net.tylerwade.quickbook.dto.business.*;
 import net.tylerwade.quickbook.dto.reservation.CreateReservationRequest;
-import net.tylerwade.quickbook.dto.reservation.ReservationDTO;
-import net.tylerwade.quickbook.dto.service.ManageServiceOfferingRequest;
-import net.tylerwade.quickbook.dto.service.ServiceOfferingDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
 import net.tylerwade.quickbook.model.Reservation;
-import net.tylerwade.quickbook.model.ServiceOffering;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -128,71 +124,6 @@ public interface BusinessService {
      * @throws HttpRequestException If the business is not found or the user is unauthorized.
      */
     void deleteBusiness(String businessId, Authentication authentication) throws HttpRequestException;
-
-    /**
-     * Creates a new service for a business.
-     *
-     * @param businessId The ID of the business.
-     * @param manageServiceOfferingRequest The request object containing service details.
-     * @param authentication The authentication object of the current user.
-     * @return The updated business entity.
-     * @throws IOException If an error occurs during creation.
-     */
-    Business createService(String businessId, ManageServiceOfferingRequest manageServiceOfferingRequest, Authentication authentication) throws IOException;
-
-    /**
-     * Updates an existing service for a business.
-     *
-     * @param businessId The ID of the business.
-     * @param serviceId The ID of the service to update.
-     * @param manageServiceOfferingRequest The request object containing updated service details.
-     * @param authentication The authentication object of the current user.
-     * @return The updated business entity.
-     * @throws IOException If an error occurs during the update.
-     */
-    Business updateService(String businessId, Long serviceId, ManageServiceOfferingRequest manageServiceOfferingRequest, Authentication authentication) throws IOException;
-
-    /**
-     * Deletes a service from a business.
-     *
-     * @param businessId The ID of the business.
-     * @param serviceId The ID of the service to delete.
-     * @param authentication The authentication object of the current user.
-     * @return The updated business entity.
-     * @throws HttpRequestException If the business or service is not found or the user is unauthorized.
-     */
-    Business deleteService(String businessId, Long serviceId, Authentication authentication) throws HttpRequestException;
-
-    /**
-     * Converts a business entity to a ManagedBusinessDTO.
-     *
-     * @param business The business entity.
-     * @return The ManagedBusinessDTO representation.
-     */
-    ManagedBusinessDTO convertToManagedBusinessDTO(Business business);
-
-    /**
-     * Converts a business entity to a BusinessDTO.
-     *
-     * @param business The business entity.
-     * @return The BusinessDTO representation.
-     */
-    BusinessDTO convertToDTO(Business business);
-
-    /**
-     * Converts a service entity to a ServiceDTO.
-     *
-     * @param serviceOffering The service entity.
-     * @return The ServiceDTO representation.
-     */
-    ServiceOfferingDTO convertToServiceDTO(ServiceOffering serviceOffering);
-
-    /**
-     * Converts a reservation entity to a ReservationDTO.
-     * @param reservation The reservation entity.
-     * @return The ReservationDTO representation.
-     */
-    ReservationDTO convertToReservationDTO(Reservation reservation);
 
     /**
      * Create a reservation
