@@ -1,7 +1,7 @@
 package net.tylerwade.quickbook;
 
 import net.tylerwade.quickbook.config.AppProperties;
-import net.tylerwade.quickbook.config.JwtProperties;
+import net.tylerwade.quickbook.config.security.JwtProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
