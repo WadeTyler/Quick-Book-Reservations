@@ -1,4 +1,4 @@
-package net.tylerwade.quickbook.serviceOffering.dto;
+package net.tylerwade.quickbook.serviceoffering.dto;
 
 import java.sql.Timestamp;
 

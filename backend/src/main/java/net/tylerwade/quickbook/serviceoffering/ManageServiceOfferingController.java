@@ -1,4 +1,4 @@
-package net.tylerwade.quickbook.serviceOffering;
+package net.tylerwade.quickbook.serviceoffering;
 
 import jakarta.validation.Valid;
 import net.tylerwade.quickbook.common.APIResponse;

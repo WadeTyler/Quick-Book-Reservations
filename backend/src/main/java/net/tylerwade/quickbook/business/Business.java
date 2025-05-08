@@ -8,7 +8,7 @@ import lombok.Setter;
 import net.tylerwade.quickbook.auth.User;
 import net.tylerwade.quickbook.business.dto.BusinessDTO;
 import net.tylerwade.quickbook.business.dto.ManagedBusinessDTO;
-import net.tylerwade.quickbook.serviceOffering.ServiceOffering;
+import net.tylerwade.quickbook.serviceoffering.ServiceOffering;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

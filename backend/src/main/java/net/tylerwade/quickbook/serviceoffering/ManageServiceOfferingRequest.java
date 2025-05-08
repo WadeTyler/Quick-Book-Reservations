@@ -1,4 +1,4 @@
-package net.tylerwade.quickbook.serviceOffering;
+package net.tylerwade.quickbook.serviceoffering;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

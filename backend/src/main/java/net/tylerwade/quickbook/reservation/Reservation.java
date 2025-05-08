@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.tylerwade.quickbook.reservation.dto.ReservationDTO;
-import net.tylerwade.quickbook.serviceOffering.ServiceOffering;
+import net.tylerwade.quickbook.serviceoffering.ServiceOffering;
 
 import java.sql.Date;
 import java.sql.Time;

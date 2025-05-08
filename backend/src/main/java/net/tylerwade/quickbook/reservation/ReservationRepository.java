@@ -1,6 +1,6 @@
 package net.tylerwade.quickbook.reservation;
 
-import net.tylerwade.quickbook.serviceOffering.ServiceOffering;
+import net.tylerwade.quickbook.serviceoffering.ServiceOffering;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

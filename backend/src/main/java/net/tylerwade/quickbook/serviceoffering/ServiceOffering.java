@@ -1,4 +1,4 @@
-package net.tylerwade.quickbook.serviceOffering;
+package net.tylerwade.quickbook.serviceoffering;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.tylerwade.quickbook.business.Business;
 import net.tylerwade.quickbook.reservation.Reservation;
-import net.tylerwade.quickbook.serviceOffering.dto.ServiceOfferingDTO;
+import net.tylerwade.quickbook.serviceoffering.dto.ServiceOfferingDTO;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

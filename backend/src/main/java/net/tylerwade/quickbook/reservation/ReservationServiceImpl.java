@@ -4,7 +4,7 @@ import net.tylerwade.quickbook.business.BusinessService;
 import net.tylerwade.quickbook.reservation.dto.CreateReservationRequest;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.business.Business;
-import net.tylerwade.quickbook.serviceOffering.ServiceOffering;
+import net.tylerwade.quickbook.serviceoffering.ServiceOffering;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 

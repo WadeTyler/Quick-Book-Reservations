@@ -1,4 +1,4 @@
-package net.tylerwade.quickbook.serviceOffering;
+package net.tylerwade.quickbook.serviceoffering;
 
 import net.tylerwade.quickbook.business.Business;
 import org.springframework.data.jpa.repository.JpaRepository;
