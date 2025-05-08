@@ -5,7 +5,7 @@ import Image from "next/image";
 import AuthProvider from "@/providers/AuthProvider";
 import {useParams, useRouter} from "next/navigation";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {ManagedBusiness, ManageServiceRequest} from "@/types/business.types";
+import {ManagedBusiness, ManageServiceOferringRequest} from "@/types/business.types";
 import {createService, fetchManagedBusinessById} from "@/lib/business.service";
 import {User} from "@/types/auth.types";
 import {fetchUser} from "@/lib/auth.service";
@@ -19,7 +19,7 @@ const CreateServiceForm = () => {
   const router = useRouter();
 
   const [imagePreview, setImagePreview] = useState<string | null>();
-  const [formFields, setFormFields] = useState<ManageServiceRequest>({
+  const [formFields, setFormFields] = useState<ManageServiceOferringRequest>({
     name: '',
     type: '',
     description: '',
@@ -91,7 +91,7 @@ const CreateServiceForm = () => {
               <input type="text"
                      id="name"
                      className="input-bar"
-                     placeholder="Enter a service name"
+                     placeholder="Enter a Service Offering name"
                      required
                      minLength={3}
                      maxLength={100}
@@ -108,7 +108,7 @@ const CreateServiceForm = () => {
               <input type="text"
                      className="input-bar"
                      id="type"
-                     placeholder="Enter a type for your service: Ex: 'Appointment'"
+                     placeholder="Enter a type for your Service Offering: Ex: 'Appointment'"
                      required
                      minLength={3}
                      maxLength={100}
@@ -126,7 +126,7 @@ const CreateServiceForm = () => {
                 id="description"
                 className="input-bar resize-none"
                 rows={5}
-                placeholder="Enter a description for your service"
+                placeholder="Enter a description for your Service Offering"
                 required
                 minLength={20}
                 maxLength={500}

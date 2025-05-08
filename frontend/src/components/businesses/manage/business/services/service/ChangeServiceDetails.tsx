@@ -1,24 +1,24 @@
 import React, {FormEvent, useState} from 'react';
-import {ManagedBusiness, ManageServiceRequest, Service} from "@/types/business.types";
+import {ManagedBusiness, ManageServiceOferringRequest, ServiceOffering} from "@/types/business.types";
 import {ClickAwayListener} from "@mui/material";
 import ImageContainer from "@/components/util/ImageContainer";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {updateService} from "@/lib/business.service";
 import {LoadingSpinnerSM} from "@/components/LoadingSpinners";
 
-const ChangeServiceDetails = ({service, closeFn}: {
-  service: Service;
+const ChangeServiceDetails = ({serviceOffering, closeFn}: {
+  serviceOffering: ServiceOffering;
   closeFn: () => void;
 }) => {
 
   const queryClient = useQueryClient();
 
-  const [imagePreview, setImagePreview] = useState<string>(service.image);
+  const [imagePreview, setImagePreview] = useState<string>(serviceOffering.image);
 
-  const [formData, setFormData] = useState<ManageServiceRequest>({
-    name: service.name,
-    description: service.description,
-    type: service.type,
+  const [formData, setFormData] = useState<ManageServiceOferringRequest>({
+    name: serviceOffering.name,
+    description: serviceOffering.description,
+    type: serviceOffering.type,
     image: null,
     removeImage: false,
   });
@@ -30,7 +30,7 @@ const ChangeServiceDetails = ({service, closeFn}: {
       image: null,
       removeImage: false
     }));
-    setImagePreview(service.image);
+    setImagePreview(serviceOffering.image);
   }
 
   const {mutate: handleUpdateService, isPending: isUpdating, error: updateError} = useMutation({
@@ -41,7 +41,7 @@ const ChangeServiceDetails = ({service, closeFn}: {
     }
   })
 
-  const isChanged = formData.name !== service.name || formData.description !== service.description || formData.type !== service.type || formData.image || formData.removeImage;
+  const isChanged = formData.name !== serviceOffering.name || formData.description !== serviceOffering.description || formData.type !== serviceOffering.type || formData.image || formData.removeImage;
 
   const isDisabled = !isChanged || isUpdating
 
@@ -51,8 +51,8 @@ const ChangeServiceDetails = ({service, closeFn}: {
     if (isDisabled) return;
 
     handleUpdateService({
-      businessId: service.businessId,
-      serviceId: service.id,
+      businessId: serviceOffering.businessId,
+      serviceId: serviceOffering.id,
       manageServiceRequest: formData
     })
   }
@@ -75,7 +75,7 @@ const ChangeServiceDetails = ({service, closeFn}: {
               <input type="text"
                      className="input-bar"
                      id="name"
-                     placeholder="Enter a name for your service"
+                     placeholder="Enter a name for your serviceOffering"
                      required
                      minLength={3}
                      maxLength={100}
@@ -93,7 +93,7 @@ const ChangeServiceDetails = ({service, closeFn}: {
               <input type="text"
                      className="input-bar"
                      id="type"
-                     placeholder="Enter a type for your service. Ex: 'Appointment'"
+                     placeholder="Enter a type for your serviceOffering. Ex: 'Appointment'"
                      required
                      minLength={3}
                      maxLength={100}
@@ -109,7 +109,7 @@ const ChangeServiceDetails = ({service, closeFn}: {
             <fieldset className="input-container">
               <label htmlFor="name" className="input-label">Description*:</label>
               <textarea className="input-bar resize-none h-40"
-                        placeholder="Enter a description for your service"
+                        placeholder="Enter a description for your serviceOffering"
                         required
                         minLength={20}
                         maxLength={500}
@@ -141,7 +141,7 @@ const ChangeServiceDetails = ({service, closeFn}: {
               />
               <div className="flex gap-4 w-full">
                 <label htmlFor="image" className="submit-btn3">Change Image</label>
-                {service.image && !formData.removeImage && (
+                {serviceOffering.image && !formData.removeImage && (
                   <button type="button" className="delete-btn3" onClick={() => {
                     setFormData(prev => ({
                       ...prev,

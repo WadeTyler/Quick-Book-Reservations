@@ -21,8 +21,8 @@ public class Reservation {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "service_id", nullable = false)
-    private Service service;
+    @JoinColumn(name = "service_offering_id", nullable = false)
+    private ServiceOffering serviceOffering;
 
     @Column(nullable = false, length = 100)
     private String firstName;
@@ -45,8 +45,8 @@ public class Reservation {
     @Column(nullable = false)
     private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 
-    public Reservation(Service service, String firstName, String lastName, String email, String phoneNumber, Date date, Time time) {
-        this.service = service;
+    public Reservation(ServiceOffering serviceOffering, String firstName, String lastName, String email, String phoneNumber, Date date, Time time) {
+        this.serviceOffering = serviceOffering;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

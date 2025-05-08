@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "business_services")
+@Table(name = "service_offerings")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Service {
+public class ServiceOffering {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -39,7 +39,7 @@ public class Service {
 
     private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 
-    @OneToMany(mappedBy = "service", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "serviceOffering", cascade = CascadeType.REMOVE)
     List<Reservation> reservations = new ArrayList<>();
 
     // --- UTIL FUNCTIONS ---

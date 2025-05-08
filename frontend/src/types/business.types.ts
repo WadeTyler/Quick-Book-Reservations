@@ -20,10 +20,10 @@ export interface ManagedBusiness {
   owner: User;
   staff: User[];
   upcomingReservationCount: number;
-  services: Service[];
+  serviceOfferings: ServiceOffering[];
 }
 
-export type Service = {
+export type ServiceOffering = {
   id: number;
   businessId: string;
   name: string;
@@ -62,7 +62,7 @@ export type UpdateBusinessImageRequest = {
   image: File;
 }
 
-export type ManageServiceRequest = {
+export type ManageServiceOferringRequest = {
   name: string;
   type: string;
   description: string;

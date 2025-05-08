@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
-public record ManageServiceRequest(
+public record ManageServiceOfferingRequest(
 
         @NotBlank(message = "Name is required.")
         @Size(min = 3, max = 100, message = "Name must be between 3 - 100 characters.")

@@ -3,11 +3,12 @@ package net.tylerwade.quickbook.service;
 import net.tylerwade.quickbook.dto.business.*;
 import net.tylerwade.quickbook.dto.reservation.CreateReservationRequest;
 import net.tylerwade.quickbook.dto.reservation.ReservationDTO;
-import net.tylerwade.quickbook.dto.service.ManageServiceRequest;
-import net.tylerwade.quickbook.dto.service.ServiceDTO;
+import net.tylerwade.quickbook.dto.service.ManageServiceOfferingRequest;
+import net.tylerwade.quickbook.dto.service.ServiceOfferingDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.model.Business;
 import net.tylerwade.quickbook.model.Reservation;
+import net.tylerwade.quickbook.model.ServiceOffering;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -132,24 +133,24 @@ public interface BusinessService {
      * Creates a new service for a business.
      *
      * @param businessId The ID of the business.
-     * @param manageServiceRequest The request object containing service details.
+     * @param manageServiceOfferingRequest The request object containing service details.
      * @param authentication The authentication object of the current user.
      * @return The updated business entity.
      * @throws IOException If an error occurs during creation.
      */
-    Business createService(String businessId, ManageServiceRequest manageServiceRequest, Authentication authentication) throws IOException;
+    Business createService(String businessId, ManageServiceOfferingRequest manageServiceOfferingRequest, Authentication authentication) throws IOException;
 
     /**
      * Updates an existing service for a business.
      *
      * @param businessId The ID of the business.
      * @param serviceId The ID of the service to update.
-     * @param manageServiceRequest The request object containing updated service details.
+     * @param manageServiceOfferingRequest The request object containing updated service details.
      * @param authentication The authentication object of the current user.
      * @return The updated business entity.
      * @throws IOException If an error occurs during the update.
      */
-    Business updateService(String businessId, Long serviceId, ManageServiceRequest manageServiceRequest, Authentication authentication) throws IOException;
+    Business updateService(String businessId, Long serviceId, ManageServiceOfferingRequest manageServiceOfferingRequest, Authentication authentication) throws IOException;
 
     /**
      * Deletes a service from a business.
@@ -181,10 +182,10 @@ public interface BusinessService {
     /**
      * Converts a service entity to a ServiceDTO.
      *
-     * @param service The service entity.
+     * @param serviceOffering The service entity.
      * @return The ServiceDTO representation.
      */
-    ServiceDTO convertToServiceDTO(net.tylerwade.quickbook.model.Service service);
+    ServiceOfferingDTO convertToServiceDTO(ServiceOffering serviceOffering);
 
     /**
      * Converts a reservation entity to a ReservationDTO.

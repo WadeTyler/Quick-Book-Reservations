@@ -1,7 +1,7 @@
 package net.tylerwade.quickbook.dto.business;
 
 import net.tylerwade.quickbook.dto.auth.UserDTO;
-import net.tylerwade.quickbook.dto.service.ServiceDTO;
+import net.tylerwade.quickbook.dto.service.ServiceOfferingDTO;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -15,6 +15,6 @@ public record ManagedBusinessDTO(
         UserDTO owner,
         List<UserDTO> staff,
         Long upcomingReservationCount,
-        List<ServiceDTO> services
+        List<ServiceOfferingDTO> serviceOfferings
 ) {
 }

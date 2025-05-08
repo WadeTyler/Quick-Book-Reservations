@@ -37,8 +37,8 @@ const ServicesList = () => {
         <div className="w-full max-w-[55rem] flex flex-col items-center justify-center gap-4">
 
           {/* List Services */}
-          {managedBusiness?.services.map((service) => (
-            <ManagedServicePanel key={service.id} businessId={managedBusiness.id} service={service}/>
+          {managedBusiness?.serviceOfferings.map((serviceOffering) => (
+            <ManagedServicePanel key={serviceOffering.id} businessId={managedBusiness.id} serviceOffering={serviceOffering}/>
           ))}
 
           {managedBusiness && managedBusiness?.owner.id === authUser?.id && (

@@ -58,11 +58,11 @@ public class Business {
 
     @OneToMany(mappedBy = "business", orphanRemoval = true)
     @JsonIgnore
-    private List<Service> services = new ArrayList<>();
+    private List<ServiceOffering> serviceOfferings = new ArrayList<>();
 
     public List<Long> getServiceIds() {
-            return services.stream()
-                    .map(Service::getId)
+            return serviceOfferings.stream()
+                    .map(ServiceOffering::getId)
                     .toList();
     }
 

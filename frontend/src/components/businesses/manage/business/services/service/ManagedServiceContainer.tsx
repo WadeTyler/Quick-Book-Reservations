@@ -79,7 +79,7 @@ const ManagedServiceContainer = () => {
 
                 {isChangingDetails && (
                   <Overlay>
-                    <ChangeServiceDetails service={targetService} closeFn={() => setIsChangingDetails(false)}/>
+                    <ChangeServiceDetails serviceOffering={targetService} closeFn={() => setIsChangingDetails(false)}/>
                   </Overlay>
                 )}
 

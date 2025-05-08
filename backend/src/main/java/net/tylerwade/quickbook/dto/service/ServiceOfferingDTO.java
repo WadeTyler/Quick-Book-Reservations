@@ -2,7 +2,7 @@ package net.tylerwade.quickbook.dto.service;
 
 import java.sql.Timestamp;
 
-public record ServiceDTO(
+public record ServiceOfferingDTO(
        Long id,
        String businessId,
        String name,

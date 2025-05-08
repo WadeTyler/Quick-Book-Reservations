@@ -6,7 +6,7 @@ export const findServiceInBusiness = (managedBusiness: ManagedBusiness | null | 
     throw new Error("Managed business not found.");
   }
 
-  const service = managedBusiness.services.find(s => s.id === parseInt(serviceId as string));
+  const service = managedBusiness.serviceOfferings.find(s => s.id === parseInt(serviceId as string));
 
   if (!service) throw new Error("Service not found.");
   return service;

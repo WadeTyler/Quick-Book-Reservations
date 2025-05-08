@@ -11,6 +11,6 @@ public record BusinessDTO(
         String description,
         Timestamp createdAt,
         List<String> staffIds,
-        List<Long> serviceIds
+        List<Long> serviceOfferingIds
 ) {
 }
