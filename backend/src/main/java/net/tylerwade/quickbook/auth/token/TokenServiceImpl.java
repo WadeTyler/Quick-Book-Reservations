@@ -1,4 +1,4 @@
-package net.tylerwade.quickbook.auth;
+package net.tylerwade.quickbook.auth.token;
 
 import jakarta.servlet.http.Cookie;
 import net.tylerwade.quickbook.config.security.JwtProperties;
