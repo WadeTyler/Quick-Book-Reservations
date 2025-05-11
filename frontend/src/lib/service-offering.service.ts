@@ -2,7 +2,7 @@ import {ManagedBusiness} from "@/types/business.types";
 import {AxiosError, AxiosResponse} from "axios";
 import {APIResponse} from "@/types/api-response.types";
 import axiosInstance from "@/lib/axios";
-import {ManageServiceOfferingRequest} from "@/types/service-offering.types";
+import {ManageServiceOfferingRequest, ServiceOffering} from "@/types/service-offering.types";
 
 export async function createService(request: {
   businessId: string;
@@ -59,6 +59,25 @@ export async function updateService(request: {
     }
   })
     .then((response: AxiosResponse<APIResponse<ManagedBusiness>>) => {
+      // Success!
+
+      if (!response.data.isSuccess) {
+        throw new Error(response.data.message);
+      }
+      return response.data.data;
+    })
+    .catch((error: AxiosError<APIResponse<null>>) => {
+      // Failed
+
+      throw new Error(error.response?.data.message || "Something went wrong. Try again later.");
+    })
+}
+
+export async function fetchAllServiceOfferings(request: {
+  businessId: string;
+}) {
+  return await axiosInstance.get(`/businesses/${request.businessId}/services`)
+    .then((response: AxiosResponse<APIResponse<ServiceOffering[]>>) => {
       // Success!
 
       if (!response.data.isSuccess) {

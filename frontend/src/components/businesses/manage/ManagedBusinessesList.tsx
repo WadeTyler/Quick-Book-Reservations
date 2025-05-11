@@ -6,7 +6,7 @@ import Link from "next/link";
 import {LoadingSpinnerXL} from "@/components/LoadingSpinners";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {Business} from "@/types/business.types";
-import {fetchAllManagedBusinesses} from "@/lib/business.service";
+import {fetchAllManagedBusinesses} from "@/lib/manage-business.service";
 import {User} from "@/types/auth.types";
 import {fetchUser} from "@/lib/auth.service";
 import AuthProvider from "@/providers/AuthProvider";

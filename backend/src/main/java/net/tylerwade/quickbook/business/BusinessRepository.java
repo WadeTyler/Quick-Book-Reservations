@@ -25,4 +25,5 @@ public interface BusinessRepository extends JpaRepository<Business, String> {
     Long countAllByOwner(User owner);
 
     boolean existsByNameAndIdNot(String name, String businessId);
+
 }

@@ -7,7 +7,7 @@ import AuthProvider from "@/providers/AuthProvider";
 import {useRouter} from "next/navigation";
 import {Business, CreateBusinessRequest} from "@/types/business.types";
 import {useMutation, useQuery} from "@tanstack/react-query";
-import {createBusiness, fetchAllManagedBusinesses} from "@/lib/business.service";
+import {createBusiness, fetchAllManagedBusinesses} from "@/lib/manage-business.service";
 import appProperties from "@/constants/app.properties";
 
 const CreateBusinessForm = () => {

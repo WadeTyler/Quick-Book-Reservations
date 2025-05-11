@@ -9,7 +9,7 @@ import ChangeServiceDetails from "@/components/businesses/manage/business/servic
 import {useParams} from "next/navigation";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {ManagedBusiness} from "@/types/business.types";
-import {fetchManagedBusinessById} from "@/lib/business.service";
+import {fetchManagedBusinessById} from "@/lib/manage-business.service";
 import {User} from "@/types/auth.types";
 import {fetchUser} from "@/lib/auth.service";
 import {findServiceOfferingInManagedBusiness} from "@/lib/util/service-offering.util";

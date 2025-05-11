@@ -1,6 +1,6 @@
 import React from 'react';
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {removeStaff} from "@/lib/business.service";
+import {removeStaff} from "@/lib/manage-business.service";
 import {ManagedBusiness} from "@/types/business.types";
 import {User} from "@/types/auth.types";
 import {fetchUser} from "@/lib/auth.service";

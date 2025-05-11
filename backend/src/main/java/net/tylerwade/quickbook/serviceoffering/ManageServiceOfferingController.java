@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import net.tylerwade.quickbook.common.APIResponse;
 import net.tylerwade.quickbook.business.dto.ManagedBusinessDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
+import net.tylerwade.quickbook.serviceoffering.dto.ManageServiceOfferingRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {ManagedBusiness, UpdateBusinessDetailsRequest} from "@/types/business.types";
 import {ClickAwayListener} from "@mui/material";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {updateBusinessDetails} from "@/lib/business.service";
+import {updateBusinessDetails} from "@/lib/manage-business.service";
 
 const ChangeDetails = ({managedBusiness, closeFn}: {
   managedBusiness: ManagedBusiness;

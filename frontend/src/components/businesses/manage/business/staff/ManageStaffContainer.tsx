@@ -8,7 +8,7 @@ import AuthProvider from "@/providers/AuthProvider";
 import {useParams} from "next/navigation";
 import {useQuery} from "@tanstack/react-query";
 import {ManagedBusiness} from "@/types/business.types";
-import {fetchManagedBusinessById} from "@/lib/business.service";
+import {fetchManagedBusinessById} from "@/lib/manage-business.service";
 import {User} from "@/types/auth.types";
 import {fetchUser} from "@/lib/auth.service";
 

@@ -4,7 +4,7 @@ import Breadcrumbs, {Breadcrumb} from "@/components/Breadcrumbs";
 import {useParams} from "next/navigation";
 import {useQuery} from "@tanstack/react-query";
 import {ManagedBusiness} from "@/types/business.types";
-import {fetchManagedBusinessById} from "@/lib/business.service";
+import {fetchManagedBusinessById} from "@/lib/manage-business.service";
 
 const ManageStaffPageBreadcrumbs = () => {
   const {businessId} = useParams();

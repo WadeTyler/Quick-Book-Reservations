@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {ManagedBusiness} from "@/types/business.types";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {addStaff} from "@/lib/business.service";
+import {addStaff} from "@/lib/manage-business.service";
 import {LoadingSpinnerSM} from "@/components/LoadingSpinners";
 
 const AddStaffMember = ({managedBusiness}: {

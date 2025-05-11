@@ -13,7 +13,7 @@ const ManagedServicePanel = ({businessId, serviceOffering}: {
 
       <ImageContainer image={serviceOffering.image} alt={`${serviceOffering.name}'s Image`}/>
 
-      <div className="w-full p-4 flex flex-col gap-2">
+      <div className="w-full p-4 flex flex-col gap-2 overflow-hidden">
         <h2 className="font-semibold text-xl">{serviceOffering.name}</h2>
         <p>Created At: {new Date(serviceOffering.createdAt).toLocaleDateString()}</p>
         <p>Type: {serviceOffering.type}</p>

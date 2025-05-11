@@ -25,6 +25,12 @@ public interface BusinessService {
     List<Business> findAll();
 
 
+    /**
+     * Retrieves business by id.
+     * @param businessId the ID of the business.
+     * @return the target business.
+     * @throws HttpRequestException If the business is not found.
+     */
     Business findById(String businessId) throws HttpRequestException;
 
     /**

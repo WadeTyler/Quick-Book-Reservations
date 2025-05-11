@@ -18,7 +18,7 @@ function LoadingHandler<T>({children, isLoading, object, error, errorBackLink, e
 
       {!isLoading && error && (
         <div className="flex flex-col gap-4 items-center">
-          <h1>Something went wrong</h1>
+          <span>Something went wrong</span>
           <p className="error-msg">{(error as Error).message || "Something went wrong."}</p>
           {errorBackLink && (
             <Link

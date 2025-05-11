@@ -2,10 +2,12 @@ package net.tylerwade.quickbook.serviceoffering;
 
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.business.Business;
+import net.tylerwade.quickbook.serviceoffering.dto.ManageServiceOfferingRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public interface ServiceOfferingService {
@@ -43,5 +45,5 @@ public interface ServiceOfferingService {
      */
     Business deleteService(String businessId, Long serviceId, Authentication authentication) throws HttpRequestException;
 
-
+    List<ServiceOffering> findAll(String businessId) throws HttpRequestException;
 }

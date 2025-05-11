@@ -6,11 +6,13 @@ import net.tylerwade.quickbook.business.BusinessService;
 import net.tylerwade.quickbook.config.AppProperties;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.business.Business;
+import net.tylerwade.quickbook.serviceoffering.dto.ManageServiceOfferingRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class ServiceOfferingServiceImpl implements ServiceOfferingService {
@@ -121,6 +123,11 @@ public class ServiceOfferingServiceImpl implements ServiceOfferingService {
         business.setServiceOfferings(business.getServiceOfferings().stream().filter(s -> !s.getId().equals(serviceId)).toList());
         return business;
 
+    }
+
+    @Override
+    public List<ServiceOffering> findAll(String businessId) throws HttpRequestException {
+        return businessService.findById(businessId).getServiceOfferings();
     }
 
 }
