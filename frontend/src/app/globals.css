@@ -43,6 +43,10 @@ body {
   @apply lg:p-16 lg:pt-44 md:p-8 md:pt-36 p-4 pt-32;
 }
 
+.section-padding {
+  @apply lg:p-16 md:p-8 p-4;
+}
+
 
 .input-container {
   @apply w-full flex flex-col gap-2;
@@ -66,11 +70,11 @@ body {
 
 
 .submit-btn2 {
-  @apply w-fit text-center bg-accent rounded-md shadow-md text-white font-semibold hover:bg-accent-dark hover:shadow-lg duration-200 p-2 cursor-pointer;
+  @apply w-fit text-center bg-accent rounded-md shadow-md text-white font-semibold hover:bg-accent-dark hover:shadow-lg duration-200 px-4 py-2 cursor-pointer;
 }
 
 .submit-btn3 {
-  @apply w-fit text-center bg-transparent rounded-md text-accent border border-accent font-semibold hover:bg-accent hover:text-white duration-200 px-3 py-1 cursor-pointer;
+  @apply w-fit text-center bg-transparent rounded-md text-accent border border-accent font-semibold hover:bg-accent hover:text-white duration-200 px-4 py-2 cursor-pointer;
 }
 
 .submit-btn3-disabled {
