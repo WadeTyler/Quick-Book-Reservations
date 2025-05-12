@@ -25,7 +25,7 @@ public class ManageServiceOfferingController {
 
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    private ResponseEntity<?> createService(Authentication authentication, @PathVariable String businessId, @Valid @ModelAttribute ManageServiceOfferingRequest manageServiceOfferingRequest) throws IOException {
+    public ResponseEntity<?> createService(Authentication authentication, @PathVariable String businessId, @Valid @ModelAttribute ManageServiceOfferingRequest manageServiceOfferingRequest) throws IOException {
         ManagedBusinessDTO updatedBusiness = serviceOfferingService.createService(businessId, manageServiceOfferingRequest, authentication).toManagedBusinessDTO();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -34,7 +34,7 @@ public class ManageServiceOfferingController {
     }
 
     @DeleteMapping("/{serviceId}")
-    private ResponseEntity<?> deleteService(Authentication authentication, @PathVariable String businessId, @PathVariable Long serviceId) throws HttpRequestException {
+    public ResponseEntity<?> deleteService(Authentication authentication, @PathVariable String businessId, @PathVariable Long serviceId) throws HttpRequestException {
         ManagedBusinessDTO updatedBusiness = serviceOfferingService.deleteService(businessId, serviceId, authentication).toManagedBusinessDTO();
 
         return ResponseEntity
@@ -43,7 +43,7 @@ public class ManageServiceOfferingController {
     }
 
     @PutMapping(value = "/{serviceId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    private ResponseEntity<?> updateService(Authentication authentication, @PathVariable String businessId, @PathVariable Long serviceId, @Valid @ModelAttribute ManageServiceOfferingRequest manageServiceOfferingRequest) throws IOException {
+    public ResponseEntity<?> updateService(Authentication authentication, @PathVariable String businessId, @PathVariable Long serviceId, @Valid @ModelAttribute ManageServiceOfferingRequest manageServiceOfferingRequest) throws IOException {
         ManagedBusinessDTO updatedBusiness = serviceOfferingService.updateService(businessId, serviceId, manageServiceOfferingRequest, authentication).toManagedBusinessDTO();
 
         return ResponseEntity
