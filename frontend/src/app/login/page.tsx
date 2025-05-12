@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginForm from "@/components/login/LoginForm";
+import LoginForm from "@/features/auth/components/LoginForm";
 import {Metadata} from "next";
 
 export const metadata: Metadata = {

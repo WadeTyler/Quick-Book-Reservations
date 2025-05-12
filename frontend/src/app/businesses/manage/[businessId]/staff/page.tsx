@@ -1,7 +1,7 @@
 import React from 'react';
-import ManageStaffPageBreadcrumbs from "@/components/businesses/manage/business/staff/ManageStaffPageBreadcrumbs";
-import ManageStaffContainer from "@/components/businesses/manage/business/staff/ManageStaffContainer";
-import StaffManagementInfo from "@/components/businesses/manage/business/staff/StaffManagementInfo";
+import ManageStaffPageBreadcrumbs from "@/features/business/components/managed-business/ManageStaffPageBreadcrumbs";
+import ManageStaffContainer from "@/features/business/components/managed-business/ManageStaffContainer";
+import StaffManagementInfo from "@/features/business/components/managed-business/StaffManagementInfo";
 import {Metadata} from "next";
 
 export const metadata: Metadata = {

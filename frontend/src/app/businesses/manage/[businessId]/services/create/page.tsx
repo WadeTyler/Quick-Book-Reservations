@@ -1,7 +1,7 @@
 import React from 'react';
 import CreateServicePageBreadcrumbs
-  from "@/components/businesses/manage/business/services/create/CreateServicePageBreadcrumbs";
-import CreateServiceForm from "@/components/businesses/manage/business/services/create/CreateServiceForm";
+  from "@/features/service-offering/components/CreateServicePageBreadcrumbs";
+import CreateServiceForm from "@/features/service-offering/components/CreateServiceForm";
 import {Metadata} from "next";
 
 export const metadata: Metadata = {

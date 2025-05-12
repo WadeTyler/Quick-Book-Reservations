@@ -1,7 +1,7 @@
 import React from 'react';
 import {Metadata} from "next";
 import ManageReservationsContainer
-  from "@/components/businesses/manage/business/reservations/ManageReservationsContainer";
+  from "@/features/reservation/components/ManageReservationsContainer";
 
 
 const metadata: Metadata = {

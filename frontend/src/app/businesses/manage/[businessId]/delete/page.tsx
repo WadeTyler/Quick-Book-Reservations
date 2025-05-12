@@ -1,7 +1,7 @@
 import React from 'react';
 import DeleteBusinessPageBreadcrumbs
-  from "@/components/businesses/manage/business/delete/DeleteBusinessPageBreadcrumbs";
-import DeleteBusinessForm from "@/components/businesses/manage/business/delete/DeleteBusinessForm";
+  from "@/features/business/components/managed-business/DeleteBusinessPageBreadcrumbs";
+import DeleteBusinessForm from "@/features/business/components/managed-business/DeleteBusinessForm";
 import {Metadata} from "next";
 
 

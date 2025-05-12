@@ -1,5 +1,5 @@
 import React from 'react';
-import AccountDetails from "@/components/account/AccountDetails";
+import AccountDetails from "@/features/auth/components/AccountDetails";
 import {Metadata} from "next";
 
 export const metadata: Metadata = {

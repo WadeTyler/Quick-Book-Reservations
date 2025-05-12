@@ -1,8 +1,8 @@
 import React from 'react';
-import AuthProvider from "@/providers/AuthProvider";
+import AuthProvider from "@/features/auth/providers/AuthProvider";
 import ManageServicesPageBreadcrumbs
-  from "@/components/businesses/manage/business/services/ManageServicesPageBreadcrumbs";
-import ServicesList from "@/components/businesses/manage/business/services/ServicesList";
+  from "@/features/service-offering/components/ManageServicesPageBreadcrumbs";
+import ServicesList from "@/features/service-offering/components/ServicesList";
 import {Metadata} from "next";
 
 export const metadata: Metadata = {

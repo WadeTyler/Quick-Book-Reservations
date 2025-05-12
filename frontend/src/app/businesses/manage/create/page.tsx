@@ -1,6 +1,6 @@
 import React from 'react';
 import Breadcrumbs, {Breadcrumb} from "@/components/Breadcrumbs";
-import CreateBusinessForm from "@/components/businesses/manage/create/CreateBusinessForm";
+import CreateBusinessForm from "@/features/business/components/managed-business/CreateBusinessForm";
 import {Metadata} from "next";
 
 

@@ -1,8 +1,8 @@
 import React from 'react';
 
 import DeleteServicePageBreadcrumbs
-  from "@/components/businesses/manage/business/services/service/delete/DeleteServicePageBreadcrumbs";
-import DeleteServiceForm from "@/components/businesses/manage/business/services/service/delete/DeleteServiceForm";
+  from "@/features/service-offering/components/DeleteServicePageBreadcrumbs";
+import DeleteServiceForm from "@/features/service-offering/components/DeleteServiceForm";
 import {Metadata} from "next";
 
 export const metadata: Metadata = {

@@ -1,7 +1,7 @@
 import React from 'react';
-import BusinessContainer from "@/components/businesses/business/BusinessContainer";
+import BusinessContainer from "@/features/business/components/BusinessContainer";
 import {Metadata} from "next";
-import {fetchBusinessById} from "@/lib/business.service";
+import {fetchBusinessById} from "@/features/business/lib/business.service";
 
 
 type Props = {

@@ -1,6 +1,6 @@
 import React from 'react';
-import ManagedBusinessPageBreadcrumbs from "@/components/businesses/manage/business/dashboard/ManagedBusinessPageBreadcrumbs";
-import ManagedBusinessDashboard from "@/components/businesses/manage/business/dashboard/ManagedBusinessDashboard";
+import ManagedBusinessPageBreadcrumbs from "@/features/business/components/managed-business/dashboard/ManagedBusinessPageBreadcrumbs";
+import ManagedBusinessDashboard from "@/features/business/components/managed-business/dashboard/ManagedBusinessDashboard";
 import {Metadata} from "next";
 
 export const metadata: Metadata = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import ManagedBusinessesList from "@/components/businesses/manage/ManagedBusinessesList";
+import ManagedBusinessesList from "@/features/business/components/managed-business/ManagedBusinessesList";
 import {Metadata} from "next";
 
 

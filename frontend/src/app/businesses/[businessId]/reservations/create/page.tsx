@@ -1,8 +1,8 @@
 import React from 'react';
 import {Metadata} from "next";
-import {fetchBusinessById} from "@/lib/business.service";
+import {fetchBusinessById} from "@/features/business/lib/business.service";
 import CreateReservationsContainer
-  from "@/components/businesses/business/reservations/create/CreateReservationsContainer";
+  from "@/features/reservation/components/CreateReservationsContainer";
 
 type Props = {
   params: Promise<{ businessId: string }>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Reservation} from "@/types/reservation.types";
-import Overlay from "@/components/util/Overlay";
+import Overlay from "@/components/Overlay";
 import {ClickAwayListener} from "@mui/material";
 import {ManagedBusiness} from "@/types/business.types";
 

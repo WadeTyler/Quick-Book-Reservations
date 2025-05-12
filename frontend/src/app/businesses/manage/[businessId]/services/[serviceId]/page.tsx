@@ -1,7 +1,7 @@
 import React from 'react';
 import ManagedServicePageBreadcrumbs
-  from "@/components/businesses/manage/business/services/service/ManagedServicePageBreadcrumbs";
-import ManagedServiceContainer from "@/components/businesses/manage/business/services/service/ManagedServiceContainer";
+  from "@/features/service-offering/components/ManagedServicePageBreadcrumbs";
+import ManagedServiceContainer from "@/features/service-offering/components/ManagedServiceContainer";
 import {Metadata} from "next";
 
 export const metadata: Metadata = {

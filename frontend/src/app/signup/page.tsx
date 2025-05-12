@@ -1,5 +1,5 @@
 import React from 'react';
-import SignupForm from "@/components/signup/SignupForm";
+import SignupForm from "@/features/auth/components/SignupForm";
 import {Metadata} from "next";
 
 export const metadata: Metadata = {
