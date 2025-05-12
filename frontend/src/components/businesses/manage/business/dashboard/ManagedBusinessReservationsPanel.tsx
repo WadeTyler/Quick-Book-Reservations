@@ -18,7 +18,7 @@ const ManagedBusinessReservationsPanel = ({managedBusiness}: {
       {/* Action Buttons */}
       <div className="flex gap-4 mt-auto items-center">
         <Link href={`/businesses/manage/${managedBusiness.id}/reservations`} className="submit-btn3">Manage All Reservations</Link>
-        <Link href={`/businesses/${managedBusiness.id}/reservations/create`} className="submit-btn3">Create Reservation</Link>
+        <Link href={`/businesses/${managedBusiness.id}`} target="_blank" className="submit-btn3">Create Reservation</Link>
       </div>
     </div>
   );
