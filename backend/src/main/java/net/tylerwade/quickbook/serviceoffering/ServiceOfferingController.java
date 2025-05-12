@@ -32,4 +32,13 @@ public class ServiceOfferingController {
                 .status(HttpStatus.OK)
                 .body(new APIResponse<>(true, "Services retrieved.", serviceOfferings));
     }
+
+    @GetMapping("/{serviceId}")
+    public ResponseEntity<?> findById(@PathVariable String businessId, @PathVariable Long serviceId) throws HttpRequestException {
+        ServiceOfferingDTO serviceOffering = serviceOfferingService.findById(businessId, serviceId).toDTO();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new APIResponse<>(true, "Service retrieved.", serviceOffering));
+    }
 }

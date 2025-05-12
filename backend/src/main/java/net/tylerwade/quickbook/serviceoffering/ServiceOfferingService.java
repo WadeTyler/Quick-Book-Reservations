@@ -46,4 +46,6 @@ public interface ServiceOfferingService {
     Business deleteService(String businessId, Long serviceId, Authentication authentication) throws HttpRequestException;
 
     List<ServiceOffering> findAll(String businessId) throws HttpRequestException;
+
+    ServiceOffering findById(String businessId, Long serviceId) throws HttpRequestException;
 }

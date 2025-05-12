@@ -91,3 +91,23 @@ export async function fetchAllServiceOfferings(request: {
       throw new Error(error.response?.data.message || "Something went wrong. Try again later.");
     })
 }
+
+export async function fetchServiceOfferingById(request: {
+  businessId: string;
+  serviceId: number;
+}) {
+  return await axiosInstance.get(`/businesses/${request.businessId}/services/${request.serviceId}`)
+    .then((response: AxiosResponse<APIResponse<ServiceOffering>>) => {
+      // Success!
+
+      if (!response.data.isSuccess) {
+        throw new Error(response.data.message);
+      }
+      return response.data.data;
+    })
+    .catch((error: AxiosError<APIResponse<null>>) => {
+      // Failed
+
+      throw new Error(error.response?.data.message || "Something went wrong. Try again later.");
+    })
+}

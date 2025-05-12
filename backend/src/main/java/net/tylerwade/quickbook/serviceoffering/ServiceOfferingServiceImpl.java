@@ -130,4 +130,12 @@ public class ServiceOfferingServiceImpl implements ServiceOfferingService {
         return businessService.findById(businessId).getServiceOfferings();
     }
 
+    @Override
+    public ServiceOffering findById(String businessId, Long serviceId) throws HttpRequestException {
+        return businessService.findById(businessId).getServiceOfferings().stream()
+                .filter(s -> s.getId().equals(serviceId))
+                .findFirst()
+                .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Service not found."));
+    }
+
 }
