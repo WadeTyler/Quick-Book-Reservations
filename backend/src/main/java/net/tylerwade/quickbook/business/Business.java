@@ -84,7 +84,7 @@ public class Business {
                 createdAt,
                 owner.toDTO(),
                 staff.stream().map(User::toDTO).toList(),
-                0L,
+                serviceOfferings.stream().mapToInt(s -> s.getReservations().size()).sum(),
                 serviceOfferings.stream().map(ServiceOffering::toDTO).toList());
     }
 

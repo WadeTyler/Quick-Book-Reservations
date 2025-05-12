@@ -14,7 +14,7 @@ public record ManagedBusinessDTO(
         Timestamp createdAt,
         UserDTO owner,
         List<UserDTO> staff,
-        Long upcomingReservationCount,
+        int upcomingReservationCount,
         List<ServiceOfferingDTO> serviceOfferings
 ) {
 }

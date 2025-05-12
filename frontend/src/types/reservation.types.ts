@@ -17,5 +17,5 @@ export type Reservation = {
   phoneNumber: string;
   date: string;
   time: string;
-  createAt: string;
+  createdAt: string;
 }

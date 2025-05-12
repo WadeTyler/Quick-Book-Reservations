@@ -2,7 +2,12 @@ package net.tylerwade.quickbook.reservation;
 
 import net.tylerwade.quickbook.reservation.dto.CreateReservationRequest;
 import net.tylerwade.quickbook.exception.HttpRequestException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public interface ReservationService {
@@ -15,4 +20,8 @@ public interface ReservationService {
      * @return the newly created reservation
      */
     Reservation createReservation(String businessId, Long serviceId, CreateReservationRequest createReservationRequest) throws HttpRequestException;
+
+    List<Reservation> findAll(String businessId, Authentication authentication) throws HttpRequestException;
+    Page<Reservation> findAll(String businessId, Pageable pageable, Authentication authentication) throws HttpRequestException;
+
 }

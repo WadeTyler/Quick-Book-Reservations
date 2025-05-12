@@ -5,8 +5,13 @@ import net.tylerwade.quickbook.reservation.dto.CreateReservationRequest;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.business.Business;
 import net.tylerwade.quickbook.serviceoffering.ServiceOffering;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -50,5 +55,17 @@ public class ReservationServiceImpl implements ReservationService {
         // TODO: Queue Email task to send confirmation
 
         return reservation;
+    }
+
+    @Override
+    public List<Reservation> findAll(String businessId, Authentication authentication) throws HttpRequestException {
+        Business targetBusiness = businessService.findByIdAndOwnerOrStaff(businessId, authentication);
+        return reservationRepository.findAllByServiceOffering_Business_Id(targetBusiness.getId());
+    }
+
+    @Override
+    public Page<Reservation> findAll(String businessId, Pageable pageable, Authentication authentication) throws HttpRequestException {
+        Business targetBusiness = businessService.findByIdAndOwnerOrStaff(businessId, authentication);
+        return reservationRepository.findAllByServiceOffering_Business_Id(targetBusiness.getId(), pageable);
     }
 }
