@@ -1,0 +1,38 @@
+import Link from "next/link";
+import BrandLogo from "@/components/BrandLogo";
+import AuthOnly from "@/features/auth/components/AuthOnly";
+import UnAuthOnly from "@/features/auth/components/UnAuthOnly";
+import {Button} from "@/components/ui/button";
+import UserOptions from "@/components/NavBar/UserOptions";
+
+export default function NavBar() {
+  return (
+    <div className="fixed top-0 w-full bg-background/95 shadow-xl">
+
+      <nav className="container w-full py-6 flex items-center gap-8">
+        <header className="mr-auto">
+          <Link href={"/"}>
+            <BrandLogo />
+          </Link>
+        </header>
+
+        <Link href={"/about"}>
+          About
+        </Link>
+
+        <AuthOnly>
+          <Link href={"/dashboard"}>Dashboard</Link>
+          <UserOptions />
+        </AuthOnly>
+        <UnAuthOnly>
+          <Link href={"/login"}>Login</Link>
+          <Link href={"/signup"}>
+            <Button>Signup</Button>
+          </Link>
+        </UnAuthOnly>
+      </nav>
+
+    </div>
+  )
+}
+
