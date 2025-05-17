@@ -1,7 +1,9 @@
-export default function ManagementLayout() {
- return (
-   <div>
+import {ReactNode} from "react";
 
+export default function ManagementLayout({children}: {children: ReactNode}) {
+ return (
+   <div className="w-full">
+     {children}
    </div>
  )
 }

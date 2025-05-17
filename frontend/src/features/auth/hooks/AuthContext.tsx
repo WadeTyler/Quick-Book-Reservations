@@ -1,6 +1,6 @@
 "use client";
 import {createContext, ReactNode, useContext, useEffect, useState} from "react";
-import {SignUpRequest, User} from "@/features/auth/authTypes";
+import {SignUpRequest, User} from "@/features/auth/auth.types";
 import {axiosInstance} from "@/lib/axios";
 import {AxiosResponse} from "axios";
 import {APIResponse} from "@/types";
