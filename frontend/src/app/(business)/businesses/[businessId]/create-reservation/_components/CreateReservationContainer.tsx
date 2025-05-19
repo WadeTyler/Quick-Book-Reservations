@@ -56,9 +56,7 @@ function CreateReservationContainer() {
   }
 
   if (currentBusiness && serviceOfferings) return (
-    <div className="min-h-screen flex flex-col gap-4 items-center justify-center bg-muted/40 py-16 p-6">
-      <CreateReservationForm currentBusiness={currentBusiness} serviceOfferings={serviceOfferings} />
-    </div>
+    <CreateReservationForm currentBusiness={currentBusiness} serviceOfferings={serviceOfferings}/>
   );
 
   return null;
