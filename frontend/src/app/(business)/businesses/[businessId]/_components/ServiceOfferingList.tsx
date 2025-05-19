@@ -37,6 +37,12 @@ function ServiceOfferingList() {
   return (
     <div className="flex flex-col gap-8 w-full items-center justify-center container">
 
+      {serviceOfferings?.length === 0 && (
+        <p className="text-muted-foreground">
+          No services found
+        </p>
+      )}
+
       {serviceOfferings?.map(service => (
         <Card key={service.id} className="w-full overflow-hidden">
 
