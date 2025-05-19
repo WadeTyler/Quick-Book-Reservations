@@ -5,6 +5,9 @@ import {useRouter} from "next/navigation";
 import {useAuth} from "@/features/auth/hooks/AuthContext";
 import Loader from "@/components/ui/loader";
 import Link from "next/link";
+import {Card, CardHeader, CardContent} from "@/components/ui/card";
+import {Label} from "@/components/ui/label";
+import {Input} from "@/components/ui/input";
 
 export default function LoginForm() {
 
@@ -27,49 +30,56 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-background p-4 max-w-96 w-full rounded-md shadow-md">
-      <h1 className="font-semibold text-accent text-center text-2xl md:text-3xl">Login</h1>
-      <p className='text-center text-balance mb-4'>Login to your account and manage your reservations!</p>
+    <Card className="max-w-lg w-full">
+      <CardHeader>
+        <h1 className="font-semibold text-accent text-center text-2xl md:text-3xl">Login</h1>
+        <p className='text-center text-balance mb-4'>Login to your account and manage your reservations!</p>
+      </CardHeader>
 
-      <fieldset className="flex flex-col gap-4 w-full">
-        <div className="input-container">
-          <label htmlFor="username" className="input-label">Email*:</label>
-          <input type="email"
-                 id="username"
-                 name="username"
-                 className="input-bar"
-                 required
-                 minLength={3}
-                 maxLength={255}
-                 placeholder="Enter your email"
-          />
-        </div>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
-        <div className="input-container">
-          <label htmlFor="password" className="input-label">Password*:</label>
-          <input type="password"
-                 id="password"
-                 name="password"
-                 className="input-bar"
-                 required
-                 minLength={6}
-                 maxLength={100}
-                 placeholder="Enter your password"
-          />
-        </div>
-      </fieldset>
+          <div className="flex-1">
+            <Label htmlFor="email" className="mb-2 block">Your Email</Label>
+            <Input
+              id="email"
+              name="username"
+              type="email"
+              placeholder="Enter your email"
+              required
+              maxLength={255}
+              autoComplete="email"
+              />
+          </div>
 
-      {loginError && (
-        <p className="text-destructive text-center text-balance mt-4">{loginError}</p>
-      )}
+          <div className="flex-1">
+            <Label htmlFor="password" className="mb-2 block">Your Password</Label>
+            <Input
+              id="email"
+              name="password"
+              type="password"
+              placeholder="Enter your password"
+              required
+              maxLength={100}
+              autoComplete="current-password"
+            />
+          </div>
 
-        <Button type="submit" className="w-full mt-4">
-          {!isLoggingIn ? 'Login' : <Loader />}
-        </Button>
+          {loginError && (
+            <p className="text-destructive text-center text-balance">{loginError}</p>
+          )}
 
-      <p className="mt-4 text-center text-balance">Don&#39;t have an account? <Link href="/signup" className="link-1">Sign Up</Link></p>
-      
+          <Button type="submit" className="w-full">
+            {!isLoggingIn ? 'Login' : <Loader />}
+          </Button>
 
-    </form>
+          <p className="text-center text-balance">Don&#39;t have an account? <Link href="/signup" className="link-1">Sign Up</Link></p>
+
+
+        </form>
+      </CardContent>
+
+    </Card>
+
   )
 }

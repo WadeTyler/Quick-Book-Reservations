@@ -4,7 +4,7 @@ import UnAuthOnly from "@/features/auth/components/UnAuthOnly";
 export default function SignUpPage() {
   return (
     <UnAuthOnly redirect={true}>
-      <div className="w-full min-h-screen bg-accent/5 flex items-center justify-center">
+      <div className="w-full min-h-screen bg-muted/40 flex items-center justify-center">
         <SignupForm/>
       </div>
     </UnAuthOnly>
