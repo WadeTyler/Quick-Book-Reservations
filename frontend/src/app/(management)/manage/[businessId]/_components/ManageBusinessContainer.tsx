@@ -57,16 +57,16 @@ export default function ManageBusinessContainer() {
 
       {/* Business Header */}
       <section className="flex flex-col md:items-center gap-6 md:gap-10">
-        <div className="flex gap-4 flex-col items-center md:items-start">
+        <div className="flex gap-4 flex-col items-center md:items-start w-full">
           <div className="aspect-video w-full h-64 relative">
             <Image src={managedBusiness.image || "./default-image.jpg"} alt={`${managedBusiness.name} Image`} fill={true} objectFit="cover" objectPosition="center" className="aspect-square rounded-xl"/>
           </div>
-          <div>
+          <div className="w-full">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">
               {managedBusiness.name}
             </h1>
             <p className="text-muted-foreground text-base mt-1">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut doloribus fuga optio quod recusandae? Ab at autem enim itaque libero magni pariatur sapiente velit! Alias aliquid aperiam, architecto consequatur corporis ducimus exercitationem fugit inventore labore laborum laudantium magnam minima, nisi nostrum praesentium qui recusandae saepe, sed ullam veniam? Accusamus, sint.
+              {managedBusiness.description}
             </p>
           </div>
         </div>
