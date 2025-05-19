@@ -64,7 +64,11 @@ function CreateReservationForm({currentBusiness, serviceOfferings}: {
   return (
     <Card className="w-full max-w-xl p-8 shadow-2xl rounded-3xl bg-background border-0">
       <CardHeader>
-        <h1 className="text-xl font-semibold tracking-tight">Create Reservation</h1>
+        <h1 className="text-xl md:text-3xl text-accent font-semibold tracking-tight">Create Reservation</h1>
+        <h2 className="tracking-tight font-semibold md:text-lg">
+          {currentBusiness.name}
+        </h2>
+
       </CardHeader>
 
       {/* Reservation Form */}
