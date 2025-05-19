@@ -21,7 +21,6 @@ interface AuthContextType {
   signUpError: string;
 }
 
-
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
@@ -33,7 +32,7 @@ export const useAuth = () => {
 export const AuthProvider = ({children}: { children: ReactNode }) => {
 
   const [authUser, setAuthUser] = useState<User | null>(null);
-  const [isLoadingAuthUser, setIsLoadingAuthUser] = useState(false);
+  const [isLoadingAuthUser, setIsLoadingAuthUser] = useState(true);
   const [loadAuthUserError, setLoadAuthUserError] = useState("");
 
   async function loadUser() {

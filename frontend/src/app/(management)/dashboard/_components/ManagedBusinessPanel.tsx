@@ -14,7 +14,7 @@ export default function ManagedBusinessPanel({managedBusiness}: {managedBusiness
         <h2 className="font-semibold tracking-tight text-accent text-xl sm:text-2xl">{managedBusiness.name}</h2>
       </CardContent>
       <CardFooter className="mt-auto gap-2">
-        <Link href={`/businesses/${managedBusiness.id}/manage`}>
+        <Link href={`/manage/${managedBusiness.id}`}>
           <Button>
             Manage
           </Button>

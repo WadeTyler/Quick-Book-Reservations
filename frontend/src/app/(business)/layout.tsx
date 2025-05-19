@@ -4,12 +4,10 @@ import {ServiceOfferingProvider} from "@/features/service-offering/hooks/Service
 
 export default function ManagementLayout({children}: { children: ReactNode }) {
   return (
-    <>
-      <BusinessProvider>
-        <ServiceOfferingProvider>
-          {children}
-        </ServiceOfferingProvider>
-      </BusinessProvider>
-    </>
+    <BusinessProvider>
+      <ServiceOfferingProvider>
+        {children}
+      </ServiceOfferingProvider>
+    </BusinessProvider>
   )
 }

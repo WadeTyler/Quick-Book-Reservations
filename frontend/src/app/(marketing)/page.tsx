@@ -5,7 +5,7 @@ import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card";
 import {subscriptions, SubscriptionTier} from "@/data/subscriptionTiers";
 import Footer from "@/components/Footer";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
       <section className="container w-full min-h-screen py-6 lg:py-16 flex flex-col items-center justify-center text-center text-balance bg-radial from-accent/40 via-transparent to-transparent">
