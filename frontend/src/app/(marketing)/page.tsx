@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
-      <section className="container w-full min-h-screen py-6 flex flex-col items-center justify-center text-center text-balance bg-radial from-accent/40 via-transparent to-transparent">
+      <section className="container w-full min-h-screen py-6 lg:py-16 flex flex-col items-center justify-center text-center text-balance bg-radial from-accent/40 via-transparent to-transparent">
         <h1 className="text-3xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight mb-6">Manage Your Business Bookings Effortlessly</h1>
         <p className="text-lg md:text-xl lg:text-2xl tracking-wide mb-3">Create your business profile on our platform and let customers book yours services directly through our user-friendly interface.</p>
         <Link href={"/signup"}>
@@ -17,7 +17,7 @@ export default function Home() {
       </section>
 
       <section id="features" className="bg-foreground text-background">
-        <div className="container flex flex-col py-6 bg-foreground text-background text-center">
+        <div className="container flex flex-col py-6 lg:py-16 bg-foreground text-background text-center">
           <h2 className="font-semibold text-2xl md:text-3xl lg:text-4xl mb-6 tracking-tight text-balance">Powerful Features for Your Business</h2>
 
           {/* Features */}
@@ -59,7 +59,7 @@ export default function Home() {
       </section>
       
       <section id="pricing" className="bg-accent/5">
-        <div className="container py-6">
+        <div className="container py-6 lg:py-16">
           <h2 className="font-semibold text-2xl md:text-3xl lg:text-4xl mb-6 tracking-tight text-center text-balance">Pricing</h2>
 
           <div className="grid lg:grid-cols-3 gap-8">
@@ -71,7 +71,7 @@ export default function Home() {
       </section>
 
       <section className="bg-foreground">
-        <div className="container py-6 flex items-center justify-center">
+        <div className="container py-6 lg:py-16 flex items-center justify-center">
 
           <div className="p-4 bg-background text-center text-balance rounded-md shadow-md">
             <h2 className="font-semibold text-2xl md:text-3xl lg:text-4xl mb-6 tracking-tight text-balance">Ready to Streamline your Booking Process?</h2>

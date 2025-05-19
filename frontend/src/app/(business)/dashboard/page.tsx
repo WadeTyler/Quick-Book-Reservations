@@ -1,4 +1,4 @@
-import ManagedBusinessList from "@/app/(management)/dashboard/_components/ManagedBusinessList";
+import ManagedBusinessList from "@/app/(business)/dashboard/_components/ManagedBusinessList";
 
 export default function DashboardPage() {
   return (

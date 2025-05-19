@@ -3,7 +3,7 @@
 import {useBusiness} from "@/features/business/hooks/BusinessContext";
 import {useEffect} from "react";
 import Loader from "@/components/ui/loader";
-import ManagedBusinessPanel from "@/app/(management)/dashboard/_components/ManagedBusinessPanel";
+import ManagedBusinessPanel from "@/app/(business)/dashboard/_components/ManagedBusinessPanel";
 
 export default function ManagedBusinessList() {
 

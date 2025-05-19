@@ -7,7 +7,7 @@ import UserOptions from "@/components/NavBar/UserOptions";
 
 export default function NavBar() {
   return (
-    <div className="fixed top-0 w-full bg-background/95 shadow-xl">
+    <div className="fixed top-0 w-full bg-background/95 shadow-xl h-24 z-50">
 
       <nav className="container w-full py-6 flex items-center gap-8">
         <header className="mr-auto">

@@ -140,3 +140,7 @@
 .link-1 {
   @apply text-accent hover:text-accent/85;
 }
+
+.nav-padding {
+  @apply pt-24;
+}
