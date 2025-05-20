@@ -15,7 +15,7 @@ type ManagedBusinessContextType = {
   managedBusiness: ManagedBusiness | null;
   isLoadingManagedBusiness: boolean;
   loadManagedBusinessError: string;
-  loadManagedBusiness: (businessId: string) => Promise<Business | null>;
+  loadManagedBusiness: (businessId: string) => Promise<ManagedBusiness | null>;
 }
 
 const ManagedBusinessContext = createContext<ManagedBusinessContextType | null>(null);
@@ -53,7 +53,7 @@ export function ManagedBusinessProvider({children}: {children: ReactNode}) {
   const [isLoadingManagedBusiness, setIsLoadingManagedBusiness] = useState<boolean>(false);
   const [loadManagedBusinessError, setLoadManagedBusinessError] = useState<string>("");
 
-  async function loadManagedBusiness(businessId: string): Promise<Business | null> {
+  async function loadManagedBusiness(businessId: string): Promise<ManagedBusiness | null> {
     setIsLoadingManagedBusiness(true);
     setLoadManagedBusinessError("");
     try {

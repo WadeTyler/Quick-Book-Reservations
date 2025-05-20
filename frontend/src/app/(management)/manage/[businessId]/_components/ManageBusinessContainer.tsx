@@ -1,8 +1,6 @@
 "use client";
-import {useParams} from "next/navigation";
 import {useManagedBusiness} from "@/features/business/hooks/ManagedBusinessContext";
-import React, {useEffect} from "react";
-import Loader from "@/components/ui/loader";
+import React from "react";
 import Link from "next/link";
 import {
   Breadcrumb,
@@ -17,39 +15,11 @@ import { UserIcon, CalendarDaysIcon, LayersIcon } from "lucide-react";
 import Image from "next/image";
 
 export default function ManageBusinessContainer() {
-  const params = useParams<{ businessId: string }>();
-  const businessId = params.businessId;
 
-  const {
-    loadManagedBusiness,
-    managedBusiness,
-    isLoadingManagedBusiness,
-    loadManagedBusinessError
-  } = useManagedBusiness();
+  const {managedBusiness} = useManagedBusiness();
 
-  useEffect(() => {
-    loadManagedBusiness(businessId);
-  }, [businessId]);
 
-  if (isLoadingManagedBusiness) return (
-    <div className="flex w-full h-screen items-center justify-center">
-      <Loader className="size-24 text-accent"/>
-    </div>
-  )
-
-  else if (loadManagedBusinessError || !managedBusiness) return (
-    <div className="flex w-full h-screen items-center justify-center text-center flex-col">
-      <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight">
-        Something went wrong
-      </h1>
-      <p className="tracking-wide leading-loose text-balance">
-        {loadManagedBusinessError}
-      </p>
-      <Link href={`/dashboard`} className="link-1">
-        Back to Dashboard
-      </Link>
-    </div>
-  )
+  if (!managedBusiness) return null;
 
   return (
     <div className="container py-8 flex flex-col gap-6">
@@ -74,7 +44,7 @@ export default function ManageBusinessContainer() {
           <Button variant="outline" size="sm">
             Edit Business
           </Button>
-          <Link href={`/businesses/${businessId}`}>
+          <Link href={`/businesses/${managedBusiness.id}`}>
             <Button variant="default" size="sm">
               View Public Page
             </Button>
@@ -113,12 +83,12 @@ export default function ManageBusinessContainer() {
           </CardHeader>
 
           <CardContent className="mt-auto gap-4 flex flex-col">
-            <Link href={`/manage/${businessId}/reservations`}>
+            <Link href={`/manage/${managedBusiness.id}/reservations`}>
               <Button className="w-full" variant={"secondary"}>
                 Manage Reservations
               </Button>
             </Link>
-            <Link href={`/businesses/${businessId}/create-reservation`} target="_blank">
+            <Link href={`/businesses/${managedBusiness.id}/create-reservation`} target="_blank">
               <Button className="w-full">
                 Create Reservation
               </Button>
@@ -137,7 +107,7 @@ export default function ManageBusinessContainer() {
           </CardHeader>
 
           <CardContent className="mt-auto gap-4 flex flex-col">
-            <Link href={`/manage/${businessId}/services`}>
+            <Link href={`/manage/${managedBusiness.id}/services`}>
               <Button className="w-full" variant={"secondary"}>
                 Manage Services
               </Button>
@@ -155,7 +125,7 @@ export default function ManageBusinessContainer() {
           </CardHeader>
 
           <CardContent className="mt-auto gap-4 flex flex-col">
-            <Link href={`/manage/${businessId}/staff`}>
+            <Link href={`/manage/${managedBusiness.id}/staff`}>
               <Button className="w-full" variant={"secondary"}>
                 Manage Staff
               </Button>

@@ -1,10 +1,13 @@
 import {ReactNode} from "react";
 import {ManagedBusinessProvider} from "@/features/business/hooks/ManagedBusinessContext";
+import AuthOnly from "@/features/auth/components/AuthOnly";
 
 export default function ManagementLayout({children}: { children: ReactNode }) {
   return (
-    <ManagedBusinessProvider>
-      {children}
-    </ManagedBusinessProvider>
+    <AuthOnly redirect={true}>
+      <ManagedBusinessProvider>
+        {children}
+      </ManagedBusinessProvider>
+    </AuthOnly>
   )
 }
