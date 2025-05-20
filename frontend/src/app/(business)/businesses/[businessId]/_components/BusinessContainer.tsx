@@ -50,38 +50,38 @@ function BusinessContainer() {
 
   // Render the business details and its services
   return (
-    <div className="flex flex-col items-center w-full min-h-screen">
+    <div className="flex flex-col items-center w-full mt-32">
 
       {/* Business image and description */}
-      <section className="relative w-full min-h-[40rem] flex items-center justify-center">
-
-        <Image
-          src={currentBusiness?.image || "/default-image.jpg"}
-          alt={`${currentBusiness?.name}'s Image`}
-          fill={true}
-          objectFit="cover"
-          objectPosition="center"
-          className="brightness-40"
-        />
-
-        <div className="flex flex-col container items-center justify-center w-full h-full text-white py-6 z-10 text-center text-balance wrap-anywhere">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold tracking-tight">
-            {currentBusiness?.name}
-          </h1>
-          <p className="text-lg lg:text-2xl tracking-wide text-white/80">
-            {currentBusiness?.description}
-          </p>
+      <section className="relative w-full min-h-[40rem] container flex flex-col gap-4 wrap-anywhere">
+        <div className="w-full relative aspect-video">
+          <Image
+            src={currentBusiness?.image || "/default-image.jpg"}
+            alt={`${currentBusiness?.name}'s Image`}
+            fill={true}
+            objectFit="cover"
+            objectPosition="center"
+            className="rounded-md shadow-md"
+          />
         </div>
+
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight">
+          {currentBusiness?.name}
+        </h1>
+        <p className="sm:tracking-wide">
+          {currentBusiness?.description}
+        </p>
       </section>
 
       {/* Business services */}
       <section id="services" className="relative w-full flex flex-col items-center">
 
-        <div className="container w-full py-6 lg:py-16">
-          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold tracking-tight text-center text-balance mb-4">
+        <div className="w-full py-6 lg:py-16">
+          <h2
+            className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold tracking-tight text-center text-balance mb-4">
             {currentBusiness?.name}&#39;s Services
           </h2>
-          <ServiceOfferingList />
+          <ServiceOfferingList/>
         </div>
       </section>
 

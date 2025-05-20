@@ -13,14 +13,19 @@ function ServiceOfferingList() {
   const params = useParams<{ businessId: string }>();
   const businessId = params.businessId;
 
-  const {serviceOfferings, isLoadingServiceOfferings, loadServiceOfferingsError, loadServiceOfferings} = useServiceOffering();
+  const {
+    serviceOfferings,
+    isLoadingServiceOfferings,
+    loadServiceOfferingsError,
+    loadServiceOfferings
+  } = useServiceOffering();
 
   useEffect(() => {
     loadServiceOfferings(businessId);
   }, [businessId]);
 
   if (isLoadingServiceOfferings) return (
-    <Loader />
+    <Loader/>
   )
 
   else if (!isLoadingServiceOfferings && loadServiceOfferingsError) {
@@ -44,16 +49,16 @@ function ServiceOfferingList() {
       )}
 
       {serviceOfferings?.map(service => (
-        <Card key={service.id} className="w-full overflow-hidden">
+        <Card key={service.id} className="w-full overflow-hidden p-4!">
 
-          <div className="p-4 w-full h-full wrap-anywhere">
-            <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold tracking-tight">
+          <div className="w-full h-full wrap-anywhere">
+            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">
               {service.name}
             </h3>
             <p className="text-lg md:text-xl font-semibold mb-4">
               {service.type}
             </p>
-            <p className="text-lg md:text-xl tracking-wide mb-4">
+            <p className="sm:text-lg mb-4">
               {service.description}
             </p>
 
@@ -66,7 +71,8 @@ function ServiceOfferingList() {
 
           {service.image && (
             <div className="relative w-full">
-              <Image src={service.image} alt={`${service.name}'s Image`} fill={true} objectFit="cover" objectPosition="center" />
+              <Image src={service.image} alt={`${service.name}'s Image`} fill={true} objectFit="cover"
+                     objectPosition="center"/>
             </div>
           )}
 
