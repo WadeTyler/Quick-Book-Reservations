@@ -16,6 +16,14 @@ type ManagedBusinessContextType = {
   isLoadingManagedBusiness: boolean;
   loadManagedBusinessError: string;
   loadManagedBusiness: (businessId: string) => Promise<ManagedBusiness | null>;
+
+  isAddingStaff: boolean;
+  addStaffError: string;
+  addStaff: (businessId: string, email: string) => Promise<ManagedBusiness | null>;
+
+  isRemovingStaff: boolean;
+  removeStaffError: string;
+  removeStaff: (businessId: string, userId: string) => Promise<ManagedBusiness | null>;
 }
 
 const ManagedBusinessContext = createContext<ManagedBusinessContextType | null>(null);
@@ -67,7 +75,45 @@ export function ManagedBusinessProvider({children}: {children: ReactNode}) {
       setIsLoadingManagedBusiness(false);
     }
   }
-  
+
+  const [isAddingStaff, setIsAddingStaff] = useState(false);
+  const [addStaffError, setAddStaffError] = useState("");
+
+  async function addStaff(businessId: string, email: string): Promise<ManagedBusiness | null> {
+    setIsAddingStaff(true);
+    setAddStaffError("");
+    try {
+      const response: AxiosResponse<APIResponse<ManagedBusiness>> = await axiosInstance.post(`/businesses/manage/${businessId}/staff`, {email});
+      setManagedBusiness(response.data.data);
+      return response.data.data;
+    } catch (e) {
+      setAddStaffError(getErrorMsg(e));
+      return null;
+    } finally {
+      setIsAddingStaff(false);
+    }
+  }
+
+  const [isRemovingStaff, setIsRemovingStaff] = useState(false);
+  const [removeStaffError, setRemoveStaffError] = useState("");
+
+  async function removeStaff(businessId: string, userId: string): Promise<ManagedBusiness | null> {
+    setIsRemovingStaff(true);
+    setRemoveStaffError("");
+
+    try {
+      const response: AxiosResponse<APIResponse<ManagedBusiness>> = await axiosInstance.delete(`/businesses/manage/${businessId}/staff/${userId}`);
+      setManagedBusiness(response.data.data);
+      return response.data.data;
+    } catch (e) {
+      setRemoveStaffError(getErrorMsg(e));
+      return null;
+    } finally {
+      setIsRemovingStaff(false);
+    }
+  }
+
+
   return (
     <ManagedBusinessContext.Provider value={{
       managedBusinesses,
@@ -78,7 +124,15 @@ export function ManagedBusinessProvider({children}: {children: ReactNode}) {
       managedBusiness,
       isLoadingManagedBusiness,
       loadManagedBusinessError,
-      loadManagedBusiness
+      loadManagedBusiness,
+
+      isAddingStaff,
+      addStaffError,
+      addStaff,
+
+      isRemovingStaff,
+      removeStaffError,
+      removeStaff
     }}>
       {children}
     </ManagedBusinessContext.Provider>
