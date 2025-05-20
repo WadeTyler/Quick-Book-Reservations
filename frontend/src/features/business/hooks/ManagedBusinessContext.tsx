@@ -1,5 +1,5 @@
 "use client";
-import {Business, ManagedBusiness} from "@/features/business/business.types";
+import {Business, ManagedBusiness, UpdateBusinessRequest} from "@/features/business/business.types";
 import {createContext, ReactNode, useContext, useState} from "react";
 import {AxiosResponse} from "axios";
 import {APIResponse} from "@/types";
@@ -24,6 +24,10 @@ type ManagedBusinessContextType = {
   isRemovingStaff: boolean;
   removeStaffError: string;
   removeStaff: (businessId: string, userId: string) => Promise<ManagedBusiness | null>;
+
+  isUpdating: boolean;
+  updateError: string;
+  update: (businessId: string, updateBusinessRequest: UpdateBusinessRequest) => Promise<ManagedBusiness | null>;
 }
 
 const ManagedBusinessContext = createContext<ManagedBusinessContextType | null>(null);
@@ -113,6 +117,28 @@ export function ManagedBusinessProvider({children}: {children: ReactNode}) {
     }
   }
 
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [updateError, setUpdateError] = useState("");
+
+  async function update(businessId: string, updateBusinessRequest: UpdateBusinessRequest): Promise<ManagedBusiness | null> {
+    setIsUpdating(true);
+    setUpdateError("");
+    try {
+      const response: AxiosResponse<APIResponse<ManagedBusiness>> = await axiosInstance.put(`/businesses/manage/${businessId}`, updateBusinessRequest, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      });
+      setManagedBusiness(response.data.data);
+      return response.data.data;
+    } catch (e) {
+      setUpdateError(getErrorMsg(e));
+      return null;
+    } finally {
+      setIsUpdating(false);
+    }
+  }
+
 
   return (
     <ManagedBusinessContext.Provider value={{
@@ -132,7 +158,11 @@ export function ManagedBusinessProvider({children}: {children: ReactNode}) {
 
       isRemovingStaff,
       removeStaffError,
-      removeStaff
+      removeStaff,
+
+      isUpdating,
+      updateError,
+      update
     }}>
       {children}
     </ManagedBusinessContext.Provider>

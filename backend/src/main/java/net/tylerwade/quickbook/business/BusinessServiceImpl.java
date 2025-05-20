@@ -6,8 +6,7 @@ import io.awspring.cloud.s3.S3Template;
 import net.tylerwade.quickbook.auth.UserService;
 import net.tylerwade.quickbook.business.dto.CreateBusinessRequest;
 import net.tylerwade.quickbook.business.dto.StaffManagementDTO;
-import net.tylerwade.quickbook.business.dto.UpdateBusinessDetailsRequest;
-import net.tylerwade.quickbook.business.dto.UpdateBusinessImageRequest;
+import net.tylerwade.quickbook.business.dto.UpdateBusinessRequest;
 import net.tylerwade.quickbook.config.AppProperties;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import net.tylerwade.quickbook.auth.User;
@@ -108,7 +107,7 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public Business updatedBusinessDetails(String businessId, UpdateBusinessDetailsRequest updateBusinessDetailsRequest, Authentication authentication) throws HttpRequestException {
+    public Business update(String businessId, UpdateBusinessRequest updateBusinessRequest, Authentication authentication) throws IOException {
 
         User authUser = userService.getUser(authentication);
 
@@ -117,54 +116,27 @@ public class BusinessServiceImpl implements BusinessService {
                 .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Business not found or you are not authorized to make this change."));
 
         // Check if business already exists with target name
-        if (businessRepository.existsByNameAndIdNot(updateBusinessDetailsRequest.name(), businessId)) {
+        if (businessRepository.existsByNameAndIdNot(updateBusinessRequest.name(), businessId)) {
             throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "A business already exists with that name.");
         }
 
         // Update fields
-        business.setName(updateBusinessDetailsRequest.name());
-        business.setDescription(updateBusinessDetailsRequest.description());
+        business.setName(updateBusinessRequest.name());
+        business.setDescription(updateBusinessRequest.description());
+
+        // If changing image
+        if (updateBusinessRequest.image() != null && !updateBusinessRequest.removeImage()) {
+            S3Resource uploadedImage = s3Template.upload(appProperties.imageBucketName(), business.getImageObjectKey(), updateBusinessRequest.image().getInputStream());
+            business.setImage(uploadedImage.getURL().toString());
+        } else if (updateBusinessRequest.removeImage() && business.getImage() != null) {
+            // Handle removing image if checked
+            s3Template.deleteObject(appProperties.imageBucketName(), business.getImageObjectKey());
+            business.setImage(null);
+        }
 
         // Save and return
         businessRepository.save(business);
         return business;
-    }
-
-    @Override
-    public Business updateBusinessImage(String businessId, UpdateBusinessImageRequest updateBusinessImageRequest, Authentication authentication) throws IOException {
-        User authUser = userService.getUser(authentication);
-
-        // Find target business
-        Business business = businessRepository.findByIdAndOwner(businessId, authUser)
-                .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Business not found or you are not authorized to make his change."));
-
-        // Update image in store
-        S3Resource uploadedImage = s3Template.upload(appProperties.imageBucketName(), business.getImageObjectKey(), updateBusinessImageRequest.image().getInputStream(), ObjectMetadata.builder().contentType("image/jpeg").build());
-
-        // Update image in database
-        business.setImage(uploadedImage.getURL().toString());
-
-        // Save and return
-        businessRepository.save(business);
-        return business;
-    }
-
-    @Override
-    public Business removeBusinessImage(String businessId, Authentication authentication) throws HttpRequestException {
-        User authUser = userService.getUser(authentication);
-
-        // Find target Business
-        Business business = businessRepository.findByIdAndOwner(businessId, authUser)
-                .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Business not found or you are not authorized to make his change."));
-
-        // Remove image from store
-        s3Template.deleteObject(appProperties.imageBucketName(), business.getImageObjectKey());
-
-        // Remove from database
-        business.setImage(null);
-
-        // Save and return
-        return businessRepository.save(business);
     }
 
     @Override

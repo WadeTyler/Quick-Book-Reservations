@@ -34,9 +34,11 @@ export type StaffManagementDTO = {
   email: string;
 }
 
-export type UpdateBusinessDetailsRequest = {
+export type UpdateBusinessRequest = {
   name: string;
   description: string;
+  image: File | null;
+  removeImage?: boolean;
 }
 
 export type UpdateBusinessImageRequest = {

@@ -56,7 +56,7 @@ function BusinessContainer() {
       <section className="relative w-full min-h-[40rem] flex items-center justify-center">
 
         <Image
-          src={currentBusiness?.image || "./default-image.jpg"}
+          src={currentBusiness?.image || "/default-image.jpg"}
           alt={`${currentBusiness?.name}'s Image`}
           fill={true}
           objectFit="cover"

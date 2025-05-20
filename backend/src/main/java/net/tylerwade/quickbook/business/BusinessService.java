@@ -2,8 +2,7 @@ package net.tylerwade.quickbook.business;
 
 import net.tylerwade.quickbook.business.dto.CreateBusinessRequest;
 import net.tylerwade.quickbook.business.dto.StaffManagementDTO;
-import net.tylerwade.quickbook.business.dto.UpdateBusinessDetailsRequest;
-import net.tylerwade.quickbook.business.dto.UpdateBusinessImageRequest;
+import net.tylerwade.quickbook.business.dto.UpdateBusinessRequest;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -97,33 +96,12 @@ public interface BusinessService {
      * Updates the details of a business.
      *
      * @param businessId The ID of the business.
-     * @param updateBusinessDetailsRequest The request object containing updated business details.
+     * @param updateBusinessRequest The request object containing updated business details.
      * @param authentication The authentication object of the current user.
      * @return The updated business entity.
      * @throws HttpRequestException If the business is not found or the user is unauthorized.
      */
-    Business updatedBusinessDetails(String businessId, UpdateBusinessDetailsRequest updateBusinessDetailsRequest, Authentication authentication) throws HttpRequestException;
-
-    /**
-     * Updates the image of a business.
-     *
-     * @param businessId The ID of the business.
-     * @param updateBusinessImageRequest The request object containing the new image details.
-     * @param authentication The authentication object of the current user.
-     * @return The updated business entity.
-     * @throws IOException If an error occurs during the update.
-     */
-    Business updateBusinessImage(String businessId, UpdateBusinessImageRequest updateBusinessImageRequest, Authentication authentication) throws IOException;
-
-    /**
-     * Removes the image of a business.
-     *
-     * @param businessId The ID of the business.
-     * @param authentication The authentication object of the current user.
-     * @return The updated business entity.
-     * @throws HttpRequestException If the business is not found or the user is unauthorized.
-     */
-    Business removeBusinessImage(String businessId, Authentication authentication) throws HttpRequestException;
+    Business update(String businessId, UpdateBusinessRequest updateBusinessRequest, Authentication authentication) throws IOException;
 
     /**
      * Deletes a business.
