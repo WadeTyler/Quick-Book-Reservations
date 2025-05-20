@@ -179,6 +179,11 @@ public class BusinessServiceImpl implements BusinessService {
             throw new HttpRequestException(HttpStatus.UNAUTHORIZED, "You must be the owner of a business to add staff members.");
         }
 
+        // Check if self
+        if (authUser.getUsername().equals(staffManagementDTO.email())) {
+            throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "You cannot add yourself to staff.");
+        }
+
         try {
             // Find the user to add as staff by email (username)
             User userToAdd = userService.loadUserByUsername(staffManagementDTO.email());
@@ -211,8 +216,15 @@ public class BusinessServiceImpl implements BusinessService {
             throw new HttpRequestException(HttpStatus.UNAUTHORIZED, "You must be the owner of a business to add staff members.");
         }
 
+        // Check if self
+        if (authUser.getId().equals(staffId)) {
+            throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "You cannot remove yourself from staff.");
+        }
+
         // Find the user to remove from staff by id
         User userToRemove = userService.findById(staffId);
+
+
 
         // Check if the user is a staff member
         if (!business.getStaff().contains(userToRemove)) {
