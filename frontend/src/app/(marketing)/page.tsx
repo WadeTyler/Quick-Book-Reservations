@@ -16,8 +16,8 @@ export default function HomePage() {
         </Link>
       </section>
 
-      <section id="features" className="bg-foreground text-background">
-        <div className="container flex flex-col py-6 lg:py-16 bg-foreground text-background text-center">
+      <section id="features" className="bg-secondary text-secondary-foreground">
+        <div className="container flex flex-col py-6 lg:py-16 text-center">
           <h2 className="font-semibold text-2xl md:text-3xl lg:text-4xl mb-6 tracking-tight text-balance">Powerful Features for Your Business</h2>
 
           {/* Features */}
@@ -70,10 +70,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-foreground">
+      <section className="bg-secondary">
         <div className="container py-6 lg:py-16 flex items-center justify-center">
 
-          <div className="p-4 bg-background text-center text-balance rounded-md shadow-md">
+          <div className="p-6 bg-background text-center text-balance rounded-md shadow-md">
             <h2 className="font-semibold text-2xl md:text-3xl lg:text-4xl mb-6 tracking-tight text-balance">Ready to Streamline your Booking Process?</h2>
             <p className="mb-6">Join other successful businesses that trust Quick Book Reservations to handle their booking needs.</p>
 

@@ -64,11 +64,11 @@ function BusinessContainer() {
           className="brightness-40"
         />
 
-        <div className="flex flex-col container items-center justify-center w-full h-full text-white py-6 z-10 text-center text-balance">
+        <div className="flex flex-col container items-center justify-center w-full h-full text-white py-6 z-10 text-center text-balance wrap-anywhere">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold tracking-tight">
             {currentBusiness?.name}
           </h1>
-          <p className="text-lg lg:text-2xl tracking-wide leading-loose text-white/80">
+          <p className="text-lg lg:text-2xl tracking-wide text-white/80">
             {currentBusiness?.description}
           </p>
         </div>

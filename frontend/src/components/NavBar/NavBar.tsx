@@ -4,6 +4,7 @@ import AuthOnly from "@/features/auth/components/AuthOnly";
 import UnAuthOnly from "@/features/auth/components/UnAuthOnly";
 import {Button} from "@/components/ui/button";
 import UserOptions from "@/components/NavBar/UserOptions";
+import ModeToggle from "@/components/theme/ModeToggle";
 
 export default function NavBar() {
   return (
@@ -22,9 +23,12 @@ export default function NavBar() {
 
         <AuthOnly>
           <Link href={"/dashboard"}>Dashboard</Link>
+          <ModeToggle />
           <UserOptions />
         </AuthOnly>
+
         <UnAuthOnly>
+          <ModeToggle />
           <Link href={"/login"}>Login</Link>
           <Link href={"/signup"}>
             <Button>Signup</Button>
