@@ -15,13 +15,13 @@ export default function ManagedBusinessPanel({managedBusiness}: {managedBusiness
       </CardContent>
       <CardFooter className="mt-auto gap-2">
         <Link href={`/manage/${managedBusiness.id}`}>
-          <Button>
+          <Button variant="outline">
             Manage
           </Button>
         </Link>
         <Link href={`/businesses/${managedBusiness.id}`}>
-          <Button variant="accent">
-            Page
+          <Button>
+            Public Page
           </Button>
         </Link>
       </CardFooter>
