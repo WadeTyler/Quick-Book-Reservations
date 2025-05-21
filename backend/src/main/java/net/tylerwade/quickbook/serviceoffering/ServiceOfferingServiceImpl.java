@@ -62,8 +62,10 @@ public class ServiceOfferingServiceImpl implements ServiceOfferingService {
             serviceOfferingRepository.save(serviceOffering);
         }
 
+        business.getServiceOfferings().add(serviceOffering);
+
         // Return updated business
-        return businessService.findByIdAndOwner(businessId, authentication);
+        return business;
     }
 
     @Override

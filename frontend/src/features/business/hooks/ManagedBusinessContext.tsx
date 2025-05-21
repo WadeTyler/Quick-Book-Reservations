@@ -5,6 +5,7 @@ import {AxiosResponse} from "axios";
 import {APIResponse} from "@/types";
 import {axiosInstance} from "@/lib/axios";
 import {getErrorMsg} from "@/lib/api-util";
+import {ManageServiceOfferingRequest} from "@/features/service-offering/service-offering.types";
 
 type ManagedBusinessContextType = {
   managedBusinesses: Business[] | null;
@@ -28,6 +29,18 @@ type ManagedBusinessContextType = {
   isUpdating: boolean;
   updateError: string;
   update: (businessId: string, updateBusinessRequest: UpdateBusinessRequest) => Promise<ManagedBusiness | null>;
+
+  isCreatingService: boolean;
+  createServiceError: string;
+  createService: (businessId: string, createRequest: ManageServiceOfferingRequest) => Promise<ManagedBusiness | null>;
+
+  isUpdatingService: boolean;
+  updateServiceError: string;
+  updateService: (businessId: string, serviceId: number, updateRequest: ManageServiceOfferingRequest) => Promise<ManagedBusiness | null>;
+
+  isDeletingService: boolean;
+  deleteServiceError: string;
+  deleteService: (businessId: string, serviceId: number) => Promise<ManagedBusiness | null>;
 }
 
 const ManagedBusinessContext = createContext<ManagedBusinessContextType | null>(null);
@@ -139,6 +152,72 @@ export function ManagedBusinessProvider({children}: {children: ReactNode}) {
     }
   }
 
+  const [isCreatingService, setIsCreatingService] = useState(false);
+  const [createServiceError, setCreateServiceError] = useState("");
+
+  async function createService(businessId: string, createRequest: ManageServiceOfferingRequest): Promise<ManagedBusiness | null> {
+    setIsCreatingService(true);
+    setCreateServiceError("");
+    try {
+      const response: AxiosResponse<APIResponse<ManagedBusiness>> = await axiosInstance.post(
+        `/businesses/manage/${businessId}/services`,
+        createRequest,
+        { headers: { "Content-Type": "multipart/form-data" }}
+      );
+      console.log(response.data.data);
+      setManagedBusiness(response.data.data);
+      return response.data.data;
+    } catch (e) {
+      setCreateServiceError(getErrorMsg(e));
+      return null;
+    } finally {
+      setIsCreatingService(false);
+    }
+  }
+
+
+  const [isUpdatingService, setIsUpdatingService] = useState(false);
+  const [updateServiceError, setUpdateServiceError] = useState("");
+
+  async function updateService(businessId: string, serviceId: number, updateRequest: ManageServiceOfferingRequest): Promise<ManagedBusiness | null> {
+    setIsUpdatingService(true);
+    setUpdateServiceError("");
+    try {
+      const response: AxiosResponse<APIResponse<ManagedBusiness>> = await axiosInstance.put(
+        `/businesses/manage/${businessId}/services/${serviceId}`,
+        updateRequest,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+      setManagedBusiness(response.data.data);
+      return response.data.data;
+    } catch (e) {
+      setUpdateServiceError(getErrorMsg(e));
+      return null;
+    } finally {
+      setIsUpdatingService(false);
+    }
+  }
+
+
+  const [isDeletingService, setIsDeletingService] = useState(false);
+  const [deleteServiceError, setDeleteServiceError] = useState("");
+
+  async function deleteService(businessId: string, serviceId: number): Promise<ManagedBusiness | null> {
+    setIsDeletingService(true);
+    setDeleteServiceError("");
+    try {
+      const response: AxiosResponse<APIResponse<ManagedBusiness>> = await axiosInstance.delete(
+        `/businesses/manage/${businessId}/services/${serviceId}`
+      );
+      setManagedBusiness(response.data.data);
+      return response.data.data;
+    } catch (e) {
+      setDeleteServiceError(getErrorMsg(e));
+      return null;
+    } finally {
+      setIsDeletingService(false);
+    }
+  }
 
   return (
     <ManagedBusinessContext.Provider value={{
@@ -162,7 +241,19 @@ export function ManagedBusinessProvider({children}: {children: ReactNode}) {
 
       isUpdating,
       updateError,
-      update
+      update,
+
+      isCreatingService,
+      createServiceError,
+      createService,
+
+      isUpdatingService,
+      updateServiceError,
+      updateService,
+
+      isDeletingService,
+      deleteServiceError,
+      deleteService
     }}>
       {children}
     </ManagedBusinessContext.Provider>

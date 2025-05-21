@@ -159,7 +159,7 @@ export default function EditBusinessSheet({managedBusiness}: { managedBusiness: 
               {updateError}
             </p>
           )}
-          <Button type="submit" size="lg">
+          <Button type="submit" size="lg" variant="accent">
             {isUpdating ? <Loader /> : "Save Changes"}
           </Button>
         </form>
