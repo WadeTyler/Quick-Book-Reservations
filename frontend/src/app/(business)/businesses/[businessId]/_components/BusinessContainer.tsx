@@ -50,7 +50,7 @@ function BusinessContainer() {
 
   // Render the business details and its services
   return (
-    <div className="flex flex-col items-center w-full mt-32">
+    <div className="flex flex-col items-center w-full mt-32 gap-6 lg:gap-16">
 
       {/* Business image and description */}
       <section className="relative w-full min-h-[40rem] container flex flex-col gap-4 wrap-anywhere">
@@ -76,9 +76,9 @@ function BusinessContainer() {
       {/* Business services */}
       <section id="services" className="relative w-full flex flex-col items-center">
 
-        <div className="w-full py-6 lg:py-16">
+        <div className="w-full">
           <h2
-            className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold tracking-tight text-center text-balance mb-4">
+            className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight text-center text-balance mb-4">
             {currentBusiness?.name}&#39;s Services
           </h2>
           <ServiceOfferingList/>

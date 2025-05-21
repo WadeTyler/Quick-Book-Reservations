@@ -49,15 +49,15 @@ function ServiceOfferingList() {
       )}
 
       {serviceOfferings?.map(service => (
-        <Card key={service.id} className="w-full overflow-hidden p-4!">
+        <Card key={service.id} className="w-full overflow-hidden p-0! flex flex-col-reverse lg:flex-row">
 
-          <div className="w-full h-full wrap-anywhere">
-            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">
+          <div className="w-full h-full wrap-anywhere p-4">
+            <h3 className="text-xl md:text-2xl font-bold tracking-tight">
               {service.name}
             </h3>
-            <p className="text-lg md:text-xl font-semibold mb-4">
+            <span className="text-sm bg-accent/20 text-accent px-2 py-1 rounded">
               {service.type}
-            </p>
+            </span>
             <p className="sm:text-lg mb-4">
               {service.description}
             </p>
@@ -70,8 +70,8 @@ function ServiceOfferingList() {
           </div>
 
           {service.image && (
-            <div className="relative w-full">
-              <Image src={service.image} alt={`${service.name}'s Image`} fill={true} objectFit="cover"
+            <div className="relative w-full min-h-48">
+              <Image src={service.image} alt={`${service.name}'s Image`} fill objectFit="cover"
                      objectPosition="center"/>
             </div>
           )}
