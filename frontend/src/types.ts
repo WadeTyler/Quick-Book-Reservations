@@ -3,3 +3,9 @@ export type APIResponse<T> = {
   message: string;
   data: T;
 }
+
+export interface Page<T> {
+  content: T[];
+  totalPages: number;
+  totalElements: number;
+}
