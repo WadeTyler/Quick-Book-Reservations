@@ -3,7 +3,7 @@
 
 import CreateReservationContainer
   from "@/app/(business)/businesses/[businessId]/create-reservation/_components/CreateReservationContainer";
-import {ReservationProvider} from "@/features/reservation/ReservationContext";
+import {ReservationProvider} from "@/features/reservation/context/ReservationContext";
 
 function CreateReservationPage() {
   return (

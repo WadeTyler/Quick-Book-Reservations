@@ -9,7 +9,7 @@
  * to retrieve the `businessId` from the URL.
  */
 import {useParams} from "next/navigation";
-import {useBusiness} from "@/features/business/hooks/BusinessContext";
+import {useBusiness} from "@/features/business/context/BusinessContext";
 import React, {useEffect} from "react";
 import Loader from "@/components/ui/loader";
 import Image from "next/image";

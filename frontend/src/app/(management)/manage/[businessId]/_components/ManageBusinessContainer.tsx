@@ -1,5 +1,5 @@
 "use client";
-import {useManagedBusiness} from "@/features/business/hooks/ManagedBusinessContext";
+import {useManagedBusiness} from "@/features/business/context/ManagedBusinessContext";
 import React from "react";
 import {
   Breadcrumb,

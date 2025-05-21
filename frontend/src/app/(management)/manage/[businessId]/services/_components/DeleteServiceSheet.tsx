@@ -2,7 +2,7 @@ import {ServiceOffering} from "@/features/service-offering/service-offering.type
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/components/ui/sheet";
 import {Button} from "@/components/ui/button";
 import {useState} from "react";
-import {useManagedBusiness} from "@/features/business/hooks/ManagedBusinessContext";
+import {useManagedBusiness} from "@/features/business/context/ManagedBusinessContext";
 import Loader from "@/components/ui/loader";
 
 export default function DeleteServiceSheet({targetService}: { targetService: ServiceOffering }) {

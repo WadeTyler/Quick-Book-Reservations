@@ -6,42 +6,7 @@ import {APIResponse} from "@/types";
 import {axiosInstance} from "@/lib/axios";
 import {getErrorMsg} from "@/lib/api-util";
 import {ManageServiceOfferingRequest} from "@/features/service-offering/service-offering.types";
-
-type ManagedBusinessContextType = {
-  managedBusinesses: Business[] | null;
-  isLoadingManagedBusinesses: boolean;
-  loadManagedBusinessesError: string;
-  loadManagedBusinesses: () => void;
-
-  managedBusiness: ManagedBusiness | null;
-  isLoadingManagedBusiness: boolean;
-  loadManagedBusinessError: string;
-  loadManagedBusiness: (businessId: string) => Promise<ManagedBusiness | null>;
-
-  isAddingStaff: boolean;
-  addStaffError: string;
-  addStaff: (businessId: string, email: string) => Promise<ManagedBusiness | null>;
-
-  isRemovingStaff: boolean;
-  removeStaffError: string;
-  removeStaff: (businessId: string, userId: string) => Promise<ManagedBusiness | null>;
-
-  isUpdating: boolean;
-  updateError: string;
-  update: (businessId: string, updateBusinessRequest: UpdateBusinessRequest) => Promise<ManagedBusiness | null>;
-
-  isCreatingService: boolean;
-  createServiceError: string;
-  createService: (businessId: string, createRequest: ManageServiceOfferingRequest) => Promise<ManagedBusiness | null>;
-
-  isUpdatingService: boolean;
-  updateServiceError: string;
-  updateService: (businessId: string, serviceId: number, updateRequest: ManageServiceOfferingRequest) => Promise<ManagedBusiness | null>;
-
-  isDeletingService: boolean;
-  deleteServiceError: string;
-  deleteService: (businessId: string, serviceId: number) => Promise<ManagedBusiness | null>;
-}
+import {ManagedBusinessContextType} from "@/features/business/context/managed-business-context.types";
 
 const ManagedBusinessContext = createContext<ManagedBusinessContextType | null>(null);
 

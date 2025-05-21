@@ -1,5 +1,5 @@
 "use client";
-import {useAuth} from "@/features/auth/hooks/AuthContext";
+import {useAuth} from "@/features/auth/context/AuthContext";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
 import {UserIcon} from "lucide-react";
 import {

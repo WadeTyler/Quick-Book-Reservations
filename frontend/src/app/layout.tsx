@@ -1,7 +1,7 @@
 import type {Metadata} from "next";
 import {Geist, Geist_Mono, Open_Sans} from "next/font/google";
 import "./globals.css";
-import {AuthProvider} from "@/features/auth/hooks/AuthContext";
+import {AuthProvider} from "@/features/auth/context/AuthContext";
 import NavBar from "@/components/NavBar/NavBar";
 import {ThemeProvider} from "@/components/theme/theme-provider";
 

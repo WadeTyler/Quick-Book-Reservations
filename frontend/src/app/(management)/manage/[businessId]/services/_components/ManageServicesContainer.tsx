@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import {useManagedBusiness} from "@/features/business/hooks/ManagedBusinessContext";
+import {useManagedBusiness} from "@/features/business/context/ManagedBusinessContext";
 import AddServiceSheet from "@/app/(management)/manage/[businessId]/services/_components/AddServiceSheet";
-import {useAuth} from "@/features/auth/hooks/AuthContext";
+import {useAuth} from "@/features/auth/context/AuthContext";
 import EditServiceSheet from "@/app/(management)/manage/[businessId]/services/_components/EditServiceSheet";
 import DeleteServiceSheet from "@/app/(management)/manage/[businessId]/services/_components/DeleteServiceSheet";
 

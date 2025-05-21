@@ -8,7 +8,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {Calendar} from "@/components/ui/calendar";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
-import {useReservation} from "@/features/reservation/ReservationContext";
+import {useReservation} from "@/features/reservation/context/ReservationContext";
 import Loader from "@/components/ui/loader";
 import {CreateReservationRequest} from "@/features/reservation/reservation.types";
 import {useRouter} from "next/navigation";

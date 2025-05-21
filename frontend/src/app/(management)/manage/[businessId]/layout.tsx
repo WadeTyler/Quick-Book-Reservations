@@ -1,6 +1,6 @@
 "use client";
 import {ReactNode, useEffect} from "react";
-import {useManagedBusiness} from "@/features/business/hooks/ManagedBusinessContext";
+import {useManagedBusiness} from "@/features/business/context/ManagedBusinessContext";
 import {useParams} from "next/navigation";
 import Loader from "@/components/ui/loader";
 import Link from "next/link";

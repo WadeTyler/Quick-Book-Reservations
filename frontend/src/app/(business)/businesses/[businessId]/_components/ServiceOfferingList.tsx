@@ -1,6 +1,6 @@
 "use client";
 import React, {useEffect} from 'react';
-import {useServiceOffering} from "@/features/service-offering/hooks/ServiceOfferingContext";
+import {useServiceOffering} from "@/features/service-offering/context/ServiceOfferingContext";
 import {useParams} from "next/navigation";
 import Loader from "@/components/ui/loader";
 import {Card} from "@/components/ui/card";

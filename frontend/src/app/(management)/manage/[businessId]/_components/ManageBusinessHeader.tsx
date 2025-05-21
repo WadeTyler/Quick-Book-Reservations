@@ -2,9 +2,9 @@ import Image from "next/image";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
-import {useManagedBusiness} from "@/features/business/hooks/ManagedBusinessContext";
+import {useManagedBusiness} from "@/features/business/context/ManagedBusinessContext";
 import EditBusinessSheet from "@/app/(management)/manage/[businessId]/_components/EditBusinessSheet";
-import {useAuth} from "@/features/auth/hooks/AuthContext";
+import {useAuth} from "@/features/auth/context/AuthContext";
 
 export default function ManageBusinessHeader() {
 

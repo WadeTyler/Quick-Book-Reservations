@@ -1,4 +1,4 @@
-import {useManagedBusiness} from "@/features/business/hooks/ManagedBusinessContext";
+import {useManagedBusiness} from "@/features/business/context/ManagedBusinessContext";
 import {FormEvent, useState} from "react";
 import {ManageServiceOfferingRequest, ServiceOffering} from "@/features/service-offering/service-offering.types";
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/components/ui/sheet";

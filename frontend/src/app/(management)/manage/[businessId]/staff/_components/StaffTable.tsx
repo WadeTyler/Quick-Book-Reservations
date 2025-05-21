@@ -13,8 +13,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {Button} from "@/components/ui/button";
 import {MoreHorizontal} from "lucide-react";
-import {useManagedBusiness} from "@/features/business/hooks/ManagedBusinessContext";
-import {useAuth} from "@/features/auth/hooks/AuthContext";
+import {useManagedBusiness} from "@/features/business/context/ManagedBusinessContext";
+import {useAuth} from "@/features/auth/context/AuthContext";
 
 
 

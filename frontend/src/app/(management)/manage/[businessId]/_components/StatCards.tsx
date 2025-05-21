@@ -1,6 +1,6 @@
 import {CalendarDaysIcon, LayersIcon, UserIcon} from "lucide-react";
 import React from "react";
-import {useManagedBusiness} from "@/features/business/hooks/ManagedBusinessContext";
+import {useManagedBusiness} from "@/features/business/context/ManagedBusinessContext";
 import {Card} from "@/components/ui/card";
 
 export default function StatCards() {

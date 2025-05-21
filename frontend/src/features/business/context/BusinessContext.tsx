@@ -5,13 +5,9 @@ import {APIResponse} from "@/types";
 import {Business} from "@/features/business/business.types";
 import {axiosInstance} from "@/lib/axios";
 import {getErrorMsg} from "@/lib/api-util";
+import {BusinessContextType} from "@/features/business/context/business-context.types";
 
-interface BusinessContextType {
-  currentBusiness: Business | null;
-  isLoadingCurrentBusiness: boolean;
-  loadCurrentBusinessError: string;
-  loadCurrentBusiness: (businessId: string) => void;
-}
+
 
 const BusinessContext = createContext<BusinessContextType | undefined>(undefined)
 

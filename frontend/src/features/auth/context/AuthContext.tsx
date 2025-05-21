@@ -5,21 +5,7 @@ import {axiosInstance} from "@/lib/axios";
 import {AxiosResponse} from "axios";
 import {APIResponse} from "@/types";
 import {getErrorMsg} from "@/lib/api-util";
-
-interface AuthContextType {
-  authUser: User | null;
-  isLoadingAuthUser: boolean;
-  loadAuthUserError: string;
-  loadUser: () => Promise<User | null>;
-  isLoggingIn: boolean;
-  loginError: string;
-  login: (username: string, password: string) => Promise<User | null>;
-  logout: () => Promise<boolean>;
-  isLoggingOut: boolean;
-  signup: (username: string, firstName: string, lastName: string, password: string, confirmPassword: string) => Promise<User | null>;
-  isSigningUp: boolean;
-  signUpError: string;
-}
+import {AuthContextType} from "@/features/auth/context/auth-context.types";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

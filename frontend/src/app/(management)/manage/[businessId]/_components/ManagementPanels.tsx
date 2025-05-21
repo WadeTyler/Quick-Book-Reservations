@@ -1,4 +1,4 @@
-import {useManagedBusiness} from "@/features/business/hooks/ManagedBusinessContext";
+import {useManagedBusiness} from "@/features/business/context/ManagedBusinessContext";
 import {Card, CardContent, CardHeader} from "@/components/ui/card";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";

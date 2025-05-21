@@ -4,7 +4,7 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import Loader from "@/components/ui/loader";
 import {FormEvent, useState} from "react";
-import {useManagedBusiness} from "@/features/business/hooks/ManagedBusinessContext";
+import {useManagedBusiness} from "@/features/business/context/ManagedBusinessContext";
 import {ManageServiceOfferingRequest} from "@/features/service-offering/service-offering.types";
 import Image from "next/image";
 

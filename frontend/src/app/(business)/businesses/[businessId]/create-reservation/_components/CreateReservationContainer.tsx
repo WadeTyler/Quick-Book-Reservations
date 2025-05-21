@@ -1,8 +1,8 @@
 "use client";
 import React, {useEffect} from 'react';
 import {useParams, useSearchParams} from "next/navigation";
-import {useBusiness} from "@/features/business/hooks/BusinessContext";
-import {useServiceOffering} from "@/features/service-offering/hooks/ServiceOfferingContext";
+import {useBusiness} from "@/features/business/context/BusinessContext";
+import {useServiceOffering} from "@/features/service-offering/context/ServiceOfferingContext";
 import Loader from "@/components/ui/loader";
 import Link from "next/link";
 import CreateReservationForm

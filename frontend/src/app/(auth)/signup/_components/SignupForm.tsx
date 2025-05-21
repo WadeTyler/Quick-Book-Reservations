@@ -2,7 +2,7 @@
 import {Button} from "@/components/ui/button";
 import {FormEvent} from "react";
 import {useRouter} from "next/navigation";
-import {useAuth} from "@/features/auth/hooks/AuthContext";
+import {useAuth} from "@/features/auth/context/AuthContext";
 import Loader from "@/components/ui/loader";
 import Link from "next/link";
 import {Card, CardContent, CardHeader} from "@/components/ui/card";

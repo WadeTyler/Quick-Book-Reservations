@@ -1,5 +1,5 @@
 "use client";
-import {useManagedBusiness} from "@/features/business/hooks/ManagedBusinessContext";
+import {useManagedBusiness} from "@/features/business/context/ManagedBusinessContext";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,7 +11,7 @@ import React from "react";
 import {StaffTable} from "@/app/(management)/manage/[businessId]/staff/_components/StaffTable";
 import AddStaffSheet from "@/app/(management)/manage/[businessId]/staff/_components/AddStaffSheet";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
-import {useAuth} from "@/features/auth/hooks/AuthContext";
+import {useAuth} from "@/features/auth/context/AuthContext";
 
 export default function ManageStaffContainer() {
 

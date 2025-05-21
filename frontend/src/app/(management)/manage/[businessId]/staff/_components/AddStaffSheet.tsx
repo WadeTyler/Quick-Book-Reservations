@@ -3,7 +3,7 @@ import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTri
 import {Button} from "@/components/ui/button";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
-import {useManagedBusiness} from "@/features/business/hooks/ManagedBusinessContext";
+import {useManagedBusiness} from "@/features/business/context/ManagedBusinessContext";
 import Loader from "@/components/ui/loader";
 import {FormEvent, useState} from "react";
 

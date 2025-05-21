@@ -7,7 +7,7 @@ import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
 import Image from "next/image";
-import {useManagedBusiness} from "@/features/business/hooks/ManagedBusinessContext";
+import {useManagedBusiness} from "@/features/business/context/ManagedBusinessContext";
 import Loader from "@/components/ui/loader";
 
 export default function EditBusinessSheet({managedBusiness}: { managedBusiness: ManagedBusiness }) {
