@@ -6,6 +6,14 @@ import AddServiceSheet from "@/app/(management)/manage/[businessId]/services/_co
 import {useAuth} from "@/features/auth/context/AuthContext";
 import EditServiceSheet from "@/app/(management)/manage/[businessId]/services/_components/EditServiceSheet";
 import DeleteServiceSheet from "@/app/(management)/manage/[businessId]/services/_components/DeleteServiceSheet";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList, BreadcrumbPage,
+  BreadcrumbSeparator
+} from "@/components/ui/breadcrumb";
+import React from "react";
 
 export default function ManageServicesContainer() {
 
@@ -13,8 +21,10 @@ export default function ManageServicesContainer() {
   const {authUser} = useAuth();
 
   return (
-    <div className="container">
-      <div className="mb-8">
+    <div className="container flex flex-col gap-6 py-6">
+      <ManageServicesBreadcrumbs />
+
+      <div className="m8-8">
         <div className="mb-1">
           <h1 className="text-2xl font-bold">Manage Service Offerings</h1>
           <p className="text-muted-foreground mt-1">
@@ -61,5 +71,25 @@ export default function ManageServicesContainer() {
       </div>
 
     </div>
+  )
+}
+
+function ManageServicesBreadcrumbs() {
+  const {managedBusiness} = useManagedBusiness()
+
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator/>
+        <BreadcrumbItem>
+          <BreadcrumbLink href={`/manage/${managedBusiness?.id}`}>{managedBusiness?.name || "Business"}</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator/>
+        <BreadcrumbPage>Manage Services</BreadcrumbPage>
+      </BreadcrumbList>
+    </Breadcrumb>
   )
 }
