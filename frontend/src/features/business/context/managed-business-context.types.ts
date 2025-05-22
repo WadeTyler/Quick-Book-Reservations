@@ -1,7 +1,17 @@
-import {Business, ManagedBusiness, UpdateBusinessRequest} from "@/features/business/business.types";
+import {
+  Business,
+  CreateBusinessRequest,
+  ManagedBusiness,
+  UpdateBusinessRequest
+} from "@/features/business/business.types";
 import {ManageServiceOfferingRequest} from "@/features/service-offering/service-offering.types";
 
 export interface ManagedBusinessContextType {
+
+  isCreatingBusiness: boolean;
+  createBusinessError: string;
+  createBusiness: (createRequest: CreateBusinessRequest) => Promise<ManagedBusiness | null>;
+
   managedBusinesses: Business[] | null;
   isLoadingManagedBusinesses: boolean;
   loadManagedBusinessesError: string;

@@ -42,13 +42,13 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     public Business findById(String businessId) throws HttpRequestException {
-        return businessRepository.findById(businessId)
+        return businessRepository.findByIdIgnoreCase(businessId)
                 .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Business not found."));
     }
 
     @Override
     public Business findByIdAndOwner(String businessId, Authentication authentication) throws HttpRequestException {
-        return businessRepository.findByIdAndOwner(businessId, userService.getUser(authentication))
+        return businessRepository.findByIdIgnoreCaseAndOwner(businessId, userService.getUser(authentication))
                 .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Business not found or you are not authorized to perform this action."));
     }
 
@@ -59,7 +59,7 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     public Business findByIdAndOwnerOrStaff(String businessId, Authentication authentication) throws HttpRequestException {
-        return businessRepository.findByIdAndOwnerOrStaff(businessId, userService.getUser(authentication))
+        return businessRepository.findByIdIgnoreCaseAndOwnerOrStaff(businessId, userService.getUser(authentication))
                 .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Business not found."));
     }
 
@@ -71,10 +71,16 @@ public class BusinessServiceImpl implements BusinessService {
             throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "Max application businesses has been reached. Please try again later.");
         }
 
+        // Check if a business exists by id
+        if (businessRepository.existsByIdIgnoreCase((createBusinessRequest.id()))) {
+            throw new HttpRequestException(HttpStatus.CONFLICT, "A Business already exists with that Abbreviation.");
+        }
+
         // Check if a business already has name
         if (businessRepository.existsByName(createBusinessRequest.name())) {
             throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "A business already exists with this name.");
         }
+
 
         User user = userService.getUser(authentication);
 
@@ -86,6 +92,7 @@ public class BusinessServiceImpl implements BusinessService {
 
         // Create new business
         Business newBusiness = new Business();
+        newBusiness.setId(createBusinessRequest.id());
         newBusiness.setOwner(user);
         newBusiness.setName(createBusinessRequest.name());
         newBusiness.setDescription(createBusinessRequest.description());
@@ -112,7 +119,7 @@ public class BusinessServiceImpl implements BusinessService {
         User authUser = userService.getUser(authentication);
 
         // Find target business
-        Business business = businessRepository.findByIdAndOwner(businessId, authUser)
+        Business business = businessRepository.findByIdIgnoreCaseAndOwner(businessId, authUser)
                 .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Business not found or you are not authorized to make this change."));
 
         // Check if business already exists with target name
@@ -214,7 +221,7 @@ public class BusinessServiceImpl implements BusinessService {
     public void deleteBusiness(String businessId, Authentication authentication) throws HttpRequestException {
         User authUser = userService.getUser(authentication);
         // Find the business and verify user is owner
-        Business business = businessRepository.findByIdAndOwner(businessId, authUser)
+        Business business = businessRepository.findByIdIgnoreCaseAndOwner(businessId, authUser)
                 .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Business not found or you are not authorized to perform this action."));
 
 

@@ -5,6 +5,11 @@ import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
 public record CreateBusinessRequest(
+
+        @NotBlank(message = "Abbreviation is required.")
+        @Size(min = 3, max = 15, message = "Abbreviation must be between 3 - 15 characters.")
+        String id,
+
         @NotBlank(message = "Name is required.")
         @Size(min = 3, max = 100, message = "Name must be between 3 - 100 characters.")
         String name,

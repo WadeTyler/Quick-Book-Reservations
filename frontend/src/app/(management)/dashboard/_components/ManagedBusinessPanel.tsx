@@ -8,7 +8,7 @@ export default function ManagedBusinessPanel({managedBusiness}: {managedBusiness
   return (
     <Card className="pt-0 rounded-md overflow-hidden">
       <CardHeader className="bg-background relative aspect-video">
-        <Image src={managedBusiness.image || "./default-image.jpg"} alt={`Image for ${managedBusiness.name}`} fill={true} objectFit="cover" objectPosition="center" />
+        <Image src={managedBusiness.image || "/default-image.jpg"} alt={`Image for ${managedBusiness.name}`} fill={true} objectFit="cover" objectPosition="center" />
       </CardHeader>
       <CardContent>
         <h2 className="font-semibold tracking-tight text-accent text-xl sm:text-2xl">{managedBusiness.name}</h2>

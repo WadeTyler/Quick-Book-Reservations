@@ -12,13 +12,13 @@ import java.util.Optional;
 @Repository
 public interface BusinessRepository extends JpaRepository<Business, String> {
 
-    Optional<Business> findByIdAndOwner(String businessId, User owner);
+    Optional<Business> findByIdIgnoreCaseAndOwner(String businessId, User owner);
 
     @Query("SELECT b FROM Business b WHERE b.owner = :user OR :user MEMBER OF b.staff")
     List<Business> findAllByOwnerOrStaff(@Param("user") User user);
 
     @Query("SELECT b FROM Business b WHERE b.id = :businessId AND (b.owner = :user OR :user MEMBER OF b.staff)")
-    Optional<Business> findByIdAndOwnerOrStaff(@Param("businessId") String businessId, @Param("user") User user);
+    Optional<Business> findByIdIgnoreCaseAndOwnerOrStaff(@Param("businessId") String businessId, @Param("user") User user);
 
     boolean existsByName(String name);
 
@@ -26,4 +26,7 @@ public interface BusinessRepository extends JpaRepository<Business, String> {
 
     boolean existsByNameAndIdNot(String name, String businessId);
 
+    boolean existsByIdIgnoreCase(String id);
+
+    Optional<Business> findByIdIgnoreCase(String id);
 }
