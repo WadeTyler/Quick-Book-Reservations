@@ -36,7 +36,7 @@ public class ManageReservationsController {
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new APIResponse<>(true, "Reservations retrieved.", reservations));
+                .body(new APIResponse<>(true, "Reservations retrievaed.", reservations));
     }
 
     @GetMapping

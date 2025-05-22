@@ -84,30 +84,12 @@ public class ManageBusinessController {
         );
     }
 
-    @PutMapping("/{businessId}/details")
-    public ResponseEntity<?> updateBusinessDetails(Authentication authentication, @PathVariable String businessId, @RequestBody @Valid UpdateBusinessDetailsRequest updateBusinessDetailsRequest) throws HttpRequestException {
-        ManagedBusinessDTO updatedBusiness = businessService.updatedBusinessDetails(businessId, updateBusinessDetailsRequest, authentication).toManagedBusinessDTO();
+    @PutMapping(value = "/{businessId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<?> update(Authentication authentication, @PathVariable String businessId, @ModelAttribute @Valid UpdateBusinessRequest updateBusinessRequest) throws IOException {
+        ManagedBusinessDTO updatedBusiness = businessService.update(businessId, updateBusinessRequest, authentication).toManagedBusinessDTO();
 
         return ResponseEntity.status(HttpStatus.OK).body(
                 new APIResponse<>(true, "Business details updated.", updatedBusiness)
-        );
-    }
-
-    @PutMapping(value = "/{businessId}/image", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> updateBusinessImage(Authentication authentication, @PathVariable String businessId, @ModelAttribute @Valid UpdateBusinessImageRequest updateBusinessImageRequest) throws IOException {
-        ManagedBusinessDTO updatedBusiness = businessService.updateBusinessImage(businessId, updateBusinessImageRequest, authentication).toManagedBusinessDTO();
-
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new APIResponse<>(true, "Business image updated.", updatedBusiness)
-        );
-    }
-
-    @DeleteMapping("/{businessId}/image")
-    public ResponseEntity<?> removeBusinessImage(Authentication authentication, @PathVariable String businessId) throws HttpRequestException {
-        ManagedBusinessDTO updatedBusiness = businessService.removeBusinessImage(businessId, authentication).toManagedBusinessDTO();
-
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new APIResponse<>(true, "Image removed.", updatedBusiness)
         );
     }
 
