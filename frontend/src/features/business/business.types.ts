@@ -25,6 +25,7 @@ export interface ManagedBusiness {
 }
 
 export type CreateBusinessRequest = {
+  id: string;
   name: string;
   image?: File | null;
   description: string;

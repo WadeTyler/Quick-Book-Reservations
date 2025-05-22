@@ -22,7 +22,7 @@ import java.util.List;
 public class Business {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(nullable = false, length = 15)
     private String id;
 
     @ManyToOne

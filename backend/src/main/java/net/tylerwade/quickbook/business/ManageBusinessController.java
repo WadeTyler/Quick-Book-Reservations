@@ -49,7 +49,7 @@ public class ManageBusinessController {
     }
 
     // Create new Business
-    @PostMapping(value = "/create", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> create(Authentication authentication, @ModelAttribute @Valid CreateBusinessRequest createBusinessRequest) throws IOException {
 
         ManagedBusinessDTO newBusiness = businessService.create(createBusinessRequest, authentication).toManagedBusinessDTO();

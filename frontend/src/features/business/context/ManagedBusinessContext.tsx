@@ -1,5 +1,10 @@
 "use client";
-import {Business, ManagedBusiness, UpdateBusinessRequest} from "@/features/business/business.types";
+import {
+  Business,
+  CreateBusinessRequest,
+  ManagedBusiness,
+  UpdateBusinessRequest
+} from "@/features/business/business.types";
 import {createContext, ReactNode, useContext, useState} from "react";
 import {AxiosResponse} from "axios";
 import {APIResponse} from "@/types";
@@ -17,6 +22,29 @@ export const useManagedBusiness = () => {
 }
 
 export function ManagedBusinessProvider({children}: {children: ReactNode}) {
+
+  const [isCreatingBusiness, setIsCreatingBusiness] = useState(false);
+  const [createBusinessError, setCreateBusinessError] = useState("");
+
+  async function createBusiness(createRequest: CreateBusinessRequest): Promise<ManagedBusiness | null> {
+    setIsCreatingBusiness(true);
+    setCreateBusinessError("");
+    try {
+      const response: AxiosResponse<APIResponse<ManagedBusiness>> = await axiosInstance.post(
+        "/businesses/manage",
+        createRequest,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+      return response.data.data;
+    } catch (e) {
+      setCreateBusinessError(getErrorMsg(e));
+      return null;
+    } finally {
+      setIsCreatingBusiness(false);
+    }
+  }
+
+
   const [managedBusinesses, setManagedBusinesses] = useState<Business[] | null>(null);
   const [isLoadingManagedBusinesses, setIsLoadingManagedBusinesses] = useState(false);
   const [loadManagedBusinessesError, setLoadManagedBusinessesError] = useState("");
@@ -186,6 +214,10 @@ export function ManagedBusinessProvider({children}: {children: ReactNode}) {
 
   return (
     <ManagedBusinessContext.Provider value={{
+      isCreatingBusiness,
+      createBusinessError,
+      createBusiness,
+
       managedBusinesses,
       isLoadingManagedBusinesses,
       loadManagedBusinessesError,

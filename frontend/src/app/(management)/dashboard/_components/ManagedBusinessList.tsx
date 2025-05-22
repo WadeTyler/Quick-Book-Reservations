@@ -24,13 +24,18 @@ export default function ManagedBusinessList() {
     <p className="text-destructive text-lg text-balance">{loadManagedBusinessesError}</p>
   )
 
-  else if (managedBusinesses) return (
-    <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-      {managedBusinesses.map(managedBusinesses => (
-        <ManagedBusinessPanel managedBusiness={managedBusinesses} key={managedBusinesses.id} />
-      ))}
-    </div>
-  )
+  else if (managedBusinesses) {
+   if (managedBusinesses.length > 0) return (
+     <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+       {managedBusinesses.map(managedBusinesses => (
+         <ManagedBusinessPanel managedBusiness={managedBusinesses} key={managedBusinesses.id} />
+       ))}
+     </div>
+   )
+   else return (
+     <p className="mx-auto text-center text-balance text-foreground/70">You have not created any businesses.</p>
+   )
+  }
 
   return null;
 }
