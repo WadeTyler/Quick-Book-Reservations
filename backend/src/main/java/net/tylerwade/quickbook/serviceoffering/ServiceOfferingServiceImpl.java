@@ -50,6 +50,7 @@ public class ServiceOfferingServiceImpl implements ServiceOfferingService {
         serviceOffering.setType(manageServiceOfferingRequest.type());
         serviceOffering.setName(manageServiceOfferingRequest.name());
         serviceOffering.setDescription(manageServiceOfferingRequest.description());
+        serviceOffering.setEnabled(true);
 
         // Save
         serviceOfferingRepository.save(serviceOffering);
@@ -86,6 +87,7 @@ public class ServiceOfferingServiceImpl implements ServiceOfferingService {
         serviceOffering.setName(manageServiceOfferingRequest.name());
         serviceOffering.setDescription(manageServiceOfferingRequest.description());
         serviceOffering.setType(manageServiceOfferingRequest.type());
+        serviceOffering.setEnabled(manageServiceOfferingRequest.enabled());
 
         // If changing image
         if (manageServiceOfferingRequest.image() != null && !manageServiceOfferingRequest.removeImage()) {

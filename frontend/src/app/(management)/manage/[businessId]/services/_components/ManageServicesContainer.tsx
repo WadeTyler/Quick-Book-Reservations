@@ -14,6 +14,8 @@ import {
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 import React from "react";
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
+import {ServiceOffering} from "@/features/service-offering/service-offering.types";
 
 export default function ManageServicesContainer() {
 
@@ -54,9 +56,16 @@ export default function ManageServicesContainer() {
               </div>
             )}
             <div className="flex-1 flex flex-col p-4">
-              <div className="flex items-center justify-between mb-2">
-                <h2 className="font-semibold text-lg">{service.name}</h2>
-                <span className="text-xs bg-accent/20 text-accent px-2 py-1 rounded">
+              <div className="flex flex-col mb-2">
+                <div className="flex items-center justify-between">
+                  {/*Service Name*/}
+                  <h2 className="font-semibold text-lg">{service.name}</h2>
+
+                  {/* Enabled Status */}
+                  <EnabledStatus service={service} />
+                </div>
+                {/* Service type*/}
+                <span className="w-fit text-xs bg-accent/20 text-accent px-2 py-1 rounded">
                   {service.type}
                 </span>
               </div>
@@ -92,4 +101,22 @@ function ManageServicesBreadcrumbs() {
       </BreadcrumbList>
     </Breadcrumb>
   )
+}
+
+
+function EnabledStatus({service}: {service: ServiceOffering}) {
+  return (
+  <TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <div className={`w-4 h-4 rounded-full flex items-center justify-center ${service.enabled ? 'bg-accent/30' : 'bg-destructive/30'}`}>
+          <div className={`w-2 h-2 rounded-full ${service.enabled ? 'bg-accent' : 'bg-destructive'}`}></div>
+        </div>
+      </TooltipTrigger>
+      <TooltipContent>
+        {service.enabled ? <p>Service Enabled</p> : <p>Service Disabled</p>}
+      </TooltipContent>
+    </Tooltip>
+  </TooltipProvider>
+  );
 }

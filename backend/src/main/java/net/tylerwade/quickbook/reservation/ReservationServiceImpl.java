@@ -35,6 +35,11 @@ public class ReservationServiceImpl implements ReservationService {
                 .findFirst()
                 .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Service not found."));
 
+        // Check if service enabled.
+        if (!serviceOffering.isEnabled()) {
+            throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "This service is currently not available for reservations.");
+        }
+
         // Check if a reservation already exists for date and time
         if (reservationRepository.existsByServiceOfferingAndDateAndTime(serviceOffering, createReservationRequest.date(), createReservationRequest.time())) {
             throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "Date and Time not available.");

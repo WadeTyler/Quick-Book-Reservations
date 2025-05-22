@@ -74,7 +74,7 @@ function BusinessContainer() {
       </section>
 
       {/* Business services */}
-      <section id="services" className="relative w-full flex flex-col items-center">
+      <section id="services" className="relative w-full flex flex-col items-center py-6">
 
         <div className="w-full">
           <h2

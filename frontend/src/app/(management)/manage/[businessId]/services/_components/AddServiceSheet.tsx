@@ -18,7 +18,8 @@ export default function AddServiceSheet() {
     type: "",
     description: "",
     image: null,
-    removeImage: false
+    removeImage: false,
+    enabled: true
   });
   const [imagePreview, setImagePreview] = useState<string>("");
 
@@ -41,7 +42,8 @@ export default function AddServiceSheet() {
       type: "",
       description: "",
       image: null,
-      removeImage: false
+      removeImage: false,
+      enabled: true
     });
     setImagePreview("");
   }

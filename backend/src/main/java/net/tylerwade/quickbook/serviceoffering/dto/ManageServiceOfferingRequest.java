@@ -20,6 +20,8 @@ public record ManageServiceOfferingRequest(
 
         MultipartFile image,
 
-        boolean removeImage
+        boolean removeImage,
+
+        boolean enabled
 ) {
 }

@@ -7,6 +7,7 @@ import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import Image from "next/image";
 import Loader from "@/components/ui/loader";
+import {Checkbox} from "@/components/ui/checkbox";
 
 export default function EditServiceSheet({targetService}: {targetService: ServiceOffering}) {
 
@@ -18,7 +19,8 @@ export default function EditServiceSheet({targetService}: {targetService: Servic
     type: targetService.type,
     description: targetService.description,
     image: null,
-    removeImage: false
+    removeImage: false,
+    enabled: targetService.enabled
   });
   const [imagePreview, setImagePreview] = useState<string>(targetService.image);
 
@@ -41,7 +43,8 @@ export default function EditServiceSheet({targetService}: {targetService: Servic
       type: targetService.type,
       description: targetService.description,
       image: null,
-      removeImage: false
+      removeImage: false,
+      enabled: targetService.enabled
     });
     setImagePreview(targetService.image);
   }
@@ -49,7 +52,7 @@ export default function EditServiceSheet({targetService}: {targetService: Servic
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="outline" size="sm">Edit</Button>
+        <Button variant="outline" size="sm" onClick={resetRequest}>Edit</Button>
       </SheetTrigger>
       <SheetContent className="w-full">
         <SheetHeader>
@@ -154,6 +157,16 @@ export default function EditServiceSheet({targetService}: {targetService: Servic
                 Reset Image
               </Button>
             )}
+          </div>
+
+          <div className="flex-1">
+            <div className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+            <Checkbox id="enabled" checked={updateRequest.enabled} onCheckedChange={(checkedState) => setUpdateRequest(prev => ({...prev, enabled: checkedState === true}))} />
+              <div className="flex-1">
+                <Label htmlFor="enabled">Is this service enabled?</Label>
+                <p className="text-foreground/40 text-xs">If disabled, the service will still be visible, but unavailable for booking.</p>
+              </div>
+            </div>
           </div>
 
           <hr className="w-full"/>
