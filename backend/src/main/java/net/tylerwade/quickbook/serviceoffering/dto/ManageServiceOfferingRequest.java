@@ -22,6 +22,8 @@ public record ManageServiceOfferingRequest(
 
         boolean removeImage,
 
-        boolean enabled
+        boolean enabled,
+
+        boolean displayPublic
 ) {
 }

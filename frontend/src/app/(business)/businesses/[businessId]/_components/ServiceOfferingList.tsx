@@ -50,7 +50,8 @@ function ServiceOfferingList() {
         </p>
       )}
 
-      {serviceOfferings?.map(service => (
+      {/* Display public services */}
+      {serviceOfferings?.filter(s => s.displayPublic).map(service => (
         <Card key={service.id} className="w-full overflow-hidden p-0! flex flex-col-reverse lg:flex-row">
 
           <div className="w-full h-full wrap-anywhere p-4">
@@ -68,6 +69,7 @@ function ServiceOfferingList() {
               {service.description}
             </p>
 
+            {/* Show Book Reservation button if enabled */}
             {service.enabled && (
               <Link href={`/businesses/${businessId}/create-reservation?serviceId=${service.id}`}>
                 <Button className="mt-auto">

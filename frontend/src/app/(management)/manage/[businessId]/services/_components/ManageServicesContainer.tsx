@@ -16,6 +16,7 @@ import {
 import React from "react";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
 import {ServiceOffering} from "@/features/service-offering/service-offering.types";
+import {EyeClosed, EyeIcon} from "lucide-react";
 
 export default function ManageServicesContainer() {
 
@@ -24,7 +25,7 @@ export default function ManageServicesContainer() {
 
   return (
     <div className="container flex flex-col gap-6 py-6">
-      <ManageServicesBreadcrumbs />
+      <ManageServicesBreadcrumbs/>
 
       <div className="m8-8">
         <div className="mb-1">
@@ -62,7 +63,11 @@ export default function ManageServicesContainer() {
                   <h2 className="font-semibold text-lg">{service.name}</h2>
 
                   {/* Enabled Status */}
-                  <EnabledStatus service={service} />
+
+                  <div className="flex items-center gap-2">
+                    <DisplayPublicStatus service={service}/>
+                    <EnabledStatus service={service}/>
+                  </div>
                 </div>
                 {/* Service type*/}
                 <span className="w-fit text-xs bg-accent/20 text-accent px-2 py-1 rounded">
@@ -104,19 +109,35 @@ function ManageServicesBreadcrumbs() {
 }
 
 
-function EnabledStatus({service}: {service: ServiceOffering}) {
+function EnabledStatus({service}: { service: ServiceOffering }) {
   return (
-  <TooltipProvider>
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <div className={`w-4 h-4 rounded-full flex items-center justify-center ${service.enabled ? 'bg-accent/30' : 'bg-destructive/30'}`}>
-          <div className={`w-2 h-2 rounded-full ${service.enabled ? 'bg-accent' : 'bg-destructive'}`}></div>
-        </div>
-      </TooltipTrigger>
-      <TooltipContent>
-        {service.enabled ? <p>Service Enabled</p> : <p>Service Disabled</p>}
-      </TooltipContent>
-    </Tooltip>
-  </TooltipProvider>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div
+            className={`w-4 h-4 rounded-full flex items-center justify-center ${service.enabled ? 'bg-accent/30' : 'bg-destructive/30'}`}>
+            <div className={`w-2 h-2 rounded-full ${service.enabled ? 'bg-accent' : 'bg-destructive'}`}></div>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent>
+          {service.enabled ? <p>Service Enabled</p> : <p>Service Disabled</p>}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
+
+function DisplayPublicStatus({service}: { service: ServiceOffering }) {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          {service.displayPublic ? <EyeIcon/> : <EyeClosed />}
+        </TooltipTrigger>
+        <TooltipContent>
+          {service.displayPublic ? <p>Publicly Displayed</p> : <p>Hidden</p>}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }

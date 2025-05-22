@@ -82,7 +82,7 @@ function CreateReservationForm({currentBusiness, serviceOfferings}: {
                 <SelectValue placeholder="Choose a service..."/>
               </SelectTrigger>
               <SelectContent>
-                {serviceOfferings.filter(s => s.enabled).map(service => (
+                {serviceOfferings.filter(s => s.enabled && s.displayPublic).map(service => (
                   <SelectItem key={service.id} value={service.id.toString()}>
                     {service.name}
                   </SelectItem>

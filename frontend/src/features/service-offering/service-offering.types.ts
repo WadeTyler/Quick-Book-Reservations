@@ -6,6 +6,7 @@ export type ServiceOffering = {
   type: string;
   image: string;
   enabled: boolean;
+  displayPublic: boolean
   createdAt: string;
 }
 
@@ -16,4 +17,5 @@ export type ManageServiceOfferingRequest = {
   image?: File | null;
   removeImage?: boolean;
   enabled: boolean;
+  displayPublic: boolean;
 }

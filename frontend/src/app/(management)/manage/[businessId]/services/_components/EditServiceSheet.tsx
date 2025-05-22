@@ -20,7 +20,8 @@ export default function EditServiceSheet({targetService}: {targetService: Servic
     description: targetService.description,
     image: null,
     removeImage: false,
-    enabled: targetService.enabled
+    enabled: targetService.enabled,
+    displayPublic: targetService.displayPublic
   });
   const [imagePreview, setImagePreview] = useState<string>(targetService.image);
 
@@ -44,7 +45,8 @@ export default function EditServiceSheet({targetService}: {targetService: Servic
       description: targetService.description,
       image: null,
       removeImage: false,
-      enabled: targetService.enabled
+      enabled: targetService.enabled,
+      displayPublic: targetService.displayPublic
     });
     setImagePreview(targetService.image);
   }
@@ -165,6 +167,16 @@ export default function EditServiceSheet({targetService}: {targetService: Servic
               <div className="flex-1">
                 <Label htmlFor="enabled">Is this service enabled?</Label>
                 <p className="text-foreground/40 text-xs">If disabled, the service will still be visible, but unavailable for booking.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex-1">
+            <div className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+              <Checkbox id="displayPublic" checked={updateRequest.displayPublic} onCheckedChange={(checkedState) => setUpdateRequest(prev => ({...prev, displayPublic: checkedState === true}))} />
+              <div className="flex-1">
+                <Label htmlFor="displayPublic">Display Publicly?</Label>
+                <p className="text-foreground/40 text-xs">If this is disabled, users will not be able to view or book this service.</p>
               </div>
             </div>
           </div>

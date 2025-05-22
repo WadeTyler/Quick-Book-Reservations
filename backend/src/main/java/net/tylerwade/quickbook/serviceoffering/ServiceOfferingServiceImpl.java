@@ -51,6 +51,7 @@ public class ServiceOfferingServiceImpl implements ServiceOfferingService {
         serviceOffering.setName(manageServiceOfferingRequest.name());
         serviceOffering.setDescription(manageServiceOfferingRequest.description());
         serviceOffering.setEnabled(true);
+        serviceOffering.setDisplayPublic(true);
 
         // Save
         serviceOfferingRepository.save(serviceOffering);
@@ -88,6 +89,7 @@ public class ServiceOfferingServiceImpl implements ServiceOfferingService {
         serviceOffering.setDescription(manageServiceOfferingRequest.description());
         serviceOffering.setType(manageServiceOfferingRequest.type());
         serviceOffering.setEnabled(manageServiceOfferingRequest.enabled());
+        serviceOffering.setDisplayPublic(manageServiceOfferingRequest.displayPublic());
 
         // If changing image
         if (manageServiceOfferingRequest.image() != null && !manageServiceOfferingRequest.removeImage()) {
@@ -130,14 +132,14 @@ public class ServiceOfferingServiceImpl implements ServiceOfferingService {
     }
 
     @Override
-    public List<ServiceOffering> findAll(String businessId) throws HttpRequestException {
-        return businessService.findById(businessId).getServiceOfferings();
+    public List<ServiceOffering> findAllByPublic(String businessId) throws HttpRequestException {
+        return businessService.findById(businessId).getServiceOfferings().stream().filter(ServiceOffering::isDisplayPublic).toList();
     }
 
     @Override
-    public ServiceOffering findById(String businessId, Long serviceId) throws HttpRequestException {
+    public ServiceOffering findByIdAndPublic(String businessId, Long serviceId) throws HttpRequestException {
         return businessService.findById(businessId).getServiceOfferings().stream()
-                .filter(s -> s.getId().equals(serviceId))
+                .filter(s -> s.getId().equals(serviceId) && s.isDisplayPublic())
                 .findFirst()
                 .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Service not found."));
     }
