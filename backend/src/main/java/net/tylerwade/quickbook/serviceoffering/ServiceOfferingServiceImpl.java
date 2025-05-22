@@ -52,6 +52,7 @@ public class ServiceOfferingServiceImpl implements ServiceOfferingService {
         serviceOffering.setDescription(manageServiceOfferingRequest.description());
         serviceOffering.setEnabled(true);
         serviceOffering.setDisplayPublic(true);
+        serviceOffering.setAllowPublic(true);
 
         // Save
         serviceOfferingRepository.save(serviceOffering);
@@ -89,7 +90,22 @@ public class ServiceOfferingServiceImpl implements ServiceOfferingService {
         serviceOffering.setDescription(manageServiceOfferingRequest.description());
         serviceOffering.setType(manageServiceOfferingRequest.type());
         serviceOffering.setEnabled(manageServiceOfferingRequest.enabled());
-        serviceOffering.setDisplayPublic(manageServiceOfferingRequest.displayPublic());
+
+        if (!manageServiceOfferingRequest.displayPublic()) {
+            // If not displaying publicly, then public booking needs to be disabled
+            serviceOffering.setDisplayPublic(false);
+            serviceOffering.setAllowPublic(false);
+        } else {
+            serviceOffering.setDisplayPublic(true);
+        }
+
+        if (manageServiceOfferingRequest.allowPublic()) {
+            // If allowing public, then it needs to be publicly displayed
+            serviceOffering.setDisplayPublic(true);
+            serviceOffering.setAllowPublic(true);
+        } else {
+            serviceOffering.setAllowPublic(false);
+        }
 
         // If changing image
         if (manageServiceOfferingRequest.image() != null && !manageServiceOfferingRequest.removeImage()) {
@@ -132,14 +148,14 @@ public class ServiceOfferingServiceImpl implements ServiceOfferingService {
     }
 
     @Override
-    public List<ServiceOffering> findAllByPublic(String businessId) throws HttpRequestException {
-        return businessService.findById(businessId).getServiceOfferings().stream().filter(ServiceOffering::isDisplayPublic).toList();
+    public List<ServiceOffering> findAll(String businessId) throws HttpRequestException {
+        return businessService.findById(businessId).getServiceOfferings();
     }
 
     @Override
-    public ServiceOffering findByIdAndPublic(String businessId, Long serviceId) throws HttpRequestException {
+    public ServiceOffering findById(String businessId, Long serviceId) throws HttpRequestException {
         return businessService.findById(businessId).getServiceOfferings().stream()
-                .filter(s -> s.getId().equals(serviceId) && s.isDisplayPublic())
+                .filter(s -> s.getId().equals(serviceId))
                 .findFirst()
                 .orElseThrow(() -> new HttpRequestException(HttpStatus.NOT_FOUND, "Service not found."));
     }

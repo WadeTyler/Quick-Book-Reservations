@@ -16,7 +16,7 @@ import {
 import React from "react";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
 import {ServiceOffering} from "@/features/service-offering/service-offering.types";
-import {EyeClosed, EyeIcon} from "lucide-react";
+import {EyeClosed, EyeIcon, ShieldIcon, UsersIcon} from "lucide-react";
 
 export default function ManageServicesContainer() {
 
@@ -66,6 +66,7 @@ export default function ManageServicesContainer() {
 
                   <div className="flex items-center gap-2">
                     <DisplayPublicStatus service={service}/>
+                    <AllowPublicStatus service={service} />
                     <EnabledStatus service={service}/>
                   </div>
                 </div>
@@ -136,6 +137,21 @@ function DisplayPublicStatus({service}: { service: ServiceOffering }) {
         </TooltipTrigger>
         <TooltipContent>
           {service.displayPublic ? <p>Publicly Displayed</p> : <p>Hidden</p>}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
+
+function AllowPublicStatus({service}: { service: ServiceOffering }) {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          {service.allowPublic ? <UsersIcon/> : <ShieldIcon />}
+        </TooltipTrigger>
+        <TooltipContent>
+          {service.allowPublic ? <p>Public Booking Allowed</p> : <p>Staff Booking Only</p>}
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

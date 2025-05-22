@@ -24,7 +24,7 @@ public class ServiceOfferingController {
 
     @GetMapping
     public ResponseEntity<?> findAll(@PathVariable String businessId) throws HttpRequestException {
-        List<ServiceOfferingDTO> serviceOfferings = serviceOfferingService.findAllByPublic(businessId).stream()
+        List<ServiceOfferingDTO> serviceOfferings = serviceOfferingService.findAll(businessId).stream()
                 .map(ServiceOffering::toDTO)
                 .toList();
 
@@ -35,7 +35,7 @@ public class ServiceOfferingController {
 
     @GetMapping("/{serviceId}")
     public ResponseEntity<?> findById(@PathVariable String businessId, @PathVariable Long serviceId) throws HttpRequestException {
-        ServiceOfferingDTO serviceOffering = serviceOfferingService.findByIdAndPublic(businessId, serviceId).toDTO();
+        ServiceOfferingDTO serviceOffering = serviceOfferingService.findById(businessId, serviceId).toDTO();
 
         return ResponseEntity
                 .status(HttpStatus.OK)

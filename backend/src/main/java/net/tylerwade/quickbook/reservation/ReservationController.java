@@ -7,6 +7,7 @@ import net.tylerwade.quickbook.reservation.dto.ReservationDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,8 +21,8 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createReservation(@PathVariable String businessId, @PathVariable Long serviceId, @RequestBody @Valid CreateReservationRequest createReservationRequest) throws HttpRequestException {
-        ReservationDTO reservation = reservationService.createReservation(businessId, serviceId, createReservationRequest).toDTO();
+    public ResponseEntity<?> createReservation(Authentication authentication, @PathVariable String businessId, @PathVariable Long serviceId, @RequestBody @Valid CreateReservationRequest createReservationRequest) throws HttpRequestException {
+        ReservationDTO reservation = reservationService.createReservation(businessId, serviceId, createReservationRequest, authentication).toDTO();
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new APIResponse<>(true, "Reservation created.", reservation));

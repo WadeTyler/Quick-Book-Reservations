@@ -19,7 +19,7 @@ public interface ReservationService {
      * @param createReservationRequest The request object containing the reservation details
      * @return the newly created reservation
      */
-    Reservation createReservation(String businessId, Long serviceId, CreateReservationRequest createReservationRequest) throws HttpRequestException;
+    Reservation createReservation(String businessId, Long serviceId, CreateReservationRequest createReservationRequest, Authentication authentication) throws HttpRequestException;
 
     List<Reservation> findAll(String businessId, Authentication authentication) throws HttpRequestException;
     Page<Reservation> findAll(String businessId, Pageable pageable, Authentication authentication) throws HttpRequestException;

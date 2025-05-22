@@ -46,6 +46,9 @@ public class ServiceOffering {
     @Column(nullable = false)
     private boolean displayPublic = true;
 
+    @Column(nullable = false)
+    private boolean allowPublic = true;
+
     private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 
     @OneToMany(mappedBy = "serviceOffering", cascade = CascadeType.REMOVE)
@@ -67,6 +70,7 @@ public class ServiceOffering {
                 image,
                 enabled,
                 displayPublic,
+                allowPublic,
                 createdAt);
     }
 }

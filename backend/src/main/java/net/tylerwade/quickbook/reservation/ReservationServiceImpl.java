@@ -1,5 +1,7 @@
 package net.tylerwade.quickbook.reservation;
 
+import net.tylerwade.quickbook.auth.User;
+import net.tylerwade.quickbook.auth.UserService;
 import net.tylerwade.quickbook.business.BusinessService;
 import net.tylerwade.quickbook.reservation.dto.CreateReservationRequest;
 import net.tylerwade.quickbook.exception.HttpRequestException;
@@ -18,14 +20,16 @@ public class ReservationServiceImpl implements ReservationService {
 
     private final BusinessService businessService;
     private final ReservationRepository reservationRepository;
+    private final UserService userService;
 
-    public ReservationServiceImpl(BusinessService businessService, ReservationRepository reservationRepository) {
+    public ReservationServiceImpl(BusinessService businessService, ReservationRepository reservationRepository, UserService userService) {
         this.businessService = businessService;
         this.reservationRepository = reservationRepository;
+        this.userService = userService;
     }
 
     @Override
-    public Reservation createReservation(String businessId, Long serviceId, CreateReservationRequest createReservationRequest) throws HttpRequestException {
+    public Reservation createReservation(String businessId, Long serviceId, CreateReservationRequest createReservationRequest, Authentication authentication) throws HttpRequestException {
         // Find the target business
         Business business = businessService.findById(businessId);
 
@@ -38,6 +42,16 @@ public class ReservationServiceImpl implements ReservationService {
         // Check if service enabled.
         if (!serviceOffering.isEnabled()) {
             throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "This service is currently not available for reservations.");
+        }
+
+        // Check if allow public or not displayed to public.
+        if (!serviceOffering.isDisplayPublic() || !serviceOffering.isAllowPublic()) {
+            // Check if authUser is owner or staff member
+            User authUser = userService.getUser(authentication);
+
+            if (!business.getOwner().getId().equals(authUser.getId()) && !business.getStaff().contains(authUser)) {
+                throw new HttpRequestException(HttpStatus.NOT_ACCEPTABLE, "This service is currently not available for public online reservation.");
+            }
         }
 
         // Check if a reservation already exists for date and time

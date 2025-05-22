@@ -9,11 +9,15 @@ import {Button} from "@/components/ui/button";
 import Image from "next/image";
 import {ServiceOffering} from "@/features/service-offering/service-offering.types";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
+import {useAuth} from "@/features/auth/context/AuthContext";
+import {useBusiness} from "@/features/business/context/BusinessContext";
 
 function ServiceOfferingList() {
 
   const params = useParams<{ businessId: string }>();
   const businessId = params.businessId;
+
+  const {currentBusiness} = useBusiness();
 
   const {
     serviceOfferings,
@@ -25,6 +29,10 @@ function ServiceOfferingList() {
   useEffect(() => {
     loadServiceOfferings(businessId);
   }, [businessId]);
+
+  const {authUser} = useAuth();
+  const isOwnerOrStaff: boolean = authUser !== null && currentBusiness !== null && (currentBusiness.ownerId === authUser.id || currentBusiness.staffIds.includes(authUser.id));
+  const filteredServices: ServiceOffering[] | undefined | null = isOwnerOrStaff ? serviceOfferings : serviceOfferings?.filter(s => s.displayPublic);
 
   if (isLoadingServiceOfferings) return (
     <Loader/>
@@ -51,7 +59,7 @@ function ServiceOfferingList() {
       )}
 
       {/* Display public services */}
-      {serviceOfferings?.filter(s => s.displayPublic).map(service => (
+      {filteredServices?.map(service => (
         <Card key={service.id} className="w-full overflow-hidden p-0! flex flex-col-reverse lg:flex-row">
 
           <div className="w-full h-full wrap-anywhere p-4">
@@ -69,8 +77,8 @@ function ServiceOfferingList() {
               {service.description}
             </p>
 
-            {/* Show Book Reservation button if enabled */}
-            {service.enabled && (
+            {/* Show Book Reservation button if enabled and allowPublic or staff */}
+            {service.enabled && (service.allowPublic || isOwnerOrStaff) && (
               <Link href={`/businesses/${businessId}/create-reservation?serviceId=${service.id}`}>
                 <Button className="mt-auto">
                   Book Reservation

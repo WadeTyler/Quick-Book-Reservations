@@ -11,6 +11,7 @@ public record ServiceOfferingDTO(
        String image,
        boolean enabled,
        boolean displayPublic,
+       boolean allowPublic,
        Timestamp createdAt
 ) {
 }

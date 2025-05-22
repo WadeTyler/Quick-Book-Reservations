@@ -45,7 +45,7 @@ public interface ServiceOfferingService {
      */
     Business deleteService(String businessId, Long serviceId, Authentication authentication) throws HttpRequestException;
 
-    List<ServiceOffering> findAllByPublic(String businessId) throws HttpRequestException;
+    List<ServiceOffering> findAll(String businessId) throws HttpRequestException;
 
-    ServiceOffering findByIdAndPublic(String businessId, Long serviceId) throws HttpRequestException;
+    ServiceOffering findById(String businessId, Long serviceId) throws HttpRequestException;
 }
