@@ -50,6 +50,9 @@ public class ServiceOfferingServiceImpl implements ServiceOfferingService {
         serviceOffering.setType(manageServiceOfferingRequest.type());
         serviceOffering.setName(manageServiceOfferingRequest.name());
         serviceOffering.setDescription(manageServiceOfferingRequest.description());
+        serviceOffering.setEnabled(true);
+        serviceOffering.setDisplayPublic(true);
+        serviceOffering.setAllowPublic(true);
 
         // Save
         serviceOfferingRepository.save(serviceOffering);
@@ -86,6 +89,23 @@ public class ServiceOfferingServiceImpl implements ServiceOfferingService {
         serviceOffering.setName(manageServiceOfferingRequest.name());
         serviceOffering.setDescription(manageServiceOfferingRequest.description());
         serviceOffering.setType(manageServiceOfferingRequest.type());
+        serviceOffering.setEnabled(manageServiceOfferingRequest.enabled());
+
+        if (!manageServiceOfferingRequest.displayPublic()) {
+            // If not displaying publicly, then public booking needs to be disabled
+            serviceOffering.setDisplayPublic(false);
+            serviceOffering.setAllowPublic(false);
+        } else {
+            serviceOffering.setDisplayPublic(true);
+        }
+
+        if (manageServiceOfferingRequest.allowPublic()) {
+            // If allowing public, then it needs to be publicly displayed
+            serviceOffering.setDisplayPublic(true);
+            serviceOffering.setAllowPublic(true);
+        } else {
+            serviceOffering.setAllowPublic(false);
+        }
 
         // If changing image
         if (manageServiceOfferingRequest.image() != null && !manageServiceOfferingRequest.removeImage()) {

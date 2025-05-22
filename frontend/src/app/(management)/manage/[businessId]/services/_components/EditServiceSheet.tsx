@@ -7,8 +7,9 @@ import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import Image from "next/image";
 import Loader from "@/components/ui/loader";
+import {Checkbox} from "@/components/ui/checkbox";
 
-export default function EditServiceSheet({targetService}: {targetService: ServiceOffering}) {
+export default function EditServiceSheet({targetService}: { targetService: ServiceOffering }) {
 
   const {managedBusiness, updateService, isUpdatingService, updateServiceError} = useManagedBusiness();
 
@@ -18,7 +19,10 @@ export default function EditServiceSheet({targetService}: {targetService: Servic
     type: targetService.type,
     description: targetService.description,
     image: null,
-    removeImage: false
+    removeImage: false,
+    enabled: targetService.enabled,
+    displayPublic: targetService.displayPublic,
+    allowPublic: targetService.allowPublic
   });
   const [imagePreview, setImagePreview] = useState<string>(targetService.image);
 
@@ -41,7 +45,10 @@ export default function EditServiceSheet({targetService}: {targetService: Servic
       type: targetService.type,
       description: targetService.description,
       image: null,
-      removeImage: false
+      removeImage: false,
+      enabled: targetService.enabled,
+      displayPublic: targetService.displayPublic,
+      allowPublic: targetService.allowPublic
     });
     setImagePreview(targetService.image);
   }
@@ -49,7 +56,7 @@ export default function EditServiceSheet({targetService}: {targetService: Servic
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="outline" size="sm">Edit</Button>
+        <Button variant="outline" size="sm" onClick={resetRequest}>Edit</Button>
       </SheetTrigger>
       <SheetContent className="w-full">
         <SheetHeader>
@@ -154,6 +161,74 @@ export default function EditServiceSheet({targetService}: {targetService: Servic
                 Reset Image
               </Button>
             )}
+          </div>
+
+          {/* Enabled Status */}
+          <div className="flex-1">
+            <div className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+              <Checkbox id="enabled" checked={updateRequest.enabled}
+                        onCheckedChange={(checkedState) => setUpdateRequest(prev => ({
+                          ...prev,
+                          enabled: checkedState === true
+                        }))}/>
+              <div className="flex-1">
+                <Label htmlFor="enabled">Is this service enabled?</Label>
+                <p className="text-foreground/40 text-xs">If disabled, the service will still be visible, but
+                  unavailable for booking.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Display Publicly */}
+          <div className="flex-1">
+            <div className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+              <Checkbox id="displayPublic" checked={updateRequest.displayPublic} onCheckedChange={(checkedState) => {
+                if (checkedState === true) {
+                  setUpdateRequest(prev => ({
+                    ...prev,
+                    displayPublic: true
+                  }))
+                } else {
+                  // If turning off displayPublic, ensure that allowPublic is also disabled.
+                  setUpdateRequest(prev => ({
+                    ...prev,
+                    displayPublic: false,
+                    allowPublic: false
+                  }))
+                }
+              }}/>
+              <div className="flex-1">
+                <Label htmlFor="displayPublic">Display Publicly?</Label>
+                <p className="text-foreground/40 text-xs">If this is disabled, users will not be able to view or book
+                  this service.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Allow Publicly */}
+          <div className="flex-1">
+            <div className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+              <Checkbox id="allowPublic" checked={updateRequest.allowPublic} onCheckedChange={(checkedState) => {
+                if (checkedState === true) {
+                  // If allowing public bookings, display public needs to also be true
+                  setUpdateRequest(prev => ({
+                    ...prev,
+                    displayPublic: true,
+                    allowPublic: true
+                  }))
+                } else {
+                  setUpdateRequest(prev => ({
+                    ...prev,
+                    allowPublic: false
+                  }))
+                }
+              }}
+              />
+              <div className="flex-1">
+                <Label htmlFor="allowPublic">Allow Public Reservations?</Label>
+                <p className="text-foreground/40 text-xs">If this is disabled, only staff will be able to book this service.</p>
+              </div>
+            </div>
           </div>
 
           <hr className="w-full"/>

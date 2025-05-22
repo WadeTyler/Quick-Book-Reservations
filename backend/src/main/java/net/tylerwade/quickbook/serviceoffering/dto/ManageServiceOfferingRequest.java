@@ -19,7 +19,10 @@ public record ManageServiceOfferingRequest(
         String description,
 
         MultipartFile image,
+        boolean removeImage,
 
-        boolean removeImage
+        boolean enabled,
+        boolean displayPublic,
+        boolean allowPublic
 ) {
 }

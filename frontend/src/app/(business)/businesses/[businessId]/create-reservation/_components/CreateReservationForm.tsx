@@ -12,6 +12,7 @@ import {useReservation} from "@/features/reservation/context/ReservationContext"
 import Loader from "@/components/ui/loader";
 import {CreateReservationRequest} from "@/features/reservation/reservation.types";
 import {useRouter} from "next/navigation";
+import {useAuth} from "@/features/auth/context/AuthContext";
 
 function CreateReservationForm({currentBusiness, serviceOfferings}: {
   currentBusiness: Business;
@@ -19,6 +20,10 @@ function CreateReservationForm({currentBusiness, serviceOfferings}: {
 }) {
 
   const router = useRouter();
+
+  const {authUser} = useAuth();
+  const isOwnerOrStaff: boolean = authUser !== null && (currentBusiness.ownerId === authUser.id || currentBusiness.staffIds.includes(authUser.id));
+  const filteredServices: ServiceOffering[] = serviceOfferings.filter(s => s.enabled && (s.allowPublic || isOwnerOrStaff));
 
   const [selectedService, setSelectedService] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
@@ -58,7 +63,6 @@ function CreateReservationForm({currentBusiness, serviceOfferings}: {
     if (reservation)  {
       router.push(`/businesses/${currentBusiness.id}/reservation-success`);
     }
-
   }
 
   return (
@@ -82,7 +86,7 @@ function CreateReservationForm({currentBusiness, serviceOfferings}: {
                 <SelectValue placeholder="Choose a service..."/>
               </SelectTrigger>
               <SelectContent>
-                {serviceOfferings.map(service => (
+                {filteredServices.map(service => (
                   <SelectItem key={service.id} value={service.id.toString()}>
                     {service.name}
                   </SelectItem>
@@ -177,7 +181,7 @@ function CreateReservationForm({currentBusiness, serviceOfferings}: {
           </div>
 
           {createReservationError && (
-            <p className="text-danger text-sm text-center">
+            <p className="text-destructive text-sm text-center">
               {createReservationError}
             </p>
           )}
