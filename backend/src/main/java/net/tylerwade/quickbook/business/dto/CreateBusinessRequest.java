@@ -1,6 +1,7 @@
 package net.tylerwade.quickbook.business.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -8,6 +9,7 @@ public record CreateBusinessRequest(
 
         @NotBlank(message = "Abbreviation is required.")
         @Size(min = 3, max = 15, message = "Abbreviation must be between 3 - 15 characters.")
+        @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Abbreviation must be alphanumeric")
         String id,
 
         @NotBlank(message = "Name is required.")
