@@ -1,4 +1,18 @@
 import ManagedBusinessList from "@/app/(management)/dashboard/_components/ManagedBusinessList";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+  title: "Business Management Dashboard | Quick Book",
+  description: "View and manage all your businesses in one place. Access business analytics, reservations, and staff management with Quick Book.",
+  keywords: [
+    "business dashboard",
+    "manage businesses",
+    "Quick Book",
+    "business analytics",
+    "reservation management",
+    "staff management"
+  ]
+}
 
 export default function DashboardPage() {
   return (

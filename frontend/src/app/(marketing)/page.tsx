@@ -4,6 +4,20 @@ import {CheckIcon, FormInputIcon, GlobeIcon, PaperclipIcon} from "lucide-react";
 import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card";
 import {subscriptions, SubscriptionTier} from "@/data/subscriptionTiers";
 import Footer from "@/components/Footer";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+  title: "Quick Book | Effortless Business Booking & Reservation Management",
+  description: "Quick Book helps businesses manage bookings and reservations with ease. Create your business profile, offer services, and let customers book online through a modern, user-friendly platform.",
+  keywords: [
+    "business booking",
+    "reservation management",
+    "online booking",
+    "Quick Book",
+    "business services",
+    "appointment scheduling"
+  ]
+}
 
 export default function HomePage() {
   return (

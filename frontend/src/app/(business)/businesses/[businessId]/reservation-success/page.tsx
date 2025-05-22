@@ -1,5 +1,28 @@
 import Link from "next/link";
 import {Card} from "@/components/ui/card";
+import {Metadata} from "next";
+import {AxiosResponse} from "axios";
+import {APIResponse} from "@/types";
+import {Business} from "@/features/business/business.types";
+import {axiosInstance} from "@/lib/axios";
+
+type Props = {
+  params: Promise<{ businessId: string }>
+}
+
+export async function generateMetadata({params}: Props): Promise<Metadata> {
+  const {businessId} = await params;
+
+  const response: AxiosResponse<APIResponse<Business>> = await axiosInstance.get(`/businesses/${businessId}`);
+
+  const title = response.data.data ? `Reservation Created at ${response.data.data.name} | Quick Book` : "Reservation Created | Quick Book";
+  const description = response.data.data ? `${response.data.data.description}` : "Reservation successfully created page.";
+
+  return {
+    title,
+    description
+  }
+}
 
 async function ReservationSuccessPage({params}: {
   params: Promise<{ businessId: string }>
