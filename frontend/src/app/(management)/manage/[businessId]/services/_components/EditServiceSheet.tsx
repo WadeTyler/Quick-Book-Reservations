@@ -22,7 +22,9 @@ export default function EditServiceSheet({targetService}: { targetService: Servi
     removeImage: false,
     enabled: targetService.enabled,
     displayPublic: targetService.displayPublic,
-    allowPublic: targetService.allowPublic
+    allowPublic: targetService.allowPublic,
+    priceInCents: targetService.priceInCents,
+    durationInMinutes: targetService.durationInMinutes
   });
   const [imagePreview, setImagePreview] = useState<string>(targetService.image);
 
@@ -48,7 +50,9 @@ export default function EditServiceSheet({targetService}: { targetService: Servi
       removeImage: false,
       enabled: targetService.enabled,
       displayPublic: targetService.displayPublic,
-      allowPublic: targetService.allowPublic
+      allowPublic: targetService.allowPublic,
+      priceInCents: targetService.priceInCents,
+      durationInMinutes: targetService.durationInMinutes
     });
     setImagePreview(targetService.image);
   }
@@ -68,7 +72,7 @@ export default function EditServiceSheet({targetService}: { targetService: Servi
 
         <form className="flex flex-col gap-4 container" onSubmit={handleSubmit}>
           <div className="flex-1">
-            <Label htmlFor="name">Service Name</Label>
+            <Label htmlFor="name" className="mb-2 block">Service Name</Label>
             <Input
               id="name"
               maxLength={100}
@@ -81,7 +85,7 @@ export default function EditServiceSheet({targetService}: { targetService: Servi
           </div>
 
           <div className="flex-1">
-            <Label htmlFor="type">Service Type</Label>
+            <Label htmlFor="type" className="mb-2 block">Service Type</Label>
             <Input
               id="type"
               minLength={3}
@@ -94,7 +98,7 @@ export default function EditServiceSheet({targetService}: { targetService: Servi
           </div>
 
           <div className="flex-1">
-            <Label htmlFor="descripition">Service Description</Label>
+            <Label htmlFor="descripition" className="mb-2 block">Service Description</Label>
             <Input
               id="description"
               maxLength={500}
@@ -103,6 +107,35 @@ export default function EditServiceSheet({targetService}: { targetService: Servi
               placeholder="Enter a description for your service"
               value={updateRequest.description}
               onChange={e => setUpdateRequest(prev => ({...prev, description: e.target.value}))}
+            />
+          </div>
+
+          <div className="flex-1">
+            <Label htmlFor="priceInCents" className="mb-2 block">Service Price (USD)</Label>
+            <Input
+              id="priceInCents"
+              type="number"
+              step="0.01"
+              min={0}
+              max={1000000}
+              required
+              placeholder="Enter a price for your service"
+              value={updateRequest.priceInCents / 100}
+              onChange={e => setUpdateRequest(prev => ({...prev, priceInCents: e.target.valueAsNumber * 100}))}
+            />
+          </div>
+
+          <div className="flex-1">
+            <Label htmlFor="durationInMinutes" className="mb-2 block">Service Duration in Minutes</Label>
+            <Input
+              id="durationInMinutes"
+              type="number"
+              min={0}
+              max={1440}
+              required
+              placeholder="Enter a duration for your service"
+              value={updateRequest.durationInMinutes}
+              onChange={e => setUpdateRequest(prev => ({...prev, durationInMinutes: e.target.valueAsNumber}))}
             />
           </div>
 

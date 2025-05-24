@@ -8,6 +8,8 @@ export type ServiceOffering = {
   enabled: boolean;
   displayPublic: boolean;
   allowPublic: boolean;
+  priceInCents: number;
+  durationInMinutes: number;
   createdAt: string;
 }
 
@@ -20,4 +22,6 @@ export type ManageServiceOfferingRequest = {
   enabled: boolean;
   displayPublic: boolean;
   allowPublic: boolean;
+  priceInCents: number;
+  durationInMinutes: number;
 }

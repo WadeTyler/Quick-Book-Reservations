@@ -1,7 +1,6 @@
 package net.tylerwade.quickbook.serviceoffering.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
 public record ManageServiceOfferingRequest(
@@ -23,6 +22,16 @@ public record ManageServiceOfferingRequest(
 
         boolean enabled,
         boolean displayPublic,
-        boolean allowPublic
+        boolean allowPublic,
+
+        @NotNull(message = "Price is required.")
+        @PositiveOrZero(message = "Price must be positive or zero.")
+        @Max(value = 1000000, message = "A max of 1000000 cents is allowed.")
+        Long priceInCents,
+
+        @NotNull(message = "Duration is required.")
+        @PositiveOrZero(message = "Duration must be positive or zero.")
+        @Max(value = 1440, message = "Duration must be less than 24 hours.")
+        Integer durationInMinutes
 ) {
 }

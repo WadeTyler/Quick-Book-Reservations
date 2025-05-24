@@ -11,6 +11,7 @@ import {ServiceOffering} from "@/features/service-offering/service-offering.type
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
 import {useAuth} from "@/features/auth/context/AuthContext";
 import {useBusiness} from "@/features/business/context/BusinessContext";
+import {formatCentsToUsdStr, formatMinutesToHoursStr} from "@/lib/utils";
 
 function ServiceOfferingList() {
 
@@ -62,7 +63,7 @@ function ServiceOfferingList() {
       {filteredServices?.map(service => (
         <Card key={service.id} className="w-full overflow-hidden p-0! flex flex-col-reverse lg:flex-row">
 
-          <div className="w-full h-full wrap-anywhere p-4">
+          <div className="w-full h-full wrap-anywhere p-4 flex flex-col">
             <div className="flex items-center justify-between">
               <h3 className="text-xl md:text-2xl font-bold tracking-tight">
                 {service.name}
@@ -70,9 +71,18 @@ function ServiceOfferingList() {
 
               <EnabledStatus service={service}/>
             </div>
-            <span className="text-sm bg-accent/20 text-accent px-2 py-1 rounded">
+            <span className="text-sm bg-accent/20 text-accent px-2 py-1 rounded w-fit">
               {service.type}
             </span>
+
+            <div className="flex items-center gap-2 my-2">
+                  <span
+                    className="w-fit text-xl font-bold tracking-tight">{formatCentsToUsdStr(service.priceInCents)}</span>
+              <span className="text-foreground/75">-</span>
+              <span
+                className="w-fit text-sm text-foreground/75 font-semibold tracking-tight">{formatMinutesToHoursStr(service.durationInMinutes)}</span>
+            </div>
+
             <p className="sm:text-lg mb-4">
               {service.description}
             </p>

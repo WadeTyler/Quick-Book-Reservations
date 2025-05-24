@@ -49,6 +49,12 @@ public class ServiceOffering {
     @Column(nullable = false)
     private boolean allowPublic = true;
 
+    @Column(nullable = false)
+    private Long priceInCents = 0L;
+
+    @Column(nullable = false)
+    private Integer durationInMinutes = 0;
+
     private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 
     @OneToMany(mappedBy = "serviceOffering", cascade = CascadeType.REMOVE)
@@ -71,6 +77,8 @@ public class ServiceOffering {
                 enabled,
                 displayPublic,
                 allowPublic,
+                priceInCents,
+                durationInMinutes,
                 createdAt);
     }
 }
