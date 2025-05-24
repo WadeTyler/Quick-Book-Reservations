@@ -19,25 +19,24 @@ export default function CreateBusinessForm() {
 
   const {createBusiness, createBusinessError, isCreatingBusiness} = useManagedBusiness();
 
-  const imageInputRef = useRef(null);
-  const [imagePreview, setImagePreview] = useState("");
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   function handleClearImage() {
-
     if (imageInputRef.current) {
       imageInputRef.current.value = "";
       setImagePreview(null);
     }
   }
 
-  async function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
-    const id = formData.get("id");
-    const name = formData.get("name");
-    const description = formData.get("description");
-    const image = formData.get("image");
+    const formData = new FormData(e.target as HTMLFormElement);
+    const id = formData.get("id") as string;
+    const name = formData.get("name") as string;
+    const description = formData.get("description") as string;
+    const imageFile = formData.get("image") as File | null;
 
     if (!id || !name || !description || isCreatingBusiness) return;
 
@@ -45,7 +44,7 @@ export default function CreateBusinessForm() {
       id,
       name,
       description,
-      image: image.size > 0 ? image : null
+      image: imageFile && imageFile.size > 0 ? imageFile : null
     }
 
     const newBusiness = await createBusiness(createRequest);
@@ -153,3 +152,4 @@ export default function CreateBusinessForm() {
   )
 
 }
+
