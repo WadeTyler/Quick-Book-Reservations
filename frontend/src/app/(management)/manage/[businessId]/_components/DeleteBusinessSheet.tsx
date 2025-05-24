@@ -36,7 +36,7 @@ export default function DeleteBusinessSheet() {
         <Button variant="destructive" size="sm">Delete Business</Button>
       </SheetTrigger>
 
-      <SheetContent className="w-full">
+      <SheetContent className="w-full overflow-y-auto">
         <SheetHeader>
           <SheetTitle>Delete Business</SheetTitle>
           <SheetDescription>

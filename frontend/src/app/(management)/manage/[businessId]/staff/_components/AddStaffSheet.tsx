@@ -33,7 +33,7 @@ export default function AddStaffSheet() {
       <SheetTrigger asChild>
         <Button>Add Staff</Button>
       </SheetTrigger>
-      <SheetContent className="w-full">
+      <SheetContent className="w-full overflow-y-auto">
         <SheetHeader>
           <SheetTitle>Add Staff Members</SheetTitle>
           <SheetDescription>
@@ -72,3 +72,4 @@ export default function AddStaffSheet() {
     </Sheet>
   )
 }
+

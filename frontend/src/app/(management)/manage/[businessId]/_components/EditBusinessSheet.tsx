@@ -60,7 +60,7 @@ export default function EditBusinessSheet({managedBusiness}: { managedBusiness: 
         <Button size="sm" variant="outline" onClick={resetFields}>Edit Business</Button>
       </SheetTrigger>
 
-      <SheetContent className="w-full">
+      <SheetContent className="w-full overflow-y-auto">
         <SheetHeader>
           <SheetTitle>Edit Business</SheetTitle>
           <SheetDescription>
@@ -168,3 +168,4 @@ export default function EditBusinessSheet({managedBusiness}: { managedBusiness: 
     </Sheet>
   )
 }
+

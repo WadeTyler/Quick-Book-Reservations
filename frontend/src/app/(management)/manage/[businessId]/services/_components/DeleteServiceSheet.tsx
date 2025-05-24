@@ -24,7 +24,7 @@ export default function DeleteServiceSheet({targetService}: { targetService: Ser
         <Button size="sm" variant="destructive">Delete</Button>
       </SheetTrigger>
 
-      <SheetContent className="w-full">
+      <SheetContent className="w-full overflow-y-auto">
         <SheetHeader>
           <SheetTitle>Delete Service</SheetTitle>
           <SheetDescription>
@@ -48,3 +48,4 @@ export default function DeleteServiceSheet({targetService}: { targetService: Ser
     </Sheet>
   )
 }
+

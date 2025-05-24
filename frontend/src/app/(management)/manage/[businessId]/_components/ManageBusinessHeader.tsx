@@ -29,7 +29,7 @@ export default function ManageBusinessHeader() {
           </p>
         </div>
       </div>
-      <div className="flex flex-row gap-4 mt-2 md:mt-0 md:ml-auto">
+      <div className="flex flex-row flex-wrap gap-4 mt-2 md:mt-0 md:ml-auto">
 
         {managedBusiness.owner.id === authUser.id && <DeleteBusinessSheet />}
         {managedBusiness.owner.id === authUser.id && <EditBusinessSheet managedBusiness={managedBusiness}/>}

@@ -61,7 +61,7 @@ export default function AddServiceSheet() {
       <SheetTrigger asChild>
         <Button onClick={resetRequest}>Add Service</Button>
       </SheetTrigger>
-      <SheetContent className="w-full">
+      <SheetContent className="w-full overflow-y-auto">
         <SheetHeader>
           <SheetTitle>Add a Service</SheetTitle>
           <SheetDescription>
@@ -200,3 +200,4 @@ export default function AddServiceSheet() {
   )
 
 }
+
