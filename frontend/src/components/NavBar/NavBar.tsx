@@ -21,13 +21,13 @@ export default function NavBar() {
           About
         </Link>
 
-        <AuthOnly>
+        <AuthOnly showLoader={false}>
           <Link href={"/dashboard"}>Dashboard</Link>
           <ModeToggle />
           <UserOptions />
         </AuthOnly>
 
-        <UnAuthOnly>
+        <UnAuthOnly showLoader={false}>
           <ModeToggle />
           <Link href={"/login"}>Login</Link>
           <Link href={"/signup"}>

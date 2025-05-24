@@ -4,13 +4,13 @@ import {useAuth} from "@/features/auth/context/AuthContext";
 import Loader from "@/components/ui/loader";
 import {useRouter} from "next/navigation";
 
-export default function AuthOnly({children, redirect = false, redirectTo = "/login"}: {children: ReactNode, redirect?: boolean, redirectTo?: string,}) {
+export default function AuthOnly({children, redirect = false, redirectTo = "/login", showLoader = true}: {children: ReactNode, redirect?: boolean, redirectTo?: string, showLoader?: boolean}) {
 
   const router = useRouter();
 
   const {authUser, isLoadingAuthUser} = useAuth();
 
-  if (isLoadingAuthUser) return <Loader />;
+  if (isLoadingAuthUser) return showLoader ? <Loader /> : null;
 
   else if (authUser && !isLoadingAuthUser) return (
     <>
