@@ -22,10 +22,6 @@ export default function NavBar() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
-          <Link href={"/about"}>
-            About
-          </Link>
-
           <AuthOnly showLoader={false}>
             <Link href={"/dashboard"}>Dashboard</Link>
             <ModeToggle />

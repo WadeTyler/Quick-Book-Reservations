@@ -25,10 +25,6 @@ export default function MobileNav() {
         <SheetContent side="right" className="w-[300px] overflow-y-auto">
           <div className="flex flex-col gap-4 mt-8 p-4">
 
-            <Link href={"/about"} className="text-lg" onClick={() => setOpen(false)}>
-              About
-            </Link>
-
             <AuthOnly showLoader={false}>
               <Link href={"/dashboard"} className="text-lg" onClick={() => setOpen(false)}>
                 Dashboard
