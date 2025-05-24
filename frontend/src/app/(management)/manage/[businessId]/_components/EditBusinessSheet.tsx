@@ -70,7 +70,7 @@ export default function EditBusinessSheet({managedBusiness}: { managedBusiness: 
 
         <form className="flex flex-col gap-4 container" onSubmit={handleSubmit}>
           <div className="flex-1">
-            <Label htmlFor="name">Business Name</Label>
+            <Label htmlFor="name" className="block mb-2">Business Name</Label>
             <Input
               id="name"
               required
@@ -86,7 +86,7 @@ export default function EditBusinessSheet({managedBusiness}: { managedBusiness: 
           </div>
 
           <div className="flex-1">
-            <Label htmlFor="description">Business Description</Label>
+            <Label htmlFor="description" className="block mb-2">Business Description</Label>
             <Textarea
               id="description"
               className="resize-none"

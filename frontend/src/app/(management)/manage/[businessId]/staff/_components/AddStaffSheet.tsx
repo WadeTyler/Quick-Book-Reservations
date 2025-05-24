@@ -44,7 +44,7 @@ export default function AddStaffSheet() {
 
         <form className="flex flex-col gap-4 container" onSubmit={handleSubmit}>
           <div className="flex-1">
-            <Label htmlFor="email">User&#39;s Email</Label>
+            <Label htmlFor="email" className="block mb-2">User&#39;s Email</Label>
             <Input
               id="email"
               name="email"
