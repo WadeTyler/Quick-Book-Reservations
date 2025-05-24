@@ -12,7 +12,7 @@ export default function LoginPage() {
 
   return (
     <UnAuthOnly redirect={true}>
-      <div className="w-full min-h-screen bg-muted/40 flex items-center justify-center">
+      <div className="w-full min-h-screen flex items-center justify-center mt-32 p-4">
         <LoginForm/>
       </div>
     </UnAuthOnly>

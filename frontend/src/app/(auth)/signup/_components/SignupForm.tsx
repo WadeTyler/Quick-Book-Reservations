@@ -86,7 +86,7 @@ export default function SignupForm() {
           <div className="flex-1">
             <Label htmlFor="password" className="mb-2 block">Your Password</Label>
             <Input
-              id="email"
+              id="password"
               name="password"
               type="password"
               placeholder="Enter your password"
