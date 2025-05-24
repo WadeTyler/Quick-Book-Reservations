@@ -22,7 +22,8 @@ export default function EditServiceSheet({targetService}: { targetService: Servi
     removeImage: false,
     enabled: targetService.enabled,
     displayPublic: targetService.displayPublic,
-    allowPublic: targetService.allowPublic
+    allowPublic: targetService.allowPublic,
+    priceInCents: targetService.priceInCents
   });
   const [imagePreview, setImagePreview] = useState<string>(targetService.image);
 
@@ -48,7 +49,8 @@ export default function EditServiceSheet({targetService}: { targetService: Servi
       removeImage: false,
       enabled: targetService.enabled,
       displayPublic: targetService.displayPublic,
-      allowPublic: targetService.allowPublic
+      allowPublic: targetService.allowPublic,
+      priceInCents: targetService.priceInCents
     });
     setImagePreview(targetService.image);
   }
@@ -103,6 +105,21 @@ export default function EditServiceSheet({targetService}: { targetService: Servi
               placeholder="Enter a description for your service"
               value={updateRequest.description}
               onChange={e => setUpdateRequest(prev => ({...prev, description: e.target.value}))}
+            />
+          </div>
+
+          <div className="flex-1">
+            <Label htmlFor="priceInCents">Service Price (USD)</Label>
+            <Input
+              id="priceInCents"
+              type="number"
+              step="0.01"
+              min={0}
+              max={1000000}
+              required
+              placeholder="Enter a price for your service"
+              value={updateRequest.priceInCents / 100}
+              onChange={e => setUpdateRequest(prev => ({...prev, priceInCents: e.target.valueAsNumber * 100}))}
             />
           </div>
 

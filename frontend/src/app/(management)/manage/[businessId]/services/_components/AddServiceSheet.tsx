@@ -21,7 +21,8 @@ export default function AddServiceSheet() {
     removeImage: false,
     enabled: true,
     displayPublic: true,
-    allowPublic: true
+    allowPublic: true,
+    priceInCents: 0
   });
   const [imagePreview, setImagePreview] = useState<string>("");
 
@@ -47,7 +48,8 @@ export default function AddServiceSheet() {
       removeImage: false,
       enabled: true,
       displayPublic: true,
-      allowPublic: true
+      allowPublic: true,
+      priceInCents: 0
     });
     setImagePreview("");
   }
@@ -102,6 +104,21 @@ export default function AddServiceSheet() {
               placeholder="Enter a description for your service"
               value={createRequest.description}
               onChange={e => setCreateRequest(prev => ({...prev, description: e.target.value}))}
+            />
+          </div>
+
+          <div className="flex-1">
+            <Label htmlFor="priceInCents">Service Price (USD)</Label>
+            <Input
+              id="priceInCents"
+              type="number"
+              step="0.01"
+              min={0}
+              max={1000000}
+              required
+              placeholder="Enter a price for your service"
+              value={createRequest.priceInCents / 100}
+              onChange={e => setCreateRequest(prev => ({...prev, priceInCents: e.target.valueAsNumber * 100}))}
             />
           </div>
 

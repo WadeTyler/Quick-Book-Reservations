@@ -53,6 +53,7 @@ public class ServiceOfferingServiceImpl implements ServiceOfferingService {
         serviceOffering.setEnabled(true);
         serviceOffering.setDisplayPublic(true);
         serviceOffering.setAllowPublic(true);
+        serviceOffering.setPriceInCents(manageServiceOfferingRequest.priceInCents());
 
         // Save
         serviceOfferingRepository.save(serviceOffering);
@@ -90,6 +91,7 @@ public class ServiceOfferingServiceImpl implements ServiceOfferingService {
         serviceOffering.setDescription(manageServiceOfferingRequest.description());
         serviceOffering.setType(manageServiceOfferingRequest.type());
         serviceOffering.setEnabled(manageServiceOfferingRequest.enabled());
+        serviceOffering.setPriceInCents(manageServiceOfferingRequest.priceInCents());
 
         if (!manageServiceOfferingRequest.displayPublic()) {
             // If not displaying publicly, then public booking needs to be disabled
