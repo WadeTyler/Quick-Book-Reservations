@@ -1,5 +1,6 @@
 package net.tylerwade.quickbook.auth;
 
+import net.tylerwade.quickbook.auth.dto.ChangePasswordRequest;
 import net.tylerwade.quickbook.auth.dto.SignupRequest;
 import net.tylerwade.quickbook.auth.dto.UserDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
@@ -42,6 +43,14 @@ public interface UserService extends UserDetailsService {
     User signup(SignupRequest signupRequest) throws HttpRequestException;
 
     /**
+     * Changes the user's password
+     * @param changePasswordRequest the request object containing the details.
+     * @param authentication The currently authenticated user
+     * @return the updated user.
+     */
+    User changePassword(ChangePasswordRequest changePasswordRequest, Authentication authentication) throws HttpRequestException;
+
+    /**
      * Converts a User entity to a UserDTO.
      *
      * @param user The user entity.
@@ -60,5 +69,7 @@ public interface UserService extends UserDetailsService {
     default User getUser(Authentication authentication) {
         return this.loadUserByUsername(authentication.getName());
     }
+
+
 
 }

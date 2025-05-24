@@ -105,6 +105,28 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
     }
   }
 
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [changePasswordError, setChangePasswordError] = useState("");
+
+  async function changePassword(currentPassword: string, newPassword: string, confirmNewPassword: string): Promise<User | null> {
+    setIsChangingPassword(true);
+    setChangePasswordError("");
+    try {
+      const response: AxiosResponse<APIResponse<User>> = await axiosInstance.put("/auth/change-password", {
+        currentPassword,
+        newPassword,
+        confirmNewPassword
+      });
+      setAuthUser(response.data.data);
+      return response.data.data;
+    } catch (error) {
+      setChangePasswordError(getErrorMsg(error));
+      return null;
+    } finally {
+      setIsChangingPassword(false);
+    }
+  }
+
   // Load user on mount
   useEffect(() => {
     loadUser();
@@ -123,7 +145,10 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
       isLoggingOut,
       signup,
       signUpError,
-      isSigningUp
+      isSigningUp,
+      isChangingPassword,
+      changePasswordError,
+      changePassword
     }}
     >
       {children}

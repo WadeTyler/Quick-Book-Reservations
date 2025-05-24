@@ -1,9 +1,11 @@
 package net.tylerwade.quickbook.auth;
 
+import net.tylerwade.quickbook.auth.dto.ChangePasswordRequest;
 import net.tylerwade.quickbook.auth.dto.SignupRequest;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -56,6 +58,30 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         return user;
+    }
+
+    @Override
+    public User changePassword(ChangePasswordRequest changePasswordRequest, Authentication authentication) throws HttpRequestException {
+        // Check if new passwords match
+        if (!changePasswordRequest.newPassword().equals(changePasswordRequest.confirmNewPassword())) {
+            throw new HttpRequestException(HttpStatus.BAD_REQUEST, "New Password must match.");
+        }
+
+        // Check if newPassword matches currentPassword
+        if (changePasswordRequest.newPassword().equals(changePasswordRequest.currentPassword())) {
+            throw new HttpRequestException(HttpStatus.BAD_REQUEST, "New Password cannot be the same as Current Password.");
+        }
+
+        User user = getUser(authentication);
+
+        // Check if current password matches
+        if (!passwordEncoder.matches(changePasswordRequest.currentPassword(), user.getPassword())) {
+            throw new HttpRequestException(HttpStatus.BAD_REQUEST, "Current Password is incorrect.");
+        }
+
+        // Update and return
+        user.setPassword(passwordEncoder.encode(changePasswordRequest.newPassword()));
+        return userRepository.save(user);
     }
 
 }
