@@ -13,6 +13,7 @@ public record ServiceOfferingDTO(
        boolean displayPublic,
        boolean allowPublic,
        Long priceInCents,
+       Integer durationInMinutes,
        Timestamp createdAt
 ) {
 }

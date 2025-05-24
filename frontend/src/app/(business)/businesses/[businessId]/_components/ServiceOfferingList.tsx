@@ -11,7 +11,7 @@ import {ServiceOffering} from "@/features/service-offering/service-offering.type
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
 import {useAuth} from "@/features/auth/context/AuthContext";
 import {useBusiness} from "@/features/business/context/BusinessContext";
-import {formatCentsToUsdStr} from "@/lib/utils";
+import {formatCentsToUsdStr, formatMinutesToHoursStr} from "@/lib/utils";
 
 function ServiceOfferingList() {
 
@@ -75,7 +75,13 @@ function ServiceOfferingList() {
               {service.type}
             </span>
 
-            <span className="w-fit text-xl font-bold tracking-tight my-2">{formatCentsToUsdStr(service.priceInCents)}</span>
+            <div className="flex items-center gap-2 my-2">
+                  <span
+                    className="w-fit text-xl font-bold tracking-tight">{formatCentsToUsdStr(service.priceInCents)}</span>
+              <span className="text-foreground/75">-</span>
+              <span
+                className="w-fit text-sm text-foreground/75 font-semibold tracking-tight">{formatMinutesToHoursStr(service.durationInMinutes)}</span>
+            </div>
 
             <p className="sm:text-lg mb-4">
               {service.description}

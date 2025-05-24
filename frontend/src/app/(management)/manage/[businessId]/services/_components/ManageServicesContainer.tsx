@@ -17,7 +17,7 @@ import React from "react";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
 import {ServiceOffering} from "@/features/service-offering/service-offering.types";
 import {EyeClosed, EyeIcon, ShieldIcon, UsersIcon} from "lucide-react";
-import {formatCentsToUsdStr} from "@/lib/utils";
+import {formatCentsToUsdStr, formatMinutesToHoursStr} from "@/lib/utils";
 
 export default function ManageServicesContainer() {
 
@@ -74,7 +74,13 @@ export default function ManageServicesContainer() {
                 <span className="w-fit text-xs bg-accent/20 text-accent px-2 py-1 rounded">
                   {service.type}
                 </span>
-                <span className="w-fit text-xl font-bold tracking-tight my-2">{formatCentsToUsdStr(service.priceInCents)}</span>
+                <div className="flex items-center gap-2 my-2">
+                  <span
+                    className="w-fit text-xl font-bold tracking-tight">{formatCentsToUsdStr(service.priceInCents)}</span>
+                  <span className="text-foreground/75">-</span>
+                  <span
+                    className="w-fit text-sm text-foreground/75 font-semibold tracking-tight">{formatMinutesToHoursStr(service.durationInMinutes)}</span>
+                </div>
               </div>
               <p className="text-sm text-muted-foreground line-clamp-3 mb-4">{service.description}</p>
               <div className="mt-auto flex gap-2">
