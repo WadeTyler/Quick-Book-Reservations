@@ -45,4 +45,8 @@ export interface ManagedBusinessContextType {
   isDeletingService: boolean;
   deleteServiceError: string;
   deleteService: (businessId: string, serviceId: number) => Promise<ManagedBusiness | null>;
+
+  isDeletingBusiness: boolean;
+  deleteBusinessError: string;
+  deleteBusiness: (businessId: string) => Promise<boolean>;
 }

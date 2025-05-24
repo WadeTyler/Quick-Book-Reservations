@@ -212,6 +212,24 @@ export function ManagedBusinessProvider({children}: {children: ReactNode}) {
     }
   }
 
+  const [isDeletingBusiness, setIsDeletingBusiness] = useState(false);
+  const [deleteBusinessError, setDeleteBusinessError] = useState("");
+
+  async function deleteBusiness(businessId: string): Promise<boolean> {
+    setIsDeletingBusiness(true);
+    setDeleteBusinessError("");
+    try {
+      await axiosInstance.delete(`/businesses/manage/${businessId}`);
+      setManagedBusiness(null);
+      return true;
+    } catch (e) {
+      setDeleteBusinessError(getErrorMsg(e));
+      return false;
+    } finally {
+      setIsDeletingBusiness(false);
+    }
+  }
+
   return (
     <ManagedBusinessContext.Provider value={{
       isCreatingBusiness,
@@ -250,7 +268,11 @@ export function ManagedBusinessProvider({children}: {children: ReactNode}) {
 
       isDeletingService,
       deleteServiceError,
-      deleteService
+      deleteService,
+
+      isDeletingBusiness,
+      deleteBusinessError,
+      deleteBusiness
     }}>
       {children}
     </ManagedBusinessContext.Provider>

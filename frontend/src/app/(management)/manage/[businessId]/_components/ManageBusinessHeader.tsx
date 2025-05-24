@@ -5,6 +5,7 @@ import React from "react";
 import {useManagedBusiness} from "@/features/business/context/ManagedBusinessContext";
 import EditBusinessSheet from "@/app/(management)/manage/[businessId]/_components/EditBusinessSheet";
 import {useAuth} from "@/features/auth/context/AuthContext";
+import DeleteBusinessSheet from "@/app/(management)/manage/[businessId]/_components/DeleteBusinessSheet";
 
 export default function ManageBusinessHeader() {
 
@@ -30,6 +31,7 @@ export default function ManageBusinessHeader() {
       </div>
       <div className="flex flex-row gap-4 mt-2 md:mt-0 md:ml-auto">
 
+        {managedBusiness.owner.id === authUser.id && <DeleteBusinessSheet />}
         {managedBusiness.owner.id === authUser.id && <EditBusinessSheet managedBusiness={managedBusiness}/>}
 
         <Link href={`/businesses/${managedBusiness.id}`}>
