@@ -1,12 +1,13 @@
 "use client";
 import React, {useEffect} from 'react';
-import {useParams, useSearchParams} from "next/navigation";
+import {useParams} from "next/navigation";
 import {useBusiness} from "@/features/business/context/BusinessContext";
 import {useServiceOffering} from "@/features/service-offering/context/ServiceOfferingContext";
 import Loader from "@/components/ui/loader";
 import Link from "next/link";
 import CreateReservationForm
   from "@/app/(business)/businesses/[businessId]/create-reservation/_components/CreateReservationForm";
+import {ArrowLeft} from "lucide-react";
 
 function CreateReservationContainer() {
   const params = useParams<{ businessId: string }>();
@@ -56,7 +57,13 @@ function CreateReservationContainer() {
   }
 
   if (currentBusiness && serviceOfferings) return (
-    <CreateReservationForm currentBusiness={currentBusiness} serviceOfferings={serviceOfferings}/>
+      <div className="max-w-xl flex flex-col gap-4">
+        <Link href={`/businesses/${businessId}`} className="link-1 font-semibold inline-flex gap-1 items-center">
+          <ArrowLeft />
+          Back to business
+        </Link>
+        <CreateReservationForm currentBusiness={currentBusiness} serviceOfferings={serviceOfferings}/>
+      </div>
   );
 
   return null;
