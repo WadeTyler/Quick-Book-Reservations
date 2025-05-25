@@ -6,10 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.tylerwade.quickbook.auth.dto.UserDTO;
+import net.tylerwade.quickbook.business.Business;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -37,6 +39,12 @@ public class User implements UserDetails {
     @Column(nullable = false)
     @JsonIgnore
     private String password;
+
+    @OneToMany(mappedBy = "owner", orphanRemoval = true)
+    List<Business> ownedBusinesses = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "staff")
+    List<Business> staffedBusinesses = new ArrayList<>();
 
     @Column(nullable = false)
     private Timestamp createdAt = new Timestamp(System.currentTimeMillis());

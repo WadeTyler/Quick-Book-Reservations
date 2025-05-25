@@ -2,24 +2,12 @@
 
 import {useAuth} from "@/features/auth/context/AuthContext";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import {Button} from "@/components/ui/button";
-import {useRouter} from "next/navigation";
 import ChangePasswordSheet from "@/app/(auth)/profile/_components/ChangePasswordSheet";
+import DeleteAccountSheet from "@/app/(auth)/profile/_components/DeleteAccountSheet";
 
 export default function ProfileCard() {
 
   const {authUser} = useAuth();
-  const router = useRouter();
-
-  function handleDeleteAccount() {
-    // Logic for deleting the account
-    console.log("Delete Account clicked");
-  }
-
-  function handleChangePassword() {
-    // Navigate to the change password page
-    router.push("/auth/change-password");
-  }
 
   return (
     <Card>
@@ -35,7 +23,7 @@ export default function ProfileCard() {
             <p><strong>Email:</strong> {authUser.username}</p>
 
             <div className="flex gap-4">
-              <Button variant="destructive" onClick={handleDeleteAccount}>Delete Account</Button>
+              <DeleteAccountSheet />
               <ChangePasswordSheet />
             </div>
           </div>

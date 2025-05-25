@@ -36,7 +36,7 @@ export default function ChangePasswordSheet() {
       <SheetTrigger asChild>
         <Button>Change Password</Button>
       </SheetTrigger>
-      <SheetContent className="w-full">
+      <SheetContent className="w-full overflow-y-auto">
         <SheetHeader>
           <SheetTitle>Change Password</SheetTitle>
           <SheetDescription>Change your account password.</SheetDescription>

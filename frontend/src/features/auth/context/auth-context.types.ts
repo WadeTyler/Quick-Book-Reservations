@@ -21,4 +21,8 @@ export interface AuthContextType {
   isChangingPassword: boolean;
   changePasswordError: string;
   changePassword: (currentPassword: string, newPassword: string, confirmNewPassword: string) => Promise<User | null>;
+
+  isDeleting: boolean;
+  deleteError: string;
+  deleteAccount: (password: string) => Promise<boolean>;
 }

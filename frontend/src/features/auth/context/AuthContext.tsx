@@ -127,6 +127,24 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
     }
   }
 
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
+
+  async function deleteAccount(password: string): Promise<boolean> {
+    setIsDeleting(true);
+    setDeleteError("");
+    try {
+      await axiosInstance.post("/auth/delete", { password });
+      setAuthUser(null);
+      return true;
+    } catch (error) {
+      setDeleteError(getErrorMsg(error));
+      return false;
+    } finally {
+      setIsDeleting(false);
+    }
+  }
+
   // Load user on mount
   useEffect(() => {
     loadUser();
@@ -148,7 +166,10 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
       isSigningUp,
       isChangingPassword,
       changePasswordError,
-      changePassword
+      changePassword,
+      isDeleting,
+      deleteError,
+      deleteAccount
     }}
     >
       {children}

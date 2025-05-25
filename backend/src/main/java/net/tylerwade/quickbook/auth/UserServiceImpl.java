@@ -1,7 +1,9 @@
 package net.tylerwade.quickbook.auth;
 
 import net.tylerwade.quickbook.auth.dto.ChangePasswordRequest;
+import net.tylerwade.quickbook.auth.dto.DeleteAccountRequest;
 import net.tylerwade.quickbook.auth.dto.SignupRequest;
+import net.tylerwade.quickbook.business.UserBusinessCleanupService;
 import net.tylerwade.quickbook.exception.HttpRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,11 +17,13 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserBusinessCleanupService userBusinessCleanupService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, UserBusinessCleanupService userBusinessCleanupService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userBusinessCleanupService = userBusinessCleanupService;
     }
 
     @Override
@@ -82,6 +86,22 @@ public class UserServiceImpl implements UserService {
         // Update and return
         user.setPassword(passwordEncoder.encode(changePasswordRequest.newPassword()));
         return userRepository.save(user);
+    }
+
+    @Override
+    public void delete(DeleteAccountRequest deleteAccountRequest, Authentication authentication) throws HttpRequestException {
+        User authUser = getUser(authentication);
+
+        // Verify password matches
+        if (!passwordEncoder.matches(deleteAccountRequest.password(), authUser.getPassword())) {
+            throw new HttpRequestException(HttpStatus.BAD_REQUEST, "Password is incorrect.");
+        }
+
+        // Remove user from all staffed businesses using cleanup service
+        userBusinessCleanupService.removeUserFromAllStaffedBusinesses(authUser);
+
+        // Delete
+        userRepository.delete(authUser);
     }
 
 }

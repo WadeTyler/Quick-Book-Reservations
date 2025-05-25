@@ -1,6 +1,7 @@
 package net.tylerwade.quickbook.auth;
 
 import net.tylerwade.quickbook.auth.dto.ChangePasswordRequest;
+import net.tylerwade.quickbook.auth.dto.DeleteAccountRequest;
 import net.tylerwade.quickbook.auth.dto.SignupRequest;
 import net.tylerwade.quickbook.auth.dto.UserDTO;
 import net.tylerwade.quickbook.exception.HttpRequestException;
@@ -49,6 +50,13 @@ public interface UserService extends UserDetailsService {
      * @return the updated user.
      */
     User changePassword(ChangePasswordRequest changePasswordRequest, Authentication authentication) throws HttpRequestException;
+
+    /**
+     * Deletes the user's account.
+     * @param deleteAccountRequest the request object containing details.
+     * @param authentication The currently authenticated user.
+     */
+    void delete(DeleteAccountRequest deleteAccountRequest, Authentication authentication) throws HttpRequestException;
 
     /**
      * Converts a User entity to a UserDTO.
